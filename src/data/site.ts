@@ -18,18 +18,17 @@ export const site: SiteData = {
   instagram: "@asmaa_naturo_lyon",
   instagramUrl: "https://www.instagram.com/asmaa_naturo_lyon",
   address: {
-    street: "15 rue Jean Jaurès",
+    street: "48 rue Francisco Ferrer",
     city: "Décines-Charpieu",
     zip: "69150",
     region: "Auvergne-Rhône-Alpes",
-    full: "15 rue Jean Jaurès, 69150 Décines-Charpieu",
+    full: "48 rue Francisco Ferrer, 69150 Décines-Charpieu",
   },
-  // ⚠️ Coordonnées approximatives du centre de Décines-Charpieu.
-  // À remplacer par les coords exactes du 15 rue Jean Jaurès quand
-  // Asmaa les communique (Google Maps → clic droit → copier coords).
+  // Coordonnées du 48 rue Francisco Ferrer, 69150 Décines-Charpieu
+  // (résolues via Nominatim/OpenStreetMap, précision rue).
   gps: {
-    lat: 45.7691,
-    lng: 4.9594,
+    lat: 45.77643,
+    lng: 4.97639,
   },
   resalibUrl:
     "https://www.resalib.fr/praticien/104874-asmaa-mansouri-naturopathe-meyzieu",
@@ -42,5 +41,5 @@ export const site: SiteData = {
     "https://www.google.com/search?sa=X&sca_esv=51f1ea3ba9abaebf&rlz=1C5AJCO_enFR1205FR1206&cs=1&hl=fr-FR&sxsrf=ANbL-n7JiNrsNesOwfM0sBC39gIvZ2eGmQ:1775672427375&q=Mansouri%20Asmaa%20Avis&rflfq=1&num=20&stick=H4sIAAAAAAAAAONgkxI2NTOzMDMxNzEwtzAyNjG0MDa33MDI-IpR2Dcxrzi_tChTwbE4NzFRwbEss3gRKzZRAL0G4MZGAAAA&rldimm=5668647407823418379&tbm=lcl&ved=0CAcQ5foLahcKEwj44q-i796TAxUAAAAAHQAAAAAQBQ&biw=1920&bih=992&dpr=1#lkt=LocalPoiReviews&arid=Ci9DQUlRQUNvZENodHljRjlvT20xa2QwSkhSelV0WmxoR1drdzFhV0k0T0VGV01XYxAB",
   verifiedReviewsCount: 24,
   googleMapsDirectionsUrl:
-    "https://www.google.com/maps/dir/?api=1&destination=15+rue+Jean+Jaur%C3%A8s%2C+69150+D%C3%A9cines-Charpieu",
+    "https://www.google.com/maps/dir/?api=1&destination=48+rue+Francisco+Ferrer%2C+69150+D%C3%A9cines-Charpieu",
 } as const;

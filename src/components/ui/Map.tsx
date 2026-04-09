@@ -57,14 +57,15 @@ interface MapProps {
  * Style positron de Carto CDN comme base, puis recoloriée au runtime
  * en bouclant sur les layers et en remappant chaque type vers les
  * tokens du thème :
- *   - background → beige-100 (terrain de base, le plus clair)
- *   - fill (water/park/building) → beige-300 (filigrane subtil)
- *   - fill (tout le reste) → beige-100 (fond uniforme, no clutter)
- *   - line (routes) → beige-300 (filigrane)
- *   - symbol text → vert-700 + halo beige-100 (lisibilité)
+ *   - background → rose-200 (terrain neutre, aligné sur le fond body)
+ *   - fill (water/park/building) → vert-500 à 10% d'opacité (équivalent
+ *     du bg-vert-500/10 des chips Presentation, cohérence palette)
+ *   - fill (tout le reste) → rose-200 (fond uniforme, no clutter)
+ *   - line (routes) → vert-500 à 10% d'opacité (filigrane discret)
+ *   - symbol text → vert-700 + halo rose-200 (lisibilité)
  *
  * Le marker est un SVG inline avec le path lucide MapPin (pas iconoir),
- * peint en vert-700 (accent du thème) avec un point inner beige-100.
+ * peint en vert-700 (accent du thème) avec un point inner rose-200.
  * Anchored 'bottom' pour que la pointe du pin soit pile sur les coords.
  *
  * Scroll-zoom désactivé (UX : sinon l'utilisateur scroll la page et
@@ -81,16 +82,19 @@ export default function Map({ className }: MapProps) {
 
     /* Couleurs résolues depuis le thème — suivent automatiquement la palette */
     const ACCENT = resolveCssColor("--color-vert-700");
-    const BG = resolveCssColor("--color-beige-100");
-    // SUBTLE = beige-200, filigrane subtle — bâtiments, eau, parcs, routes.
-    const SUBTLE = resolveCssColor("--color-beige-200");
+    // BG = rose-200 (terrain neutre, aligné sur le fond body)
+    const BG = resolveCssColor("--color-rose-200");
+    // SUBTLE = vert-500 plein, appliqué avec fill-opacity / line-opacity 0.1.
+    // Reproduit l'effet visuel du tag "Naturopathie" (bg-vert-500/10) pour
+    // garder une cohérence palette entre la map et les chips Presentation.
+    const SUBTLE = resolveCssColor("--color-vert-500");
     const LABEL = resolveCssColor("--color-vert-700");
 
     const map = new maplibregl.Map({
       container: containerRef.current,
       style: STYLE_URL,
       center: [site.gps.lng, site.gps.lat],
-      zoom: 15,
+      zoom: 13,
       attributionControl: false,
     });
 
@@ -110,7 +114,8 @@ export default function Map({ className }: MapProps) {
           if (type === "background") {
             map.setPaintProperty(id, "background-color", BG);
           } else if (type === "fill") {
-            // Eau, parcs et bâtiments en beige-300 (filigrane subtil) ;
+            // Eau, parcs et bâtiments en vert-500 à 10% d'opacité
+            // (équivalent du bg-vert-500/10 des chips Presentation) ;
             // tout le reste (terre, landuse résidentiel) fond dans le BG.
             if (
               id.includes("water") ||
@@ -118,12 +123,14 @@ export default function Map({ className }: MapProps) {
               id.includes("building")
             ) {
               map.setPaintProperty(id, "fill-color", SUBTLE);
+              map.setPaintProperty(id, "fill-opacity", 0.1);
             } else {
               map.setPaintProperty(id, "fill-color", BG);
             }
           } else if (type === "line") {
-            // Routes en beige-300 — filigrane discret
+            // Routes en vert-500 à 10% d'opacité — filigrane discret
             map.setPaintProperty(id, "line-color", SUBTLE);
+            map.setPaintProperty(id, "line-opacity", 0.1);
           } else if (type === "symbol" && layer.layout?.["text-field"]) {
             map.setPaintProperty(id, "text-color", LABEL);
             map.setPaintProperty(id, "text-halo-color", BG);
@@ -133,7 +140,7 @@ export default function Map({ className }: MapProps) {
 
       /*
         Marker custom — SVG lucide MapPin inline, peint en vert-700 (ACCENT)
-        avec un cercle inner beige-100 (BG) pour la "boule" du pin.
+        avec un cercle inner rose-200 (BG) pour la "boule" du pin.
         anchor: 'bottom' pour que la pointe du pin tombe pile sur les coords.
       */
       const el = document.createElement("div");

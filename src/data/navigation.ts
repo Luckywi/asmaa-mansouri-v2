@@ -12,7 +12,9 @@ import type { NavLink } from "@/types";
  */
 export const navLinks: NavLink[] = [
   {
-    label: "Qui suis-je",
+    // \u00A0 = espace insécable (typo française : pas de retour à la ligne
+    // entre "je" et "?", et l'espace ne peut pas tomber en fin de ligne).
+    label: "Qui suis-je\u00A0?",
     href: "#presentation",
     futureHref: "/qui-suis-je",
   },
@@ -20,7 +22,7 @@ export const navLinks: NavLink[] = [
     label: "Spécialités",
     href: "#specialites",
     futureHref: "/specialites",
-    // Hub vers les pages SEO par condition (SOPK, endométriose, périménopause,
+    // Hub vers les pages SEO par condition (SOPK, endométriose, préménopause,
     // post-partum, troubles du cycle, fertilité…). Phase 2 : créer la page hub
     // /specialites + une page article par spécialité (/specialites/sopk, etc.).
     // ⚠️ Liste des spécialités à valider avec Asmaa avant publication.

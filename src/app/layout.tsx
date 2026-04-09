@@ -22,7 +22,7 @@ const manrope = Manrope({
 export const metadata: Metadata = {
   title: "Asmaa Mansouri — Naturopathe à Décines-Charpieu",
   description:
-    "Naturopathie féminine à Décines-Charpieu. Consultations, massages Tuina, cupping therapy. Prenez rendez-vous en ligne.",
+    "Naturopathie féminine à Décines-Charpieu. Consultations, massages thérapeutiques Tuina, cupping therapy. Prenez rendez-vous en ligne.",
 };
 
 export default function RootLayout({
@@ -57,7 +57,7 @@ export default function RootLayout({
             "sr-only focus:not-sr-only",
             "focus:fixed focus:top-4 focus:left-4 focus:z-50",
             "focus:px-5 focus:py-3 focus:rounded-md",
-            "focus:bg-vert-700 focus:text-beige-100",
+            "focus:bg-vert-700 focus:text-rose-100",
             "focus:font-body focus:text-[14px] focus:font-medium",
             "focus:outline-2 focus:outline-offset-2 focus:outline-vert-700",
             "focus:shadow-[0_4px_12px_-2px_rgba(11,40,28,0.25)]",

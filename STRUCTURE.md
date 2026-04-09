@@ -120,7 +120,7 @@ Sur toutes les pages sauf la landing — schema.org BreadcrumbList (Phase 2 SEO 
 6. Consultations à distance — section dédiée (Zoom / téléphone)
 7. CTA — Prendre RDV
 
-**Adresse :** Everybodyfit, 15 rue Jean Jaurès, 69330 Meyzieu *(à mettre à jour si changement Décines)*
+**Adresse :** 48 rue Francisco Ferrer, 69150 Décines-Charpieu
 
 **SEO Phase 2 :**
 - `<title>` : Cabinet de naturopathie à Décines-Charpieu — Asmaa Mansouri

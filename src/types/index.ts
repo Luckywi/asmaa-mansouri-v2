@@ -86,7 +86,7 @@ export type SiteData = {
 export type Temoignage = {
   /** Nom (typiquement prénom + initiale, ex: "Marie L.") */
   name: string;
-  /** Description courte du contexte (ex: "SOPK", "Périménopause"). Optionnel. */
+  /** Description courte du contexte (ex: "SOPK", "Préménopause"). Optionnel. */
   role?: string;
   /** Texte du témoignage */
   body: string;

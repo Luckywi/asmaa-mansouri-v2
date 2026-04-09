@@ -11,7 +11,7 @@ type ResalibLogoProps = {
  * ResalibLogo — logo officiel "Resalib" (mark + wordmark).
  *
  * Couleur via `currentColor` : la teinte est appliquée par le parent via
- * une classe Tailwind `text-*` (ex: `text-beige-100`). Aucune couleur
+ * une classe Tailwind `text-*` (ex: `text-rose-100`). Aucune couleur
  * n'est figée dans le SVG → on peut décliner sans dupliquer les paths.
  *
  * Cf. mémoire `feedback_svg_inline_color_no_filter` — jamais de filter

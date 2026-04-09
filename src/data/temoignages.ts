@@ -26,7 +26,7 @@ export const temoignages: Temoignage[] = [
   },
   {
     name: "Sonia B.",
-    role: "Massage Tuina",
+    role: "Massage thérapeutique Tuina",
     body: "J'ai vraiment apprécié le massage tuina, j'ai ressenti tous les bienfaits immédiatement. Cette praticienne aux doigts de fée m'a vraiment détendue. Un accueil chaleureux et un thé après le massage pour terminer en douceur.",
   },
   {
@@ -51,7 +51,7 @@ export const temoignages: Temoignage[] = [
   },
   {
     name: "Nassima B.",
-    role: "Massage Tuina",
+    role: "Massage thérapeutique Tuina",
     body: "Mon meilleur massage, pourtant j'en ai fait des massages. Je souffrais du dos et là c'est véridique, le top du top. Je n'ai plus de douleurs. Merci pour l'accueil et votre énergie.",
   },
   {

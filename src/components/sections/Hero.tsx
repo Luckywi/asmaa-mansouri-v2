@@ -17,9 +17,9 @@ import { site } from "@/data/site";
 const heroTags = [
   "SOPK",
   "Endométriose",
-  "Périménopause",
+  "Préménopause",
   "Stress chronique",
-  "Post-partum",
+  "Troubles digestifs",
   "Cycles irréguliers",
   "Fertilité",
 ] as const;

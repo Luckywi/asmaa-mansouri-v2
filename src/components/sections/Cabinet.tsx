@@ -16,7 +16,7 @@ import { site } from "@/data/site";
  *   - Mobile (< lg) : stack vertical dans cet ordre — titre, adresse,
  *     map (200px de haut), description, 2 CTAs côte à côte.
  *
- * Map themée à la palette beige/vert via `Map.tsx` (composant client
+ * Map themée à la palette rose/vert via `Map.tsx` (composant client
  * MapLibre + override des paint properties au runtime).
  *
  * Deux CTAs : Appeler Asmaa (variant primary, lucide Phone) +

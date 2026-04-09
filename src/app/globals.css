@@ -7,25 +7,26 @@
      Palette rotée autour du 700 = #38512F ≈ oklch(0.393 0.061 137).
      H = 137 (olive forêt chaud, jaune-vert) au lieu de 154 (teal froid).
      Plus chaud, plus identitaire, cohérent avec l'univers santé féminine
-     d'Asmaa et le beige doux du fond. */
+     d'Asmaa et le rose doux du fond. */
   --color-vert-100: oklch(0.90  0.045 137);
   --color-vert-300: oklch(0.66  0.085 137);
   --color-vert-500: oklch(0.52  0.075 137);
   --color-vert-700: oklch(0.393 0.061 137);  /* ≈ #38512F */
   --color-vert-900: oklch(0.20  0.030 137);
 
-  /* Beige — usage complet 100 → 900
-     Vanille crème chaude, palette ancrée sur #F2EAD8 ≈ oklch(0.938 0.024 86).
-     H=86 (jaune chaud, famille cream/vanille organique). Logique du ramp :
-     L décroît régulièrement, C culmine au milieu (0.044 sur le 500) puis
-     redescend aux extrêmes pour rester élégant aux très clairs et très foncés.
-     200 ajouté en pas intermédiaire pour les washes filigrane (Map). */
-  --color-beige-100: oklch(0.938 0.024 86);   /* ≈ #F2EAD8 — fond fix */
-  --color-beige-200: oklch(0.90  0.030 86);
-  --color-beige-300: oklch(0.86  0.034 86);
-  --color-beige-500: oklch(0.72  0.044 86);
-  --color-beige-700: oklch(0.60  0.036 86);
-  --color-beige-900: oklch(0.49  0.030 86);
+  /* Rose — usage complet 100 → 900
+     Palette rose pâle épurée, H=5 (rose poudré tirant légèrement vers le
+     pêche). Stops 100/200/300 sont les seuls réellement utilisés dans le
+     projet (rose-200 = fond body, rose-100 = texte sur bouton primary,
+     rose-300 = wash gradient body + map filigrane).
+     Stops 500-900 conservés en bout de ramp (L/C inchangés, hue 86 → 5)
+     pour garder un système complet si besoin futur. */
+  --color-rose-100: oklch(0.978 0.008 5);
+  --color-rose-200: oklch(0.910 0.035 5);   /* fond fix body */
+  --color-rose-300: oklch(0.820 0.068 5);
+  --color-rose-500: oklch(0.72  0.044 5);
+  --color-rose-700: oklch(0.60  0.036 5);
+  --color-rose-900: oklch(0.49  0.030 5);
 
   /* ─── Typographies ─────────────────────────────────── */
   /* Les variables --font-outfit et --font-manrope sont injectées
@@ -103,12 +104,10 @@
   --header-height: 64px;
 
   /* Fond translucide du verre, par défaut pour les navigateurs qui supportent
-     backdrop-filter (la grande majorité). Élévation subtle au-dessus du
-     beige-100 : L=0.95 (+0.012) pour une légère "remontée" lumineuse,
-     C=0.012 (moitié de la C du bg) pour rester dans la même famille tonale
-     sans amplifier le jaune. C'est le backdrop-blur-xl qui fait le vrai
-     travail de différenciation, pas la couleur du fond — approche iOS. */
-  --glass-bg: oklch(0.95 0.012 86 / 0.65);
+     backdrop-filter (la grande majorité). Aligné sur --color-rose-200 (le
+     fond body), opacité 0.65. L'effet "frost" est porté par backdrop-blur-xl,
+     la couleur du verre suit simplement la teinte du body. */
+  --glass-bg: oklch(0.910 0.035 5 / 0.65);
 }
 
 /* Fallback pour les ~8% d'utilisateurs desktop avec "Réduire la transparence"
@@ -116,7 +115,7 @@
    backdrop-filter. On rend le verre quasi opaque pour garder la lisibilité. */
 @supports not (backdrop-filter: blur(1px)) {
   :root {
-    --glass-bg: oklch(0.938 0.024 86 / 0.95);
+    --glass-bg: oklch(0.910 0.035 5 / 0.95);
   }
 }
 
@@ -140,12 +139,12 @@ html {
 }
 
 body {
-  background-color: var(--color-beige-100);
+  background-color: var(--color-rose-200);
   /* TEMPORAIRE : gradient du bas désactivé pour test visuel.
      Pour restaurer, rajouter après le 1er linear-gradient :
        , linear-gradient(
            to top,
-           color-mix(in oklch, var(--color-vert-300) 27%, transparent) 0%,
+           color-mix(in oklch, var(--color-rose-300) 38%, transparent) 0%,
            transparent 100%
          )
      et passer background-position à `top, bottom` et background-size
@@ -153,7 +152,7 @@ body {
   background-image:
     linear-gradient(
       to bottom,
-      color-mix(in oklch, var(--color-vert-300) 27%, transparent) 0%,
+      color-mix(in oklch, var(--color-rose-300) 38%, transparent) 0%,
       transparent 100%
     );
   background-repeat: no-repeat;
@@ -161,7 +160,7 @@ body {
   background-size: 100% clamp(220px, 38vh, 520px);
   /* background-attachment: fixed → le gradient est attaché au VIEWPORT
      (pas au body), donc il "frame" en permanence la zone visible pendant
-     le scroll. À n'importe quel scroll position, le wash vert reste à 38vh
+     le scroll. À n'importe quel scroll position, le wash rose reste à 38vh
      du haut de l'écran. C'est l'approche "canvas uniforme" : tout le
      site flotte sur ce gradient permanent, aucune section n'a son propre bg
      (cf. DESIGN.md > Principe d'uniformité). */

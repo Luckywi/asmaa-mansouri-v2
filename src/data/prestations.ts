@@ -32,9 +32,9 @@ export const prestations: readonly Prestation[] = [
     icon: HandHeart,
     category: "Massage Tuina",
     tagline: "Médecine traditionnelle chinoise",
-    title: "Massage Tuina",
+    title: "Massage thérapeutique Tuina",
     description:
-      "Le massage Tuina, issu de la médecine traditionnelle chinoise, agit sur les méridiens et les points d'énergie pour libérer les tensions, relancer la circulation et apaiser le système nerveux. Une approche manuelle profonde et structurée, qui complète idéalement le travail naturopathique en agissant directement sur le corps.",
+      "Le massage thérapeutique Tuina, issu de la médecine traditionnelle chinoise, agit sur les méridiens et les points d'énergie pour libérer les tensions, relancer la circulation et apaiser le système nerveux. Une approche manuelle profonde et structurée, qui complète idéalement le travail naturopathique en agissant directement sur le corps.",
     detailHref: "/prestations/massage-tuina",
     ctaLabel: "Comprendre le massage Tuina",
   },
@@ -45,7 +45,7 @@ export const prestations: readonly Prestation[] = [
     tagline: "Ventouses thérapeutiques",
     title: "Cupping Therapy",
     description:
-      "La cupping therapy, ou thérapie par ventouses, utilise la succion pour stimuler la circulation sanguine et lymphatique, dénouer les tensions musculaires profondes et favoriser l'élimination des toxines. Une technique ancestrale qui s'intègre parfaitement à une démarche de soin globale.",
+      "Issue de la médecine traditionnelle chinoise, la cupping therapy consiste à poser des ventouses sur la peau pour relâcher les tensions musculaires, soulager les douleurs chroniques et apaiser les zones de blocage. Une approche douce et ciblée, qui complète naturellement le massage thérapeutique Tuina et le travail naturopathique.",
     detailHref: "/prestations/cupping-therapy",
     ctaLabel: "Découvrir la cupping therapy",
   },

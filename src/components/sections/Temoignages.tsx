@@ -173,7 +173,7 @@ export function Temoignages() {
 
             Solution actuelle : 2 overlays absolus (fadeTop / fadeBottom)
             posés au-dessus des marquees (z-10, pointer-events-none). Chaque
-            overlay réplique EXACTEMENT le bg du body (beige-100 +
+            overlay réplique EXACTEMENT le bg du body (rose-200 +
             linear-gradient wash vert + `background-attachment: fixed`),
             donc il est visuellement indistinguable du body bg derrière.
             Le fade est obtenu via `mask-image` SUR L'OVERLAY (pas sur le
@@ -230,7 +230,7 @@ export function Temoignages() {
             {/*
               Fade overlays (top + bottom) — siblings des marquees, posés
               au-dessus via z-10. Chaque overlay réplique le bg du body
-              (beige-100 + wash vert vert-300 27% en linear-gradient,
+              (rose-200 + wash rose-300 38% en linear-gradient,
               background-attachment: fixed) → visuellement identique au
               fond derrière. Le mask-image fait le fade : opaque côté
               extérieur (top du top-overlay / bottom du bottom-overlay)
@@ -244,9 +244,9 @@ export function Temoignages() {
               aria-hidden="true"
               className="pointer-events-none absolute inset-x-0 top-0 z-10 h-[25%]"
               style={{
-                backgroundColor: "var(--color-beige-100)",
+                backgroundColor: "var(--color-rose-200)",
                 backgroundImage:
-                  "linear-gradient(to bottom, color-mix(in oklch, var(--color-vert-300) 27%, transparent) 0%, transparent 100%)",
+                  "linear-gradient(to bottom, color-mix(in oklch, var(--color-rose-300) 38%, transparent) 0%, transparent 100%)",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "top",
                 backgroundSize: "100% clamp(220px, 38vh, 520px)",
@@ -261,9 +261,9 @@ export function Temoignages() {
               aria-hidden="true"
               className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-[25%]"
               style={{
-                backgroundColor: "var(--color-beige-100)",
+                backgroundColor: "var(--color-rose-200)",
                 backgroundImage:
-                  "linear-gradient(to bottom, color-mix(in oklch, var(--color-vert-300) 27%, transparent) 0%, transparent 100%)",
+                  "linear-gradient(to bottom, color-mix(in oklch, var(--color-rose-300) 38%, transparent) 0%, transparent 100%)",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "top",
                 backgroundSize: "100% clamp(220px, 38vh, 520px)",

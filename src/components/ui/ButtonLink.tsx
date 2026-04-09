@@ -20,7 +20,7 @@ type ButtonLinkProps = {
  * Bouton-lien primitif réutilisable, déclinaison `primary | secondary`.
  *
  * - **primary** : CTA principal (Resalib, "Prendre RDV") — fond vert-700,
- *   texte beige-100. Utilisé Header, Hero, fin de chaque section, Footer.
+ *   texte rose-100. Utilisé Header, Hero, fin de chaque section, Footer.
  * - **secondary** : action secondaire (En savoir plus, lien vers page) —
  *   bordure vert-500, texte vert-700, fond transparent.
  *
@@ -51,7 +51,7 @@ export function ButtonLink({
 
   const variants: Record<ButtonLinkVariant, string> = {
     primary:
-      "text-beige-100 bg-vert-700 hover:bg-vert-900 " +
+      "text-rose-100 bg-vert-700 hover:bg-vert-900 " +
       "shadow-[0_4px_12px_-2px_rgba(11,40,28,0.25),inset_0_1px_0_0_rgba(255,255,255,0.15)]",
     secondary:
       "text-vert-500 bg-transparent border border-vert-500 hover:bg-vert-500/10 hover:text-vert-700",

@@ -26,7 +26,7 @@ import { site } from "@/data/site";
 const specialitesLinks = [
   { label: "SOPK", href: "/#specialites", futureHref: "/specialites/sopk" },
   { label: "Endométriose", href: "/#specialites", futureHref: "/specialites/endometriose" },
-  { label: "Ménopause", href: "/#specialites", futureHref: "/specialites/perimenopause" },
+  { label: "Ménopause", href: "/#specialites", futureHref: "/specialites/premenopause" },
   { label: "Post-partum", href: "/#specialites", futureHref: "/specialites/post-partum" },
   { label: "Fertilité", href: "/#specialites", futureHref: "/specialites/fertilite" },
 ] as const;
@@ -45,7 +45,7 @@ const specialitesLinks = [
  */
 const PRESTATION_FOOTER_LABELS: Record<string, string> = {
   consultation: "Consultations",
-  tuina: "Massage Tuina",
+  tuina: "Massage thérapeutique Tuina",
   cupping: "Cupping Therapy",
   accompagnement: "Accompagnement 3 mois",
 };

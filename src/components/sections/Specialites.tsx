@@ -15,19 +15,19 @@ const specialitesBuckets = [
     icon: Flower2,
     title: "Déséquilibres hormonaux",
     description:
-      "SOPK, endométriose, cycles irréguliers, fertilité. Un accompagnement ciblé pour rééquilibrer naturellement le terrain hormonal et apaiser les symptômes au quotidien.",
+      "SOPK, endométriose, syndrome prémenstruel, cycles irréguliers, fertilité. Un accompagnement ciblé pour rééquilibrer naturellement le terrain hormonal et apaiser les symptômes au quotidien.",
   },
   {
     icon: Wind,
-    title: "Stress chronique & fatigue",
+    title: "Stress & digestion",
     description:
-      "Burn-out, troubles du sommeil, charge mentale, anxiété. Des protocoles personnalisés pour retrouver énergie, sérénité et clarté.",
+      "Stress chronique, troubles digestifs, ballonnements, syndrome de l'intestin irritable, sommeil perturbé. Des protocoles personnalisés pour apaiser le système nerveux et restaurer un confort digestif au quotidien.",
   },
   {
     icon: Sunrise,
     title: "Périodes de transition",
     description:
-      "Post-partum, périménopause, ménopause. Un soutien sur mesure pour traverser sereinement les grandes étapes de la vie de femme.",
+      "Post-partum, préménopause, ménopause. Un soutien sur mesure pour traverser sereinement les grandes étapes de la vie de femme.",
   },
 ] as const;
 
@@ -91,8 +91,8 @@ export function Specialites() {
           <p className="mt-6 font-body text-lg lg:text-xl leading-relaxed text-vert-700">
             Trois grands axes d&apos;accompagnement reliés par une même
             approche holistique : rééquilibrer le terrain hormonal, apaiser
-            le stress chronique et traverser sereinement les transitions de
-            vie.
+            le stress et la digestion, traverser sereinement les transitions
+            de vie.
           </p>
         </div>
 

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Microscope } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 
@@ -5,12 +6,12 @@ import { ButtonLink } from "@/components/ui/ButtonLink";
  * Presentation — section "Qui suis-je" (extrait) sur la landing.
  *
  * Layout :
- *   - Desktop (lg+) : grid 12 cols, photo placeholder à gauche (col-span-5),
+ *   - Desktop (lg+) : grid 12 cols, photo à gauche (col-span-5),
  *     content à droite (col-span-7), gap-16
  *   - Mobile : stack vertical (photo en haut, content en dessous)
  *
  * Pas de background propre : la section est transparente et hérite du
- * body (beige-100 uniforme + le wash vert-300 du gradient si on est dans
+ * body (rose-200 uniforme + le wash rose-300 du gradient si on est dans
  * la zone top/bottom). Règle de cohérence : sur ce projet, AUCUNE section
  * n'a son propre bg, tout reste uniforme avec le body.
  *
@@ -18,9 +19,15 @@ import { ButtonLink } from "@/components/ui/ButtonLink";
  * sur la section, et la section a id="presentation" pour matcher l'anchor
  * du Header (#presentation).
  *
- * Photo : placeholder div (aspect 4/5) en attendant la vraie photo
- * d'Asmaa. Quand la photo arrivera, swap le div par <Image> next/image
- * en gardant la même aspect-ratio et le même radius.
+ * Photo : `<Image>` next/image en mode `fill` dans un parent à aspect-ratio
+ * fixe. Source : `/public/asmaa-mansouri.jpg` (951×1280, ratio ~3/4).
+ * Mobile : aspect-[3/2] (paysage). On crop volontairement bas de la photo
+ * pour réduire la hauteur de moitié vs. ratio natif (la photo plein ratio
+ * prenait trop d'écran sur mobile). `object-top` ancre la tête en haut
+ * du cadre pour que le visage reste pleinement visible malgré le crop.
+ * Desktop : aspect-auto + h-full pour que la colonne photo s'aligne sur
+ * la hauteur de la colonne content (object-cover + object-top gère le
+ * crop si la hauteur du content dépasse le ratio naturel).
  *
  * CTA "Découvrir mon approche" : variant secondary, lien vers la future
  * page /qui-suis-je (Phase 2). En Phase 1 le lien 404era — c'est conforme
@@ -37,16 +44,27 @@ export function Presentation() {
     >
       <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
-          {/* ─── Colonne photo (placeholder) ─────────────── */}
+          {/* ─── Colonne photo ────────────────────────────── */}
           <div className="lg:col-span-5">
-            <div
-              className="aspect-[8/7] lg:aspect-auto lg:h-full w-full rounded-xl border border-vert-900 flex items-center justify-center"
-              role="img"
-              aria-label="Portrait d'Asmaa Mansouri (photo à venir)"
-            >
-              <span className="font-body text-sm text-vert-700">
-                Photo à venir
-              </span>
+            {/*
+              Container avec aspect-ratio fixe + overflow-hidden pour clip
+              le radius. `relative` est requis par next/image en mode `fill`.
+              Mobile : aspect-[3/2] (paysage) — on coupe volontairement
+              le bas de la photo pour réduire la hauteur de moitié vs. le
+              ratio natif 3/4 qui prenait trop de scroll sur mobile.
+              Desktop : aspect-auto + h-full pour épouser la hauteur de
+              la colonne content. `object-top` ancre le visage en haut du
+              cadre dans les deux cas, garantissant qu'il reste visible
+              quel que soit le crop appliqué par object-cover.
+            */}
+            <div className="relative aspect-[3/2] lg:aspect-auto lg:h-full w-full overflow-hidden rounded-xl border border-vert-900">
+              <Image
+                src="/asmaa-mansouri.jpg"
+                alt="Portrait d'Asmaa Mansouri, naturopathe à Décines-Charpieu"
+                fill
+                className="object-cover object-top"
+                sizes="(min-width: 1024px) 42vw, 100vw"
+              />
             </div>
           </div>
 
@@ -72,7 +90,7 @@ export function Presentation() {
               {[
                 "Naturopathie",
                 "Médecine traditionnelle chinoise",
-                "Massage Tuina",
+                "Massage thérapeutique Tuina",
               ].map((label) => (
                 <li
                   key={label}
