@@ -1,26 +1,174 @@
 @import "tailwindcss";
 
+@theme {
+  /* ─── Couleurs ─────────────────────────────────────── */
+
+  /* Vert — usage 100 → 900 (100 ajouté pour les washes très pâles type Map)
+     Palette rotée autour du 700 = #38512F ≈ oklch(0.393 0.061 137).
+     H = 137 (olive forêt chaud, jaune-vert) au lieu de 154 (teal froid).
+     Plus chaud, plus identitaire, cohérent avec l'univers santé féminine
+     d'Asmaa et le beige doux du fond. */
+  --color-vert-100: oklch(0.90  0.045 137);
+  --color-vert-300: oklch(0.66  0.085 137);
+  --color-vert-500: oklch(0.52  0.075 137);
+  --color-vert-700: oklch(0.393 0.061 137);  /* ≈ #38512F */
+  --color-vert-900: oklch(0.20  0.030 137);
+
+  /* Beige — usage complet 100 → 900
+     Vanille crème chaude, palette ancrée sur #F2EAD8 ≈ oklch(0.938 0.024 86).
+     H=86 (jaune chaud, famille cream/vanille organique). Logique du ramp :
+     L décroît régulièrement, C culmine au milieu (0.044 sur le 500) puis
+     redescend aux extrêmes pour rester élégant aux très clairs et très foncés.
+     200 ajouté en pas intermédiaire pour les washes filigrane (Map). */
+  --color-beige-100: oklch(0.938 0.024 86);   /* ≈ #F2EAD8 — fond fix */
+  --color-beige-200: oklch(0.90  0.030 86);
+  --color-beige-300: oklch(0.86  0.034 86);
+  --color-beige-500: oklch(0.72  0.044 86);
+  --color-beige-700: oklch(0.60  0.036 86);
+  --color-beige-900: oklch(0.49  0.030 86);
+
+  /* ─── Typographies ─────────────────────────────────── */
+  /* Les variables --font-outfit et --font-manrope sont injectées
+     par next/font dans layout.tsx, sur la balise <html>. */
+  --font-display: var(--font-outfit), "Outfit", ui-sans-serif, sans-serif;
+  --font-body:    var(--font-manrope), "Manrope", ui-sans-serif, sans-serif;
+
+  /* ─── Radius — système adaptatif ──────────────────── */
+  /* Échelle de 5 tokens pour garder une cohérence visuelle "presque carré"
+     à toutes les échelles. Chaque composant choisit le token correspondant
+     à sa hauteur typique. Le ratio radius/taille reste autour de 10-15%.
+     Voir DESIGN.md > Composants UI pour la spec complète. */
+  --radius-sm:  4px;   /* ≤40px : boutons standards, inputs, tags, badges */
+  --radius-md:  6px;   /* 40-56px : CTA primaires, hover pills nav */
+  --radius-lg:  8px;   /* 56-100px : cards, sections moyennes */
+  --radius-xl:  10px;  /* 100-300px : Header pill, modales, blocs larges */
+  --radius-2xl: 14px;  /* 300px+ : Hero, sections géantes, fullscreen */
+
+}
+
+/* ─── Animations Marquee ──────────────────────────── */
+/* On utilise @utility (Tailwind v4) plutôt qu'un token --animate-* dans
+   @theme parce que la chaîne var() imbriquée
+   (var(--animate-marquee) contenant var(--duration)) peut échouer à
+   résoudre proprement dans certains contextes — la résolution "late
+   binding" ne propage pas toujours bien à travers la substitution.
+   En définissant directement la propriété animation via @utility, on
+   garantit que var(--duration) est résolu à l'élément final, avec un
+   fallback à 40s si la variable n'est pas définie sur l'élément ou un
+   ancêtre.
+
+   var(--gap, 1rem) dans les keyframes : fallback aussi pour la même
+   raison. */
+
+@utility animate-marquee {
+  animation: marquee var(--duration, 40s) linear infinite;
+}
+
+@utility animate-marquee-vertical {
+  animation: marquee-vertical var(--duration, 40s) linear infinite;
+}
+
+/* ─── Keyframes Marquee ─────────────────────────────── */
+/* calc(-100% - var(--gap)) garantit que chaque répétition du contenu
+   enchaîne sans saut visible (boucle continue). Le -100% est relatif
+   à la hauteur (vertical) ou largeur (horizontal) de l'élément. */
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100% - var(--gap, 1rem)));
+  }
+}
+
+@keyframes marquee-vertical {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(calc(-100% - var(--gap, 1rem)));
+  }
+}
+
+/* ─── Custom properties hors @theme ──────────────────── */
+/* Variables utilisées par les éléments "chrome" (Header glass, futurs popovers,
+   tooltips). Hors @theme parce qu'on les override via @supports plus bas — un
+   token @theme est inliné par Tailwind au build et ne peut pas être surchargé
+   à l'exécution par une feature query. */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Hauteur du Header — source de vérité unique. Si elle change, mettre à jour
+     ici et le scroll-padding-top suivra automatiquement. */
+  --header-height: 64px;
+
+  /* Fond translucide du verre, par défaut pour les navigateurs qui supportent
+     backdrop-filter (la grande majorité). Élévation subtle au-dessus du
+     beige-100 : L=0.95 (+0.012) pour une légère "remontée" lumineuse,
+     C=0.012 (moitié de la C du bg) pour rester dans la même famille tonale
+     sans amplifier le jaune. C'est le backdrop-blur-xl qui fait le vrai
+     travail de différenciation, pas la couleur du fond — approche iOS. */
+  --glass-bg: oklch(0.95 0.012 86 / 0.65);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+/* Fallback pour les ~8% d'utilisateurs desktop avec "Réduire la transparence"
+   activée (préférence système macOS / Windows), ou les vieux navigateurs sans
+   backdrop-filter. On rend le verre quasi opaque pour garder la lisibilité. */
+@supports not (backdrop-filter: blur(1px)) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --glass-bg: oklch(0.938 0.024 86 / 0.95);
+  }
+}
+
+/* ─── Reset / défauts globaux ───────────────────────── */
+
+html {
+  /* Compense la hauteur du Header fixed quand on scroll vers une ancre
+     (#presentation, #cabinet, etc.) — sinon la section atterrit sous le
+     Header et reste invisible. 40px de respiration au-dessus. */
+  scroll-padding-top: calc(var(--header-height) + 40px);
+
+  /* Scroll fluide pour les anchor links. Désactivé si l'utilisateur a
+     prefers-reduced-motion (cf. media query plus bas). */
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-beige-100);
+  /* TEMPORAIRE : gradient du bas désactivé pour test visuel.
+     Pour restaurer, rajouter après le 1er linear-gradient :
+       , linear-gradient(
+           to top,
+           color-mix(in oklch, var(--color-vert-300) 27%, transparent) 0%,
+           transparent 100%
+         )
+     et passer background-position à `top, bottom` et background-size
+     à deux valeurs `100% clamp(...), 100% clamp(...)`. */
+  background-image:
+    linear-gradient(
+      to bottom,
+      color-mix(in oklch, var(--color-vert-300) 27%, transparent) 0%,
+      transparent 100%
+    );
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: 100% clamp(220px, 38vh, 520px);
+  /* background-attachment: fixed → le gradient est attaché au VIEWPORT
+     (pas au body), donc il "frame" en permanence la zone visible pendant
+     le scroll. À n'importe quel scroll position, le wash vert reste à 38vh
+     du haut de l'écran. C'est l'approche "canvas uniforme" : tout le
+     site flotte sur ce gradient permanent, aucune section n'a son propre bg
+     (cf. DESIGN.md > Principe d'uniformité). */
+  background-attachment: fixed;
+
+  color: var(--color-vert-700);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
