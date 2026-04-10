@@ -87,9 +87,12 @@ export function Hero() {
                     href="#specialites"
                     className={[
                       "inline-flex items-center px-2.5 py-1 lg:px-3 lg:py-1.5 rounded-md",
-                      "border border-warm-700/20 bg-transparent",
+                      "bg-[var(--glass-bg)]",
+                      "backdrop-blur-xl backdrop-saturate-[1.8]",
+                      "border-[0.5px] border-white/50",
+                      "shadow-[inset_0_1px_0_rgba(255,255,255,0.7),inset_0_-1px_0_rgba(60,30,25,0.04),0_4px_16px_-6px_rgba(60,30,25,0.15)]",
                       "font-body text-xs lg:text-sm font-medium text-warm-700",
-                      "hover:bg-warm-700/5 hover:border-warm-700/35 hover:text-warm-900",
+                      "hover:border-white/70 hover:text-warm-900",
                       "transition-colors duration-200 ease-out",
                       "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700",
                     ].join(" ")}

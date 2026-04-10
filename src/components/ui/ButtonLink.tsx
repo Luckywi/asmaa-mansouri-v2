@@ -51,12 +51,14 @@ export function ButtonLink({
 
   const variants: Record<ButtonLinkVariant, string> = {
     primary:
-      "text-warm-900 bg-accent/50 hover:bg-accent-hover/60 " +
+      "text-warm-100 bg-accent hover:bg-accent-hover " +
+      "shadow-[0_4px_12px_-2px_rgba(40,60,30,0.25),inset_0_1px_0_0_rgba(255,255,255,0.12)]",
+    secondary:
+      "text-warm-700 bg-[var(--glass-bg)] " +
       "backdrop-blur-xl backdrop-saturate-[1.8] " +
       "border-[0.5px] border-white/50 " +
-      "shadow-[inset_0_1px_0_rgba(255,255,255,0.7),inset_0_-1px_0_rgba(60,30,25,0.04),0_4px_12px_-4px_rgba(60,30,25,0.12)]",
-    secondary:
-      "text-warm-700 bg-transparent border border-warm-500 hover:bg-warm-500/10 hover:text-warm-900",
+      "shadow-[inset_0_1px_0_rgba(255,255,255,0.7),inset_0_-1px_0_rgba(60,30,25,0.04),0_4px_16px_-6px_rgba(60,30,25,0.15)] " +
+      "hover:border-white/70 hover:text-warm-900",
   };
 
   const classes = `${base} ${variants[variant]} ${className}`.trim();

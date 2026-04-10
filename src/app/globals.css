@@ -1,16 +1,18 @@
 @import "tailwindcss";
 
 @theme {
-  /* ─── Couleurs — palette sage nature clair (hue ~140) ── */
-  --color-warm-100: oklch(0.98  0.004 143);     /* fond body, surfaces claires */
-  --color-warm-300: oklch(0.95  0.008 142);     /* cards glass, overlays */
-  --color-warm-500: oklch(0.74  0.022 140);     /* décoratif : bordures, icônes */
-  --color-warm-700: oklch(0.52  0.025 140);     /* texte body, secondary btn */
-  --color-warm-900: oklch(0.30  0.020 140);     /* titres, emphasis */
+  /* ─── Fond — beige crème chaud (ref Gamma #F2E4CF) ───── */
+  --color-warm-100: #F2E4CF;                    /* fond body — beige exact Gamma */
+  --color-warm-300: #FEF5E7;                    /* cards glass — crème clair */
+  --color-warm-500: oklch(0.84  0.030 78);      /* bordures — sable */
 
-  /* ─── Accent — beige doux (hue ~70) ─────────────────── */
-  --color-accent:       oklch(0.93  0.015 70);  /* CTA primary bg — beige clair */
-  --color-accent-hover: oklch(0.88  0.025 70);  /* CTA primary hover */
+  /* ─── Texte & accent — olive vert (hue ~140, ref Gamma) */
+  --color-warm-700: oklch(0.40  0.050 140);     /* texte body, icônes — #38512F */
+  --color-warm-900: oklch(0.28  0.045 140);     /* titres, emphasis — #1e3715 */
+
+  /* ─── CTA — olive vert (même famille) ──────────────── */
+  --color-accent:       oklch(0.40  0.050 140); /* bouton primary bg */
+  --color-accent-hover: oklch(0.32  0.045 140); /* bouton primary hover */
 
   /* ─── Typographies ─────────────────────────────────── */
   /* Les variables --font-outfit et --font-manrope sont injectées
@@ -88,12 +90,12 @@
   --header-height: 64px;
 
   /* Fond translucide du verre — aligné sur warm-100, opacité 0.65. */
-  --glass-bg: oklch(0.98 0.004 143 / 0.65);
+  --glass-bg: color-mix(in oklch, #FFF8F0 65%, transparent);
 }
 
 @supports not (backdrop-filter: blur(1px)) {
   :root {
-    --glass-bg: oklch(0.98 0.004 143 / 0.95);
+    --glass-bg: color-mix(in oklch, #FFF8F0 95%, transparent);
   }
 }
 
