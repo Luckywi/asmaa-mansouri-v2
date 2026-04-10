@@ -1,12 +1,16 @@
 @import "tailwindcss";
 
 @theme {
-  /* ─── Couleurs — palette monochrome warm (hue 29.154) ── */
-  --color-warm-100: oklch(0.95  0.01  29.154);  /* fond body, surfaces claires */
-  --color-warm-300: oklch(0.85  0.04  29.154);  /* cards glass, overlays */
-  --color-warm-500: oklch(0.613 0.096 29.154);  /* décoratif : bordures, icônes, accents */
-  --color-warm-700: oklch(0.444 0.07  29.154);  /* texte body, bouton primary bg */
-  --color-warm-900: oklch(0.276 0.043 29.154);  /* titres, emphasis, hover bouton */
+  /* ─── Couleurs — palette sage nature (hue ~140) ──────── */
+  --color-warm-100: oklch(0.965 0.007 143);     /* fond body, surfaces claires */
+  --color-warm-300: oklch(0.905 0.018 142);     /* cards glass, overlays */
+  --color-warm-500: oklch(0.64  0.040 140);     /* décoratif : bordures, icônes */
+  --color-warm-700: oklch(0.44  0.035 140);     /* texte body, secondary btn */
+  --color-warm-900: oklch(0.27  0.022 140);     /* titres, emphasis */
+
+  /* ─── Accent — touche féminine rosée (hue ~15) ──────── */
+  --color-accent:       oklch(0.55  0.10  15);  /* CTA primary bg */
+  --color-accent-hover: oklch(0.45  0.09  15);  /* CTA primary hover */
 
   /* ─── Typographies ─────────────────────────────────── */
   /* Les variables --font-outfit et --font-manrope sont injectées
@@ -84,12 +88,12 @@
   --header-height: 64px;
 
   /* Fond translucide du verre — aligné sur warm-100, opacité 0.65. */
-  --glass-bg: oklch(0.95 0.01 29.154 / 0.65);
+  --glass-bg: oklch(0.965 0.007 143 / 0.65);
 }
 
 @supports not (backdrop-filter: blur(1px)) {
   :root {
-    --glass-bg: oklch(0.95 0.01 29.154 / 0.95);
+    --glass-bg: oklch(0.965 0.007 143 / 0.95);
   }
 }
 

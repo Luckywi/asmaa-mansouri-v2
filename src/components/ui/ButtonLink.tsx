@@ -51,8 +51,8 @@ export function ButtonLink({
 
   const variants: Record<ButtonLinkVariant, string> = {
     primary:
-      "text-warm-100 bg-warm-700 hover:bg-warm-900 " +
-      "shadow-[0_4px_12px_-2px_rgba(60,30,25,0.25),inset_0_1px_0_0_rgba(255,255,255,0.15)]",
+      "text-warm-100 bg-accent hover:bg-accent-hover " +
+      "shadow-[0_4px_12px_-2px_rgba(80,30,40,0.25),inset_0_1px_0_0_rgba(255,255,255,0.15)]",
     secondary:
       "text-warm-700 bg-transparent border border-warm-500 hover:bg-warm-500/10 hover:text-warm-900",
   };
