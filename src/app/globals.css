@@ -8,9 +8,9 @@
   --color-warm-700: oklch(0.44  0.035 140);     /* texte body, secondary btn */
   --color-warm-900: oklch(0.27  0.022 140);     /* titres, emphasis */
 
-  /* ─── Accent — touche féminine rosée (hue ~15) ──────── */
-  --color-accent:       oklch(0.55  0.10  15);  /* CTA primary bg */
-  --color-accent-hover: oklch(0.45  0.09  15);  /* CTA primary hover */
+  /* ─── Accent — voile rosé mat, même douceur que le bg ── */
+  --color-accent:       oklch(0.945 0.010 18);  /* CTA primary bg */
+  --color-accent-hover: oklch(0.91  0.018 18);  /* CTA primary hover */
 
   /* ─── Typographies ─────────────────────────────────── */
   /* Les variables --font-outfit et --font-manrope sont injectées
