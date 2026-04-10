@@ -61,7 +61,7 @@ export function HeaderMobile() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25, ease: "easeInOut" }}
-            className="fixed inset-0 -z-10 bg-vert-900/15 backdrop-blur-md"
+            className="fixed inset-0 -z-10 bg-warm-900/15 backdrop-blur-md"
             onClick={closeMenu}
             aria-hidden
           />
@@ -80,7 +80,7 @@ export function HeaderMobile() {
           "bg-[var(--glass-bg)]",
           "backdrop-blur-xl backdrop-saturate-[1.8]",
           "border-[0.5px] border-white/50",
-          "shadow-[inset_0_1px_0_rgba(255,255,255,0.7),inset_0_-1px_0_rgba(11,40,28,0.04),0_12px_32px_-10px_rgba(11,40,28,0.20),0_2px_6px_-2px_rgba(11,40,28,0.10)]",
+          "shadow-[inset_0_1px_0_rgba(255,255,255,0.7),inset_0_-1px_0_rgba(60,30,25,0.04),0_12px_32px_-10px_rgba(60,30,25,0.20),0_2px_6px_-2px_rgba(60,30,25,0.10)]",
         ].join(" ")}
       >
         {/* ─── Top bar (toujours visible) ──────────────── */}
@@ -90,15 +90,15 @@ export function HeaderMobile() {
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label={menuOpen ? "Fermer le menu" : "Ouvrir le menu"}
             aria-expanded={menuOpen}
-            className="flex h-10 w-10 flex-col items-center justify-center gap-[5px] rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vert-700"
+            className="flex h-10 w-10 flex-col items-center justify-center gap-[5px] rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700"
           >
             <span
-              className={`block h-[2px] w-5 bg-vert-900 transition-all duration-300 ease-out ${
+              className={`block h-[2px] w-5 bg-warm-900 transition-all duration-300 ease-out ${
                 menuOpen ? "translate-y-[3.5px] rotate-45" : ""
               }`}
             />
             <span
-              className={`block h-[2px] w-5 bg-vert-900 transition-all duration-300 ease-out ${
+              className={`block h-[2px] w-5 bg-warm-900 transition-all duration-300 ease-out ${
                 menuOpen ? "-translate-y-[3.5px] -rotate-45" : ""
               }`}
             />
@@ -109,7 +109,7 @@ export function HeaderMobile() {
             href="/"
             aria-label={`${site.name}, retour à l'accueil`}
             onClick={closeMenu}
-            className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center h-10 px-3 rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vert-700"
+            className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center h-10 px-3 rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700"
           >
             <Logo />
           </Link>
@@ -139,7 +139,7 @@ export function HeaderMobile() {
                       <Link
                         href={link.href}
                         onClick={closeMenu}
-                        className="block py-4 font-display text-[20px] font-medium tracking-tight text-vert-900 transition-colors duration-200 hover:text-vert-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vert-700 rounded-md"
+                        className="block py-4 font-display text-[20px] font-medium tracking-tight text-warm-900 transition-colors duration-200 hover:text-warm-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700 rounded-md"
                       >
                         {link.label}
                       </Link>

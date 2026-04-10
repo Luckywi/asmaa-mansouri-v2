@@ -62,11 +62,11 @@ export function Hero() {
         <div className="text-center">
           <h1
             id="hero-titre"
-            className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.02em] leading-[1.05] text-vert-900 max-w-4xl mx-auto"
+            className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.02em] leading-[1.05] text-warm-900 max-w-4xl mx-auto"
           >
             La naturopathie au service de votre santé de femme.
           </h1>
-          <p className="mt-6 max-w-2xl mx-auto font-body text-lg md:text-xl leading-relaxed text-vert-700">
+          <p className="mt-6 max-w-2xl mx-auto font-body text-lg md:text-xl leading-relaxed text-warm-700">
             Asmaa Mansouri — Naturopathe et médecine traditionnelle chinoise à
             Décines-Charpieu.
           </p>
@@ -87,11 +87,11 @@ export function Hero() {
                     href="#specialites"
                     className={[
                       "inline-flex items-center px-2.5 py-1 lg:px-3 lg:py-1.5 rounded-md",
-                      "border border-vert-700/20 bg-transparent",
-                      "font-body text-xs lg:text-sm font-medium text-vert-700",
-                      "hover:bg-vert-700/5 hover:border-vert-700/35 hover:text-vert-900",
+                      "border border-warm-700/20 bg-transparent",
+                      "font-body text-xs lg:text-sm font-medium text-warm-700",
+                      "hover:bg-warm-700/5 hover:border-warm-700/35 hover:text-warm-900",
                       "transition-colors duration-200 ease-out",
-                      "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vert-700",
+                      "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700",
                     ].join(" ")}
                   >
                     {tag}
@@ -107,7 +107,7 @@ export function Hero() {
             Desktop : order-2 = colonne centrale
           */}
           <div className="lg:col-span-4 order-1 lg:order-2 flex justify-center">
-            <LogoMark className="w-32 h-32 sm:w-40 sm:h-40 md:w-72 md:h-72 lg:w-[294px] lg:h-[294px] text-vert-700" />
+            <LogoMark className="w-32 h-32 sm:w-40 sm:h-40 md:w-72 md:h-72 lg:w-[294px] lg:h-[294px] text-warm-700" />
           </div>
 
           {/* ── Colonne 3 (lg) : Avis Resalib + CTAs ── */}
@@ -121,7 +121,7 @@ export function Hero() {
               Anchor natif (pas ButtonLink) parce que c'est un lien texte
               avec affordance discrète, pas un CTA. Les étoiles sont
               aria-hidden : seul le texte porte l'info pour les lecteurs
-              d'écran. Étoiles en vert-700 pour rester sur la palette
+              d'écran. Étoiles en warm-700 pour rester sur la palette
               (pas de gold off-brand).
             */}
             <a
@@ -131,7 +131,7 @@ export function Hero() {
               className={[
                 "inline-flex items-center gap-3 lg:gap-4 rounded-md px-2 py-1 -mx-2 -my-1",
                 "transition-colors duration-200 ease-out group",
-                "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vert-700",
+                "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700",
               ].join(" ")}
             >
               <span
@@ -141,7 +141,7 @@ export function Hero() {
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star
                     key={i}
-                    className="w-[18px] h-[18px] lg:w-5 lg:h-5 text-vert-700"
+                    className="w-[18px] h-[18px] lg:w-5 lg:h-5 text-warm-700"
                     fill="currentColor"
                     stroke="none"
                   />
@@ -150,9 +150,9 @@ export function Hero() {
               <span
                 className={[
                   "font-body text-sm lg:text-base font-medium",
-                  "text-vert-700 group-hover:text-vert-900",
+                  "text-warm-700 group-hover:text-warm-900",
                   "underline underline-offset-4 decoration-1",
-                  "decoration-vert-700/40 group-hover:decoration-vert-900",
+                  "decoration-warm-700/40 group-hover:decoration-warm-900",
                   "transition-colors duration-200 ease-out",
                 ].join(" ")}
               >

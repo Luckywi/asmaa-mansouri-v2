@@ -10,7 +10,7 @@ type LogoMarkProps = {
  * Hero, footer, favicon, écrans de chargement, etc.
  *
  * Couleur via `currentColor` : la teinte est appliquée par le parent
- * via une classe Tailwind `text-*` (ex: `text-vert-700`). Aucune
+ * via une classe Tailwind `text-*` (ex: `text-warm-700`). Aucune
  * couleur n'est figée dans le SVG → on peut décliner sans dupliquer
  * le path. Cf. mémoire `feedback_svg_inline_color_no_filter` —
  * jamais de filter CSS pour teinter, on passe par la couleur héritée.

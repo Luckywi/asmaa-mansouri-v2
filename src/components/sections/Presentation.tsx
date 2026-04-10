@@ -11,7 +11,7 @@ import { ButtonLink } from "@/components/ui/ButtonLink";
  *   - Mobile : stack vertical (photo en haut, content en dessous)
  *
  * Pas de background propre : la section est transparente et hérite du
- * body (rose-200 uniforme + le wash rose-300 du gradient si on est dans
+ * body (warm-100 uniforme + le wash warm-300 du gradient si on est dans
  * la zone top/bottom). Règle de cohérence : sur ce projet, AUCUNE section
  * n'a son propre bg, tout reste uniforme avec le body.
  *
@@ -57,7 +57,7 @@ export function Presentation() {
               cadre dans les deux cas, garantissant qu'il reste visible
               quel que soit le crop appliqué par object-cover.
             */}
-            <div className="relative aspect-[3/2] lg:aspect-auto lg:h-full w-full overflow-hidden rounded-xl border border-vert-900">
+            <div className="relative aspect-[3/2] lg:aspect-auto lg:h-full w-full overflow-hidden rounded-xl border border-warm-900">
               <Image
                 src="/asmaa-mansouri.jpg"
                 alt="Portrait d'Asmaa Mansouri, naturopathe à Décines-Charpieu"
@@ -75,11 +75,11 @@ export function Presentation() {
             {/* H2 + sous-titre mission */}
             <h2
               id="presentation-titre"
-              className="font-display text-4xl lg:text-5xl font-medium tracking-[-0.02em] leading-[1.1] text-vert-900"
+              className="font-display text-4xl lg:text-5xl font-medium tracking-[-0.02em] leading-[1.1] text-warm-900"
             >
               Asmaa Mansouri
             </h2>
-            <p className="font-display text-xl lg:text-2xl font-light tracking-tight text-vert-700">
+            <p className="font-display text-xl lg:text-2xl font-light tracking-tight text-warm-700">
               Au service de la santé des femmes
             </p>
 
@@ -94,7 +94,7 @@ export function Presentation() {
               ].map((label) => (
                 <li
                   key={label}
-                  className="rounded-md bg-vert-500/10 px-2 lg:px-3 py-1 lg:py-1.5 font-body text-xs lg:text-sm text-vert-700"
+                  className="rounded-md bg-warm-500/10 px-2 lg:px-3 py-1 lg:py-1.5 font-body text-xs lg:text-sm text-warm-700"
                 >
                   {label}
                 </li>
@@ -102,7 +102,7 @@ export function Presentation() {
             </ul>
 
             {/* Description courte */}
-            <p className="mt-8 max-w-2xl font-body text-lg leading-relaxed text-vert-700">
+            <p className="mt-8 max-w-2xl font-body text-lg leading-relaxed text-warm-700">
               Spécialisée en santé féminine, j&apos;accompagne les femmes
               confrontées aux déséquilibres hormonaux, troubles du cycle et
               grandes transitions de vie. Mon approche combine naturopathie,

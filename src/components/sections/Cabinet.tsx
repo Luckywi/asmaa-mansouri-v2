@@ -39,14 +39,14 @@ export function Cabinet() {
           <div className="flex-1">
             <h2
               id="cabinet-titre"
-              className="font-display text-4xl lg:text-5xl font-medium tracking-[-0.02em] leading-[1.1] text-vert-900"
+              className="font-display text-4xl lg:text-5xl font-medium tracking-[-0.02em] leading-[1.1] text-warm-900"
             >
               Mon cabinet
             </h2>
-            <p className="font-display text-xl lg:text-2xl font-light tracking-tight text-vert-700">
+            <p className="font-display text-xl lg:text-2xl font-light tracking-tight text-warm-700">
               {site.address.full}
             </p>
-            <p className="mt-6 font-body text-lg leading-relaxed text-vert-700 max-w-xl">
+            <p className="mt-6 font-body text-lg leading-relaxed text-warm-700 max-w-xl">
               Je vous accueille dans mon cabinet à Décines-Charpieu, à quelques
               minutes de Lyon. Les consultations se font en cabinet ou à
               distance par visio, selon ce qui vous convient le mieux.
@@ -75,7 +75,7 @@ export function Cabinet() {
           </div>
 
           {/* Map */}
-          <div className="w-[480px] h-[320px] shrink-0 rounded-md overflow-hidden border border-vert-700/15">
+          <div className="w-[480px] h-[320px] shrink-0 rounded-md overflow-hidden border border-warm-700/15">
             <Map className="w-full h-full" />
           </div>
         </div>
@@ -85,20 +85,20 @@ export function Cabinet() {
           <div>
             <h2
               id="cabinet-titre-mobile"
-              className="font-display text-4xl font-medium tracking-[-0.02em] leading-[1.1] text-vert-900"
+              className="font-display text-4xl font-medium tracking-[-0.02em] leading-[1.1] text-warm-900"
             >
               Mon cabinet
             </h2>
-            <p className="font-display text-xl lg:text-2xl font-light tracking-tight text-vert-700">
+            <p className="font-display text-xl lg:text-2xl font-light tracking-tight text-warm-700">
               {site.address.full}
             </p>
           </div>
 
-          <div className="w-full h-[220px] rounded-md overflow-hidden border border-vert-700/15">
+          <div className="w-full h-[220px] rounded-md overflow-hidden border border-warm-700/15">
             <Map className="w-full h-full" />
           </div>
 
-          <p className="font-body text-base leading-relaxed text-vert-700">
+          <p className="font-body text-base leading-relaxed text-warm-700">
             Je vous accueille dans mon cabinet à Décines-Charpieu, à quelques
             minutes de Lyon. Les consultations se font en cabinet ou à distance
             par visio, selon ce qui vous convient le mieux.

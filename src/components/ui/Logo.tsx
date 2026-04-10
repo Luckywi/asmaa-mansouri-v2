@@ -21,13 +21,13 @@ import { site } from "@/data/site";
 export function Logo() {
   return (
     <span className="inline-flex flex-col items-center leading-none whitespace-nowrap">
-      {/* Titre — font-display, vert-900, weight 500 */}
-      <span className="font-display text-[17px] font-medium tracking-[-0.01em] text-vert-900">
+      {/* Titre — font-display, warm-900, weight 500 */}
+      <span className="font-display text-[17px] font-medium tracking-[-0.01em] text-warm-900">
         {site.name}
       </span>
 
-      {/* Sous-titre — font-display, vert-700, weight 300 (light), uppercase, tracking large */}
-      <span className="font-display text-[10px] font-light uppercase tracking-[0.18em] text-vert-700 mt-0.5">
+      {/* Sous-titre — font-display, warm-700, weight 300 (light), uppercase, tracking large */}
+      <span className="font-display text-[10px] font-light uppercase tracking-[0.18em] text-warm-700 mt-0.5">
         Naturopathe
       </span>
     </span>

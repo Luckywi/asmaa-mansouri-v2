@@ -38,11 +38,11 @@ export function Prestations() {
         <div className="text-center max-w-3xl mx-auto">
           <h2
             id="prestations-titre"
-            className="font-display text-4xl lg:text-5xl font-medium tracking-[-0.02em] leading-[1.1] text-vert-900"
+            className="font-display text-4xl lg:text-5xl font-medium tracking-[-0.02em] leading-[1.1] text-warm-900"
           >
             Mes prestations
           </h2>
-          <p className="mt-6 font-body text-lg lg:text-xl leading-relaxed text-vert-700">
+          <p className="mt-6 font-body text-lg lg:text-xl leading-relaxed text-warm-700">
             Consultations, massages Tuina, cupping therapy et accompagnement
             intensif. Chaque pratique est adaptée à votre histoire et à vos
             besoins du moment.

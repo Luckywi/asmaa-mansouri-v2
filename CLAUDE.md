@@ -42,7 +42,7 @@ Chaque décision, chaque composant, chaque ligne de code doit servir ces 4 pilie
 | `STRUCTURE.md` | Navigation, arborescence, contenu par page | ⚠️ En cours |
 | `CLAUDE.md` | Fichier directeur — stack, principes, méthodologie | ✅ Ce fichier |
 
-**IMPORTANT :** DESIGN.md est figé sur la palette beige/vert validée. Toute nouvelle page suit strictement les conventions couleurs/radius/typo qui y sont décrites. La source de vérité technique reste `src/app/globals.css`.
+**IMPORTANT :** Ce repo expérimente une palette monochrome `warm` (terracotta hue 29.154). La source de vérité technique reste `src/app/globals.css`.
 
 STRUCTURE.md évolue au fur et à mesure. Ne pas se bloquer si un élément n'est pas encore défini — avancer, proposer, itérer.
 
@@ -52,17 +52,12 @@ STRUCTURE.md évolue au fur et à mesure. Ne pas se bloquer si un élément n'es
 
 ```css
 @theme {
-  /* Vert — usage 500 → 900 uniquement */
-  --color-vert-500: oklch(0.414 0.058 154.34);
-  --color-vert-700: oklch(0.232 0.032 154.34);
-  --color-vert-900: oklch(0.05  0.007 154.34);
-
-  /* Beige — usage complet */
-  --color-beige-100: oklch(0.972 0.006 90);
-  --color-beige-300: oklch(0.888 0.022 90);
-  --color-beige-500: oklch(0.729 0.036 84.593);
-  --color-beige-700: oklch(0.619 0.03  84.593);
-  --color-beige-900: oklch(0.509 0.025 84.593);
+  /* Warm — palette monochrome terracotta (hue 29.154) */
+  --color-warm-100: oklch(0.95  0.01  29.154);  /* fond body, surfaces claires */
+  --color-warm-300: oklch(0.85  0.04  29.154);  /* cards glass, overlays */
+  --color-warm-500: oklch(0.613 0.096 29.154);  /* décoratif : bordures, icônes */
+  --color-warm-700: oklch(0.444 0.07  29.154);  /* texte body, bouton primary bg */
+  --color-warm-900: oklch(0.276 0.043 29.154);  /* titres, emphasis */
 
   /* Typographies */
   --font-display: 'Outfit', sans-serif;   /* Titres H1/H2/H3 */

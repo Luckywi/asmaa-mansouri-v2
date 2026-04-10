@@ -19,10 +19,10 @@ type ButtonLinkProps = {
 /**
  * Bouton-lien primitif réutilisable, déclinaison `primary | secondary`.
  *
- * - **primary** : CTA principal (Resalib, "Prendre RDV") — fond vert-700,
- *   texte rose-100. Utilisé Header, Hero, fin de chaque section, Footer.
+ * - **primary** : CTA principal (Resalib, "Prendre RDV") — fond warm-700,
+ *   texte warm-100. Utilisé Header, Hero, fin de chaque section, Footer.
  * - **secondary** : action secondaire (En savoir plus, lien vers page) —
- *   bordure vert-500, texte vert-700, fond transparent.
+ *   bordure warm-500, texte warm-700, fond transparent.
  *
  * Toutes les CTA du site doivent passer par ce composant pour garantir
  * la cohérence visuelle (radius, padding, transitions, focus rings,
@@ -47,14 +47,14 @@ export function ButtonLink({
     "inline-flex items-center justify-center gap-1.5 h-10 px-5 rounded-md " +
     "font-body text-[14px] font-medium tracking-[0.01em] whitespace-nowrap " +
     "transition-colors duration-150 ease-out " +
-    "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vert-700";
+    "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700";
 
   const variants: Record<ButtonLinkVariant, string> = {
     primary:
-      "text-rose-100 bg-vert-700 hover:bg-vert-900 " +
-      "shadow-[0_4px_12px_-2px_rgba(11,40,28,0.25),inset_0_1px_0_0_rgba(255,255,255,0.15)]",
+      "text-warm-100 bg-warm-700 hover:bg-warm-900 " +
+      "shadow-[0_4px_12px_-2px_rgba(60,30,25,0.25),inset_0_1px_0_0_rgba(255,255,255,0.15)]",
     secondary:
-      "text-vert-500 bg-transparent border border-vert-500 hover:bg-vert-500/10 hover:text-vert-700",
+      "text-warm-700 bg-transparent border border-warm-500 hover:bg-warm-500/10 hover:text-warm-900",
   };
 
   const classes = `${base} ${variants[variant]} ${className}`.trim();

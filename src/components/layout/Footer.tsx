@@ -78,8 +78,8 @@ function FooterSection({
 }) {
   return (
     <div>
-      <div className="h-px bg-vert-700/15 lg:hidden" />
-      <h3 className="mt-4 lg:mt-0 font-display text-xs font-medium uppercase tracking-[0.18em] text-vert-900">
+      <div className="h-px bg-warm-700/15 lg:hidden" />
+      <h3 className="mt-4 lg:mt-0 font-display text-xs font-medium uppercase tracking-[0.18em] text-warm-900">
         {title}
       </h3>
       <nav className="mt-4 flex flex-col gap-2.5 pb-4 lg:pb-0">{children}</nav>
@@ -105,7 +105,7 @@ function FooterLink({
   return (
     <Link
       href={href}
-      className="font-body text-sm text-vert-700/80 transition-colors duration-150 ease-out hover:text-vert-900"
+      className="font-body text-sm text-warm-700/80 transition-colors duration-150 ease-out hover:text-warm-900"
     >
       {children}
     </Link>
@@ -115,7 +115,7 @@ function FooterLink({
 /**
  * Footer — composant chrome OS-level, transparent (pas de glass).
  *
- * Architecture en 4 zones, séparées par des hairlines `bg-vert-700/15` :
+ * Architecture en 4 zones, séparées par des hairlines `bg-warm-700/15` :
  *
  *   1. Brand block centré : LogoMark (glyphe) + Logo (wordmark stacké) + baseline
  *   2. Contact line centrée : téléphone · email · Instagram (séparés par middots)
@@ -127,7 +127,7 @@ function FooterLink({
  * **Background — transparent, hérite du body :**
  * Conforme à la règle d'uniformité du projet (`project_no_section_bg_uniform`).
  * Pas de glass effect, pas de bg propre, pas de backdrop-filter. Le footer est
- * une zone du body comme les sections, mais marquée par un hairline `vert-700/15`
+ * une zone du body comme les sections, mais marquée par un hairline `warm-700/15`
  * en bordure top pour donner un mini repère visuel "fin de page" sans casser
  * l'uniformité.
  *
@@ -155,8 +155,8 @@ export function Footer() {
       className={[
         "relative overflow-hidden",
         // Hairline top — mini repère "fin de page", aligné sur les hairlines
-        // internes du footer (vert-700/15). Pas de glass, pas de bg.
-        "border-t border-vert-700/15",
+        // internes du footer (warm-700/15). Pas de glass, pas de bg.
+        "border-t border-warm-700/15",
         // Padding interne
         "pt-16 pb-10",
       ].join(" ")}
@@ -164,7 +164,7 @@ export function Footer() {
       {/* Watermark LogoMark — décoratif, masqué par overflow-hidden du parent */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -right-24 -bottom-24 h-[420px] w-[420px] text-vert-700 opacity-[0.08]"
+        className="pointer-events-none absolute -right-24 -bottom-24 h-[420px] w-[420px] text-warm-700 opacity-[0.08]"
       >
         <LogoMark className="w-full h-full" />
       </div>
@@ -178,38 +178,38 @@ export function Footer() {
             className={[
               "inline-flex items-center gap-3",
               "rounded-md p-2",
-              "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vert-700",
+              "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700",
             ].join(" ")}
           >
             {/* Glyphe SVG (LogoMark) à gauche, wordmark texte (Logo) à droite —
                 forme un logo lockup horizontal. Les deux composants existent
                 déjà et sont réutilisés tels quels. */}
-            <LogoMark className="w-10 h-10 text-vert-900" />
+            <LogoMark className="w-10 h-10 text-warm-900" />
             <Logo />
           </Link>
 
-          <p className="mt-5 max-w-md font-body text-sm leading-relaxed text-vert-700">
+          <p className="mt-5 max-w-md font-body text-sm leading-relaxed text-warm-700">
             {site.baseline}
           </p>
         </div>
 
         {/* Hairline 1 — sous brand block */}
-        <div className="mt-10 h-px bg-vert-700/15" />
+        <div className="mt-10 h-px bg-warm-700/15" />
 
         {/* ─── 2. Contact line ────────────────────────────── */}
         <div className="mt-6 flex flex-col items-center justify-center gap-2 lg:flex-row lg:gap-3">
           <a
             href={site.phoneHref}
-            className="font-body text-sm text-vert-700/80 transition-colors duration-150 ease-out hover:text-vert-900"
+            className="font-body text-sm text-warm-700/80 transition-colors duration-150 ease-out hover:text-warm-900"
           >
             {site.phone}
           </a>
-          <span aria-hidden="true" className="hidden text-vert-700/30 lg:inline">
+          <span aria-hidden="true" className="hidden text-warm-700/30 lg:inline">
             ·
           </span>
           <a
             href={`mailto:${site.email}`}
-            className="font-body text-sm text-vert-700/80 transition-colors duration-150 ease-out hover:text-vert-900"
+            className="font-body text-sm text-warm-700/80 transition-colors duration-150 ease-out hover:text-warm-900"
           >
             {site.email}
           </a>
@@ -255,7 +255,7 @@ export function Footer() {
         <div className="hidden lg:block">
           {/* Hairline 2 — sépare contact line des colonnes nav (desktop only,
               en mobile chaque FooterSection a déjà sa hairline interne) */}
-          <div className="mt-10 h-px bg-vert-700/15" />
+          <div className="mt-10 h-px bg-warm-700/15" />
 
           <div className="mx-auto mt-10 grid max-w-4xl grid-cols-4 gap-10">
             <FooterSection title="Navigation">
@@ -294,10 +294,10 @@ export function Footer() {
         </div>
 
         {/* Hairline 3 — sépare colonnes du copyright */}
-        <div className="mt-12 h-px bg-vert-700/15" />
+        <div className="mt-12 h-px bg-warm-700/15" />
 
         {/* ─── 4. Copyright centré ─────────────────────────── */}
-        <p className="mt-6 text-center font-body text-xs text-vert-700/60">
+        <p className="mt-6 text-center font-body text-xs text-warm-700/60">
           &copy; {new Date().getFullYear()} {site.name} — Naturopathe à Décines-Charpieu
         </p>
       </div>

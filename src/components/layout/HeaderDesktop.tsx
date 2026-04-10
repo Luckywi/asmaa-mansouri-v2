@@ -63,7 +63,7 @@ export function HeaderDesktop() {
           // 2. inset bottom : retombée légèrement teintée
           // 3. drop long doux teinté vert
           // 4. micro-contact shadow pour ancrer visuellement
-          "shadow-[inset_0_1px_0_rgba(255,255,255,0.7),inset_0_-1px_0_rgba(11,40,28,0.04),0_12px_32px_-10px_rgba(11,40,28,0.20),0_2px_6px_-2px_rgba(11,40,28,0.10)]",
+          "shadow-[inset_0_1px_0_rgba(255,255,255,0.7),inset_0_-1px_0_rgba(60,30,25,0.04),0_12px_32px_-10px_rgba(60,30,25,0.20),0_2px_6px_-2px_rgba(60,30,25,0.10)]",
         ].join(" ")}
       >
         {/* Logo — wrappé dans un Link "retour accueil" qui porte le aria-label */}
@@ -74,7 +74,7 @@ export function HeaderDesktop() {
             // Pas de hover pill (le logo n'est pas un lien interactif décoratif,
             // c'est juste un retour accueil). On garde le focus ring pour l'a11y.
             "flex items-center justify-center h-10 px-3 rounded-md",
-            "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vert-700",
+            "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700",
           ].join(" ")}
         >
           <Logo />
@@ -89,9 +89,9 @@ export function HeaderDesktop() {
                 className={[
                   "inline-flex items-center h-10 px-4 rounded-md whitespace-nowrap",
                   "font-body text-[14px] font-medium tracking-[0.02em]",
-                  "text-vert-700 hover:text-vert-900 hover:bg-vert-500/8",
+                  "text-warm-700 hover:text-warm-900 hover:bg-warm-500/8",
                   "transition-colors duration-200 ease-out",
-                  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vert-700",
+                  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700",
                 ].join(" ")}
               >
                 {link.label}

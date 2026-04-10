@@ -19,7 +19,7 @@ const secondColumn = temoignages.slice(halfPoint);
 /**
  * ReviewCard — une carte témoignage individuelle.
  *
- * Layout : avatar initiales (cercle vert-500/15) + nom + role en header,
+ * Layout : avatar initiales (cercle warm-500/15) + nom + role en header,
  * puis citation en dessous. Glass effect identique aux cards Specialites
  * pour cohérence visuelle.
  *
@@ -55,7 +55,7 @@ function ReviewCard({ name, role, body }: Temoignage) {
         "bg-[var(--glass-bg)]",
         "backdrop-blur-xl backdrop-saturate-[1.8]",
         "border-[0.5px] border-white/50",
-        "shadow-[inset_0_1px_0_rgba(255,255,255,0.7),inset_0_-1px_0_rgba(11,40,28,0.04),0_4px_16px_-6px_rgba(11,40,28,0.15)]",
+        "shadow-[inset_0_1px_0_rgba(255,255,255,0.7),inset_0_-1px_0_rgba(60,30,25,0.04),0_4px_16px_-6px_rgba(60,30,25,0.15)]",
       ].join(" ")}
     >
       {/* Header card : avatar initiale + nom + role */}
@@ -63,22 +63,22 @@ function ReviewCard({ name, role, body }: Temoignage) {
         {/* Avatar initiale (placeholder en attendant vraies photos clientes) */}
         <div
           aria-hidden="true"
-          className="w-9 h-9 rounded-full bg-vert-500/15 flex items-center justify-center font-display text-sm font-medium text-vert-700 shrink-0"
+          className="w-9 h-9 rounded-full bg-warm-500/15 flex items-center justify-center font-display text-sm font-medium text-warm-700 shrink-0"
         >
           {name.charAt(0)}
         </div>
         <div className="flex flex-col leading-tight">
-          <figcaption className="font-display text-sm font-medium text-vert-900">
+          <figcaption className="font-display text-sm font-medium text-warm-900">
             {name}
           </figcaption>
           {role && (
-            <p className="font-body text-xs text-vert-700/60 mt-0.5">{role}</p>
+            <p className="font-body text-xs text-warm-700/60 mt-0.5">{role}</p>
           )}
         </div>
       </div>
 
       {/* Citation */}
-      <blockquote className="font-body text-sm leading-relaxed text-vert-700">
+      <blockquote className="font-body text-sm leading-relaxed text-warm-700">
         {body}
       </blockquote>
     </figure>
@@ -117,12 +117,12 @@ function ReviewCard({ name, role, body }: Temoignage) {
  *
  *   Hiérarchie typo du bloc texte (pattern emprunté à Presentation
  *   "Asmaa Mansouri / Au service de la santé des femmes") :
- *     - H2 : font-display, text-4xl/5xl, medium, text-vert-900
- *     - Sous-titre : font-display, text-xl/2xl, light, text-vert-700,
+ *     - H2 : font-display, text-4xl/5xl, medium, text-warm-900
+ *     - Sous-titre : font-display, text-xl/2xl, light, text-warm-700,
  *       posé sans mt directement sous le H2
- *     - 5 étoiles lucide (text-vert-700, fill currentColor) + texte
+ *     - 5 étoiles lucide (text-warm-700, fill currentColor) + texte
  *       "Découvrez les X avis vérifiés" — pattern repris du Hero, étoiles
- *       aria-hidden, partie chiffrée soulignée en decoration vert-500/60
+ *       aria-hidden, partie chiffrée soulignée en decoration warm-500/60
  *     - 2 CTA : Resalib primary + Google secondary, gap-3
  *
  *   Marquees (identique sur les 2 layouts) :
@@ -173,7 +173,7 @@ export function Temoignages() {
 
             Solution actuelle : 2 overlays absolus (fadeTop / fadeBottom)
             posés au-dessus des marquees (z-10, pointer-events-none). Chaque
-            overlay réplique EXACTEMENT le bg du body (rose-200 +
+            overlay réplique EXACTEMENT le bg du body (warm-100 +
             linear-gradient wash vert + `background-attachment: fixed`),
             donc il est visuellement indistinguable du body bg derrière.
             Le fade est obtenu via `mask-image` SUR L'OVERLAY (pas sur le
@@ -230,7 +230,7 @@ export function Temoignages() {
             {/*
               Fade overlays (top + bottom) — siblings des marquees, posés
               au-dessus via z-10. Chaque overlay réplique le bg du body
-              (rose-200 + wash rose-300 38% en linear-gradient,
+              (warm-100 + wash warm-300 38% en linear-gradient,
               background-attachment: fixed) → visuellement identique au
               fond derrière. Le mask-image fait le fade : opaque côté
               extérieur (top du top-overlay / bottom du bottom-overlay)
@@ -244,9 +244,9 @@ export function Temoignages() {
               aria-hidden="true"
               className="pointer-events-none absolute inset-x-0 top-0 z-10 h-[25%]"
               style={{
-                backgroundColor: "var(--color-rose-200)",
+                backgroundColor: "var(--color-warm-100)",
                 backgroundImage:
-                  "linear-gradient(to bottom, color-mix(in oklch, var(--color-rose-300) 38%, transparent) 0%, transparent 100%)",
+                  "linear-gradient(to bottom, color-mix(in oklch, var(--color-warm-300) 38%, transparent) 0%, transparent 100%)",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "top",
                 backgroundSize: "100% clamp(220px, 38vh, 520px)",
@@ -261,9 +261,9 @@ export function Temoignages() {
               aria-hidden="true"
               className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-[25%]"
               style={{
-                backgroundColor: "var(--color-rose-200)",
+                backgroundColor: "var(--color-warm-100)",
                 backgroundImage:
-                  "linear-gradient(to bottom, color-mix(in oklch, var(--color-rose-300) 38%, transparent) 0%, transparent 100%)",
+                  "linear-gradient(to bottom, color-mix(in oklch, var(--color-warm-300) 38%, transparent) 0%, transparent 100%)",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "top",
                 backgroundSize: "100% clamp(220px, 38vh, 520px)",
@@ -287,17 +287,17 @@ export function Temoignages() {
           <div className="order-1 text-center max-w-3xl mx-auto lg:max-w-none lg:mx-0">
             <h2
               id="temoignages-titre"
-              className="font-display text-4xl lg:text-5xl font-medium tracking-[-0.02em] leading-[1.1] text-vert-900"
+              className="font-display text-4xl lg:text-5xl font-medium tracking-[-0.02em] leading-[1.1] text-warm-900"
             >
               Ce qu&apos;elles en disent
             </h2>
-            <p className="font-display text-xl lg:text-2xl font-light tracking-tight text-vert-700">
+            <p className="font-display text-xl lg:text-2xl font-light tracking-tight text-warm-700">
               Les retours des femmes que j&apos;accompagne au quotidien
             </p>
 
             {/*
               5 étoiles + count d'avis vérifiés. Pattern repris du Hero
-              (Hero.tsx) : étoiles lucide remplies en text-vert-700, gap
+              (Hero.tsx) : étoiles lucide remplies en text-warm-700, gap
               compact entre étoiles, gap plus large avec le texte. Les
               étoiles sont aria-hidden : seul le texte porte l'info pour
               les lecteurs d'écran.
@@ -311,13 +311,13 @@ export function Temoignages() {
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star
                     key={i}
-                    className="w-[18px] h-[18px] lg:w-5 lg:h-5 text-vert-700"
+                    className="w-[18px] h-[18px] lg:w-5 lg:h-5 text-warm-700"
                     fill="currentColor"
                     stroke="none"
                   />
                 ))}
               </span>
-              <p className="font-body text-base text-vert-700 underline underline-offset-4 decoration-vert-500/60">
+              <p className="font-body text-base text-warm-700 underline underline-offset-4 decoration-warm-500/60">
                 Découvrez les {site.verifiedReviewsCount} avis vérifiés
               </p>
             </div>

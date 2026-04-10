@@ -89,31 +89,31 @@ export function PrestationsSelector() {
                     // Transition globale : couleurs, opacity, filtre, transform, shadow
                     // pour que l'état actif/inactif glisse en douceur.
                     "transition-[color,background-color,border-color,opacity,filter,transform,box-shadow] duration-300 ease-out",
-                    "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vert-700",
+                    "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700",
                     isActive
                       ? // ── ACTIF : pleine intensité, légèrement scalé en avant,
                         // shadow externe plus marquée pour qu'il "sorte" du plan.
                         "border-white/95 opacity-100 saturate-100 scale-[1.015] " +
-                        "shadow-[inset_0_1px_0_rgba(255,255,255,0.85),inset_0_-1px_0_rgba(11,40,28,0.04),0_8px_24px_-8px_rgba(11,40,28,0.25)]"
+                        "shadow-[inset_0_1px_0_rgba(255,255,255,0.85),inset_0_-1px_0_rgba(60,30,25,0.04),0_8px_24px_-8px_rgba(60,30,25,0.25)]"
                       : // ── INACTIF : estompé + désaturé. Hover remonte
                         // partiellement pour signaler l'interactivité.
                         "border-white/40 opacity-50 saturate-75 hover:opacity-80 hover:border-white/60 " +
-                        "shadow-[inset_0_1px_0_rgba(255,255,255,0.7),inset_0_-1px_0_rgba(11,40,28,0.04),0_4px_16px_-6px_rgba(11,40,28,0.15)]",
+                        "shadow-[inset_0_1px_0_rgba(255,255,255,0.7),inset_0_-1px_0_rgba(60,30,25,0.04),0_4px_16px_-6px_rgba(60,30,25,0.15)]",
                   ].join(" ")}
                 >
                   <Icon
                     aria-hidden="true"
                     className={[
                       "w-7 h-7 shrink-0 transition-colors duration-200 ease-out",
-                      isActive ? "text-vert-900" : "text-vert-700",
+                      isActive ? "text-warm-900" : "text-warm-700",
                     ].join(" ")}
                     strokeWidth={1.5}
                   />
                   <div className="flex-1 min-w-0">
-                    <div className="font-display text-lg font-medium text-vert-900">
+                    <div className="font-display text-lg font-medium text-warm-900">
                       {p.category}
                     </div>
-                    <div className="font-body text-sm text-vert-700">
+                    <div className="font-body text-sm text-warm-700">
                       {p.tagline}
                     </div>
                   </div>
@@ -146,7 +146,7 @@ export function PrestationsSelector() {
                       clipPath:
                         "polygon(0% 0%, calc(100% - 8px) 0%, 100% 50%, calc(100% - 8px) 100%, 0% 100%)",
                     }}
-                    className="absolute left-[calc(100%-10px)] top-1/2 -translate-y-1/2 h-1.5 w-14 bg-vert-700 pointer-events-none -z-10"
+                    className="absolute left-[calc(100%-10px)] top-1/2 -translate-y-1/2 h-1.5 w-14 bg-warm-700 pointer-events-none -z-10"
                     aria-hidden="true"
                   />
                 )}
@@ -161,13 +161,13 @@ export function PrestationsSelector() {
             COUCHE 1 — LogoMark en background, anchré à droite.
             Square aligné sur le bord droit, hauteur = 110% de la card pour
             déborder légèrement haut/bas (le overflow-hidden du parent crop).
-            text-vert-500/40 + le backdrop-blur-xl de la card glass par-dessus
+            text-warm-500/40 + le backdrop-blur-xl de la card glass par-dessus
             produisent le même effet "ghost watermark flouté" que dans
             Specialites — recette identique, seul le positionnement change
             (right-aligned au lieu de inset-0 centered).
           */}
           <LogoMark
-            className="absolute right-0 top-1/2 -translate-y-1/2 h-[80%] aspect-square text-vert-700/50 pointer-events-none"
+            className="absolute right-0 top-1/2 -translate-y-1/2 h-[80%] aspect-square text-warm-700/50 pointer-events-none"
           />
 
           <AnimatePresence mode="wait">
@@ -183,20 +183,20 @@ export function PrestationsSelector() {
                 "bg-[var(--glass-bg)]",
                 "backdrop-blur-xl backdrop-saturate-[1.8]",
                 "border-[0.5px] border-white/50",
-                "shadow-[inset_0_1px_0_rgba(255,255,255,0.7),inset_0_-1px_0_rgba(11,40,28,0.04),0_4px_16px_-6px_rgba(11,40,28,0.15)]",
+                "shadow-[inset_0_1px_0_rgba(255,255,255,0.7),inset_0_-1px_0_rgba(60,30,25,0.04),0_4px_16px_-6px_rgba(60,30,25,0.15)]",
               ].join(" ")}
             >
               <div className="flex items-center gap-4">
                 <ActiveIcon
                   aria-hidden="true"
-                  className="w-10 h-10 text-vert-700 shrink-0"
+                  className="w-10 h-10 text-warm-700 shrink-0"
                   strokeWidth={1.5}
                 />
-                <h3 className="font-display text-2xl lg:text-3xl font-medium tracking-tight text-vert-900">
+                <h3 className="font-display text-2xl lg:text-3xl font-medium tracking-tight text-warm-900">
                   {active.title}
                 </h3>
               </div>
-              <p className="mt-6 font-body text-base lg:text-lg leading-relaxed text-vert-700">
+              <p className="mt-6 font-body text-base lg:text-lg leading-relaxed text-warm-700">
                 {active.description}
               </p>
               <div className="mt-8">
@@ -229,7 +229,7 @@ export function PrestationsSelector() {
                 "bg-[var(--glass-bg)]",
                 "backdrop-blur-xl backdrop-saturate-[1.8]",
                 "border-[0.5px] transition-colors duration-200 ease-out",
-                "shadow-[inset_0_1px_0_rgba(255,255,255,0.7),inset_0_-1px_0_rgba(11,40,28,0.04),0_4px_16px_-6px_rgba(11,40,28,0.15)]",
+                "shadow-[inset_0_1px_0_rgba(255,255,255,0.7),inset_0_-1px_0_rgba(60,30,25,0.04),0_4px_16px_-6px_rgba(60,30,25,0.15)]",
                 isOpen ? "border-white/80" : "border-white/40",
               ].join(" ")}
             >
@@ -244,19 +244,19 @@ export function PrestationsSelector() {
                 className={[
                   // min-h-14 = 56px tap target minimum (WCAG 2.5.5, iOS HIG 44pt)
                   "w-full flex items-center gap-4 p-5 min-h-14 text-left",
-                  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vert-700",
+                  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700",
                 ].join(" ")}
               >
                 <Icon
                   aria-hidden="true"
-                  className="w-7 h-7 text-vert-700 shrink-0"
+                  className="w-7 h-7 text-warm-700 shrink-0"
                   strokeWidth={1.5}
                 />
                 <div className="flex-1 min-w-0">
-                  <div className="font-display text-lg font-medium text-vert-900">
+                  <div className="font-display text-lg font-medium text-warm-900">
                     {p.category}
                   </div>
-                  <div className="font-body text-sm text-vert-700">
+                  <div className="font-body text-sm text-warm-700">
                     {p.tagline}
                   </div>
                 </div>
@@ -267,7 +267,7 @@ export function PrestationsSelector() {
                 >
                   <ChevronDown
                     aria-hidden="true"
-                    className="w-5 h-5 text-vert-700"
+                    className="w-5 h-5 text-warm-700"
                     strokeWidth={1.5}
                   />
                 </motion.div>
@@ -284,7 +284,7 @@ export function PrestationsSelector() {
                     style={{ overflow: "hidden" }}
                   >
                     <div className="px-5 pb-5 pt-1">
-                      <p className="font-body text-base leading-relaxed text-vert-700">
+                      <p className="font-body text-base leading-relaxed text-warm-700">
                         {p.description}
                       </p>
                       <div className="mt-6">

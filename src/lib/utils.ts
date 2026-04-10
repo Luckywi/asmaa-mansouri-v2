@@ -12,7 +12,7 @@ import { twMerge } from "tailwind-merge";
  * commence à composer dynamiquement des classes Tailwind.
  *
  * Exemple :
- *   cn("px-4 py-2", isActive && "bg-vert-500", className)
+ *   cn("px-4 py-2", isActive && "bg-warm-500", className)
  */
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

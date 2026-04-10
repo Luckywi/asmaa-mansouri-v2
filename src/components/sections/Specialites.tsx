@@ -84,11 +84,11 @@ export function Specialites() {
         <div className="text-center max-w-3xl mx-auto">
           <h2
             id="specialites-titre"
-            className="font-display text-4xl lg:text-5xl font-medium tracking-[-0.02em] leading-[1.1] text-vert-900"
+            className="font-display text-4xl lg:text-5xl font-medium tracking-[-0.02em] leading-[1.1] text-warm-900"
           >
             Ce que j&apos;accompagne
           </h2>
-          <p className="mt-6 font-body text-lg lg:text-xl leading-relaxed text-vert-700">
+          <p className="mt-6 font-body text-lg lg:text-xl leading-relaxed text-warm-700">
             Trois grands axes d&apos;accompagnement reliés par une même
             approche holistique : rééquilibrer le terrain hormonal, apaiser
             le stress et la digestion, traverser sereinement les transitions
@@ -108,9 +108,9 @@ export function Specialites() {
                 Absolute, fills the <li>. La preserveAspectRatio par défaut
                 (xMidYMid meet) garde le ratio 1:1 et centre l'icône.
 
-                Couleur vert-700 à 50% (couleur bouton, recette filigrane
-                commune avec le LogoMark de PrestationsSelector). vert-700
-                étant plus foncé que vert-500, le /50 compense le delta
+                Couleur warm-700 à 50% (couleur bouton, recette filigrane
+                commune avec le LogoMark de PrestationsSelector). warm-700
+                étant plus foncé que warm-500, le /50 compense le delta
                 de lightness pour garder le même poids visuel qu'avant —
                 tout en alignant la couleur sur celle des CTA primary
                 pour la cohérence identitaire. Le backdrop-blur-xl de la
@@ -118,7 +118,7 @@ export function Specialites() {
               */}
               <Icon
                 aria-hidden="true"
-                className="absolute inset-0 w-full h-full text-vert-700/50 pointer-events-none"
+                className="absolute inset-0 w-full h-full text-warm-700/50 pointer-events-none"
                 strokeWidth={2}
               />
 
@@ -139,7 +139,7 @@ export function Specialites() {
                   "backdrop-blur-xl backdrop-saturate-[1.8]",
                   "border-[0.5px] border-white/50",
                   // Shadow allégée (cards posées, pas flottantes comme la pill du Header)
-                  "shadow-[inset_0_1px_0_rgba(255,255,255,0.7),inset_0_-1px_0_rgba(11,40,28,0.04),0_4px_16px_-6px_rgba(11,40,28,0.15)]",
+                  "shadow-[inset_0_1px_0_rgba(255,255,255,0.7),inset_0_-1px_0_rgba(60,30,25,0.04),0_4px_16px_-6px_rgba(60,30,25,0.15)]",
                   // Hover : on densifie légèrement la bordure et le glass
                   "group-hover:border-white/70",
                   "transition-colors duration-200 ease-out",
@@ -149,15 +149,15 @@ export function Specialites() {
                 <div className="flex items-center gap-3">
                   <Icon
                     aria-hidden="true"
-                    className="w-7 h-7 text-vert-700 shrink-0"
+                    className="w-7 h-7 text-warm-700 shrink-0"
                     strokeWidth={1.5}
                   />
-                  <h3 className="font-display text-xl lg:text-2xl font-medium tracking-tight text-vert-900">
+                  <h3 className="font-display text-xl lg:text-2xl font-medium tracking-tight text-warm-900">
                     {title}
                   </h3>
                 </div>
 
-                <p className="mt-4 font-body text-base leading-relaxed text-vert-700">
+                <p className="mt-4 font-body text-base leading-relaxed text-warm-700">
                   {description}
                 </p>
 

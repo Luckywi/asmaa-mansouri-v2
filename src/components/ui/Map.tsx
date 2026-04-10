@@ -57,15 +57,15 @@ interface MapProps {
  * Style positron de Carto CDN comme base, puis recoloriée au runtime
  * en bouclant sur les layers et en remappant chaque type vers les
  * tokens du thème :
- *   - background → rose-200 (terrain neutre, aligné sur le fond body)
- *   - fill (water/park/building) → rose-200 à 10% d'opacité (cohérence
+ *   - background → warm-100 (terrain neutre, aligné sur le fond body)
+ *   - fill (water/park/building) → warm-100 à 10% d'opacité (cohérence
  *     avec le fond body, filigrane discret)
- *   - fill (tout le reste) → rose-200 (fond uniforme, no clutter)
- *   - line (routes) → rose-200 à 10% d'opacité (filigrane discret)
- *   - symbol text → vert-700 + halo rose-200 (lisibilité)
+ *   - fill (tout le reste) → warm-100 (fond uniforme, no clutter)
+ *   - line (routes) → warm-100 à 10% d'opacité (filigrane discret)
+ *   - symbol text → warm-700 + halo warm-100 (lisibilité)
  *
  * Le marker est un SVG inline avec le path lucide MapPin (pas iconoir),
- * peint en vert-700 (accent du thème) avec un point inner rose-200.
+ * peint en warm-700 (accent du thème) avec un point inner warm-100.
  * Anchored 'bottom' pour que la pointe du pin soit pile sur les coords.
  *
  * Scroll-zoom désactivé (UX : sinon l'utilisateur scroll la page et
@@ -81,14 +81,14 @@ export default function Map({ className }: MapProps) {
     if (!containerRef.current || mapRef.current) return;
 
     /* Couleurs résolues depuis le thème — suivent automatiquement la palette */
-    const ACCENT = resolveCssColor("--color-vert-700");
-    // BG = rose-200 (terrain neutre, aligné sur le fond body)
-    const BG = resolveCssColor("--color-rose-200");
-    // SUBTLE = rose-500 plein, appliqué avec fill-opacity / line-opacity 0.1.
-    // Plus foncé que le fond (rose-200) pour que le filigrane reste visible,
+    const ACCENT = resolveCssColor("--color-warm-700");
+    // BG = warm-100 (terrain neutre, aligné sur le fond body)
+    const BG = resolveCssColor("--color-warm-100");
+    // SUBTLE = warm-500 plein, appliqué avec fill-opacity / line-opacity 0.1.
+    // Plus foncé que le fond (warm-100) pour que le filigrane reste visible,
     // tout en gardant la même famille de teinte.
-    const SUBTLE = resolveCssColor("--color-rose-500");
-    const LABEL = resolveCssColor("--color-vert-700");
+    const SUBTLE = resolveCssColor("--color-warm-500");
+    const LABEL = resolveCssColor("--color-warm-700");
 
     const map = new maplibregl.Map({
       container: containerRef.current,
@@ -114,7 +114,7 @@ export default function Map({ className }: MapProps) {
           if (type === "background") {
             map.setPaintProperty(id, "background-color", BG);
           } else if (type === "fill") {
-            // Eau, parcs et bâtiments en rose-200 à 10% d'opacité ;
+            // Eau, parcs et bâtiments en warm-100 à 10% d'opacité ;
             // tout le reste (terre, landuse résidentiel) fond dans le BG.
             if (
               id.includes("water") ||
@@ -127,7 +127,7 @@ export default function Map({ className }: MapProps) {
               map.setPaintProperty(id, "fill-color", BG);
             }
           } else if (type === "line") {
-            // Routes en rose-200 à 10% d'opacité — filigrane discret
+            // Routes en warm-100 à 10% d'opacité — filigrane discret
             map.setPaintProperty(id, "line-color", SUBTLE);
             map.setPaintProperty(id, "line-opacity", 0.1);
           } else if (type === "symbol" && layer.layout?.["text-field"]) {
@@ -138,8 +138,8 @@ export default function Map({ className }: MapProps) {
       }
 
       /*
-        Marker custom — SVG lucide MapPin inline, peint en vert-700 (ACCENT)
-        avec un cercle inner rose-200 (BG) pour la "boule" du pin.
+        Marker custom — SVG lucide MapPin inline, peint en warm-700 (ACCENT)
+        avec un cercle inner warm-100 (BG) pour la "boule" du pin.
         anchor: 'bottom' pour que la pointe du pin tombe pile sur les coords.
       */
       const el = document.createElement("div");
