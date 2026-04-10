@@ -58,10 +58,10 @@ interface MapProps {
  * en bouclant sur les layers et en remappant chaque type vers les
  * tokens du thème :
  *   - background → rose-200 (terrain neutre, aligné sur le fond body)
- *   - fill (water/park/building) → vert-500 à 10% d'opacité (équivalent
- *     du bg-vert-500/10 des chips Presentation, cohérence palette)
+ *   - fill (water/park/building) → rose-200 à 10% d'opacité (cohérence
+ *     avec le fond body, filigrane discret)
  *   - fill (tout le reste) → rose-200 (fond uniforme, no clutter)
- *   - line (routes) → vert-500 à 10% d'opacité (filigrane discret)
+ *   - line (routes) → rose-200 à 10% d'opacité (filigrane discret)
  *   - symbol text → vert-700 + halo rose-200 (lisibilité)
  *
  * Le marker est un SVG inline avec le path lucide MapPin (pas iconoir),
@@ -84,10 +84,10 @@ export default function Map({ className }: MapProps) {
     const ACCENT = resolveCssColor("--color-vert-700");
     // BG = rose-200 (terrain neutre, aligné sur le fond body)
     const BG = resolveCssColor("--color-rose-200");
-    // SUBTLE = vert-500 plein, appliqué avec fill-opacity / line-opacity 0.1.
-    // Reproduit l'effet visuel du tag "Naturopathie" (bg-vert-500/10) pour
-    // garder une cohérence palette entre la map et les chips Presentation.
-    const SUBTLE = resolveCssColor("--color-vert-500");
+    // SUBTLE = rose-500 plein, appliqué avec fill-opacity / line-opacity 0.1.
+    // Plus foncé que le fond (rose-200) pour que le filigrane reste visible,
+    // tout en gardant la même famille de teinte.
+    const SUBTLE = resolveCssColor("--color-rose-500");
     const LABEL = resolveCssColor("--color-vert-700");
 
     const map = new maplibregl.Map({
@@ -114,8 +114,7 @@ export default function Map({ className }: MapProps) {
           if (type === "background") {
             map.setPaintProperty(id, "background-color", BG);
           } else if (type === "fill") {
-            // Eau, parcs et bâtiments en vert-500 à 10% d'opacité
-            // (équivalent du bg-vert-500/10 des chips Presentation) ;
+            // Eau, parcs et bâtiments en rose-200 à 10% d'opacité ;
             // tout le reste (terre, landuse résidentiel) fond dans le BG.
             if (
               id.includes("water") ||
@@ -128,7 +127,7 @@ export default function Map({ className }: MapProps) {
               map.setPaintProperty(id, "fill-color", BG);
             }
           } else if (type === "line") {
-            // Routes en vert-500 à 10% d'opacité — filigrane discret
+            // Routes en rose-200 à 10% d'opacité — filigrane discret
             map.setPaintProperty(id, "line-color", SUBTLE);
             map.setPaintProperty(id, "line-opacity", 0.1);
           } else if (type === "symbol" && layer.layout?.["text-field"]) {

@@ -22,7 +22,7 @@
      Stops 500-900 conservés en bout de ramp (L/C inchangés, hue 86 → 5)
      pour garder un système complet si besoin futur. */
   --color-rose-100: oklch(0.978 0.008 5);
-  --color-rose-200: oklch(0.910 0.035 5);   /* fond fix body */
+  --color-rose-200: oklch(0.95 0.025 25.281);   /* fond fix body — #FFE4E1 approx */
   --color-rose-300: oklch(0.820 0.068 5);
   --color-rose-500: oklch(0.72  0.044 5);
   --color-rose-700: oklch(0.60  0.036 5);
@@ -107,7 +107,7 @@
      backdrop-filter (la grande majorité). Aligné sur --color-rose-200 (le
      fond body), opacité 0.65. L'effet "frost" est porté par backdrop-blur-xl,
      la couleur du verre suit simplement la teinte du body. */
-  --glass-bg: oklch(0.910 0.035 5 / 0.65);
+  --glass-bg: oklch(0.95 0.025 25.281 / 0.65);
 }
 
 /* Fallback pour les ~8% d'utilisateurs desktop avec "Réduire la transparence"
@@ -115,7 +115,7 @@
    backdrop-filter. On rend le verre quasi opaque pour garder la lisibilité. */
 @supports not (backdrop-filter: blur(1px)) {
   :root {
-    --glass-bg: oklch(0.910 0.035 5 / 0.95);
+    --glass-bg: oklch(0.95 0.025 25.281 / 0.95);
   }
 }
 
@@ -149,22 +149,7 @@ body {
          )
      et passer background-position à `top, bottom` et background-size
      à deux valeurs `100% clamp(...), 100% clamp(...)`. */
-  background-image:
-    linear-gradient(
-      to bottom,
-      color-mix(in oklch, var(--color-rose-300) 38%, transparent) 0%,
-      transparent 100%
-    );
-  background-repeat: no-repeat;
-  background-position: top;
-  background-size: 100% clamp(220px, 38vh, 520px);
-  /* background-attachment: fixed → le gradient est attaché au VIEWPORT
-     (pas au body), donc il "frame" en permanence la zone visible pendant
-     le scroll. À n'importe quel scroll position, le wash rose reste à 38vh
-     du haut de l'écran. C'est l'approche "canvas uniforme" : tout le
-     site flotte sur ce gradient permanent, aucune section n'a son propre bg
-     (cf. DESIGN.md > Principe d'uniformité). */
-  background-attachment: fixed;
+  /* Gradient désactivé pour cette variante palette — fond plat rose-200 uniquement. */
 
   color: var(--color-vert-700);
   font-family: var(--font-body);
