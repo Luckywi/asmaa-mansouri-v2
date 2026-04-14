@@ -38,37 +38,59 @@ Chaque décision, chaque composant, chaque ligne de code doit servir ces 4 pilie
 | Fichier | Rôle | Statut |
 |---|---|---|
 | `PERSONA.md` | Identité, parcours, ton, cible, services d'Asmaa | ✅ Validé |
-| `DESIGN.md` | Couleurs OKLCH, typographies, assets, conventions Tailwind | ✅ Validé v2 |
-| `STRUCTURE.md` | Navigation, arborescence, contenu par page | ⚠️ En cours |
+| `DESIGN.md` | Palette warm + accent, glass recipe, typo, boutons, patterns landing | ✅ **Figé 2026-04-14** (post-landing) |
+| `STRUCTURE.md` | Navigation, arborescence, contenu par page | ⚠️ En cours (pages internes Phase 2) |
 | `CLAUDE.md` | Fichier directeur — stack, principes, méthodologie | ✅ Ce fichier |
+| `PALETTE_AUDIT.md` | (ancien) Audit palette `vert/beige` pré-refactor | ❌ Obsolète — tokens supprimés, à ignorer |
 
-**IMPORTANT :** Ce repo expérimente une palette monochrome `warm` (terracotta hue 29.154). La source de vérité technique reste `src/app/globals.css`.
+**Landing figée — base pour toutes les pages internes :**
+
+La landing page (`src/app/page.tsx` + sections `Hero`, `Presentation`,
+`Specialites`, `Cabinet`, `Prestations`, `Temoignages`) est validée à
+100 % en couleurs, UI et UX au 2026-04-14. **Toute nouvelle page doit
+réutiliser les tokens `warm-*` / `accent` et les recettes documentées
+dans `DESIGN.md`** (glass, boutons, cards, typo, radius, section types).
+Pas de variation créative sur les patterns de base — seule la
+composition et le contenu diffèrent entre pages.
+
+Source de vérité technique : `src/app/globals.css`.
 
 STRUCTURE.md évolue au fur et à mesure. Ne pas se bloquer si un élément n'est pas encore défini — avancer, proposer, itérer.
 
 ---
 
-## Palette — rappel globals.css
+## Palette — rappel globals.css (post-landing)
 
 ```css
 @theme {
-  /* Warm — palette monochrome terracotta (hue 29.154) */
-  --color-warm-100: oklch(0.95  0.01  29.154);  /* fond body, surfaces claires */
-  --color-warm-300: oklch(0.85  0.04  29.154);  /* cards glass, overlays */
-  --color-warm-500: oklch(0.613 0.096 29.154);  /* décoratif : bordures, icônes */
-  --color-warm-700: oklch(0.444 0.07  29.154);  /* texte body, bouton primary bg */
-  --color-warm-900: oklch(0.276 0.043 29.154);  /* titres, emphasis */
+  /* Warm — beige crème chaud → olive vert (hue ~140 sur 700/900) */
+  --color-warm-100: #F2E4CF;                    /* fond body — beige Gamma */
+  --color-warm-300: #FEF5E7;                    /* overlays, washes locaux */
+  --color-warm-500: oklch(0.84  0.030 78);      /* bordures sable, tints /15 */
+  --color-warm-700: oklch(0.40  0.050 140);     /* texte body, icônes */
+  --color-warm-900: oklch(0.28  0.045 140);     /* titres, emphasis */
 
-  /* Typographies */
-  --font-display: 'Outfit', sans-serif;   /* Titres H1/H2/H3 */
-  --font-body:    'Manrope', sans-serif;  /* Body, UI, nav, boutons */
+  /* Accent CTA — olive plein (identique à warm-700) */
+  --color-accent:       oklch(0.40  0.050 140);
+  --color-accent-hover: oklch(0.32  0.045 140);
 
-  /* Radius — quasi carré */
-  --radius-sm: 2px;
-  --radius-md: 4px;
-  --radius-lg: 4px;
+  /* Typographies (injectées par next/font sur <html>) */
+  --font-display: var(--font-outfit), "Outfit", sans-serif;
+  --font-body:    var(--font-manrope), "Manrope", sans-serif;
+
+  /* Radius adaptatif — 5 tokens selon hauteur du composant */
+  --radius-sm:  4px;   /* ≤40px : inputs, tags fins */
+  --radius-md:  6px;   /* 40-56px : boutons, cards, tags, mini-cards */
+  --radius-lg:  8px;   /* 56-100px : réservé */
+  --radius-xl:  10px;  /* 100-300px : Header pill, panels, photos */
+  --radius-2xl: 14px;  /* 300px+ : sections géantes */
 }
 ```
+
+Custom prop `--glass-bg` hors `@theme` (surchargée via `@supports`) :
+`color-mix(in oklch, #FFF8F0 65%, transparent)` — fond de toutes les
+surfaces glass (cards, Header, tags, bouton secondary). Voir
+`DESIGN.md` pour la recette complète.
 
 ---
 

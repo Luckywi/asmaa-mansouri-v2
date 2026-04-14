@@ -1,115 +1,121 @@
 # DESIGN.md — Asmaa Mansouri Naturopathe
 
-> Direction artistique du projet. Fichier évolutif — ne contient que les éléments validés.
+> Direction artistique du projet. **Figée au 2026-04-14** après validation
+> complète de la landing page. Toute nouvelle page doit réutiliser ces
+> tokens et ces recettes — pas de variation créative sur les patterns de
+> base (glass, boutons, cards, typo, radius).
+>
+> Source de vérité technique : `src/app/globals.css`. Ce document explique
+> **comment** consommer ces tokens — le CSS reste le juge final.
 
 ---
 
-## Palette couleurs
+## Palette — `warm` + `accent`
 
-### Vert — usage 500 → 900 uniquement
+Palette monochrome beige + accent olive. Deux familles seulement, pas de
+vert/beige séparés, pas de stops 100/300 côté accent.
 
-Hue fixe : 154.34 — chroma proportionnel
+### Warm (100 → 900)
 
-| Stop | OKLCH | Usage |
+| Token | Valeur | Usage |
 |---|---|---|
-| 500 | `oklch(0.414 0.058 154.34)` | CTA, tags, accents, bordures actives |
-| 700 | `oklch(0.232 0.032 154.34)` | Body, nav, sous-titres, texte secondaire |
-| 900 | `oklch(0.05 0.007 154.34)` | Titres H1, H2 |
+| `--color-warm-100` | `#F2E4CF` (beige crème chaud ref Gamma) | Fond body, texte sur bouton primary |
+| `--color-warm-300` | `#FEF5E7` (crème clair) | Réservé overlays / gradient local (Temoignages fade). **Pas un fond de section.** |
+| `--color-warm-500` | `oklch(0.84 0.030 78)` (sable) | Bordures, tints faibles (`/15`), avatar placeholder |
+| `--color-warm-700` | `oklch(0.40 0.050 140)` (olive ~`#38512F`) | Texte body, icônes, sous-titres, nav, rating stars, watermark |
+| `--color-warm-900` | `oklch(0.28 0.045 140)` (olive foncé ~`#1e3715`) | Titres H1/H2/H3, Logo wordmark, hover renforcé |
 
-> ⚠️ Les stops 100 et 300 du vert ne sont pas utilisés dans ce projet.
+### Accent (CTA)
 
-### Beige — usage complet 100 → 900
-
-Hue fixe : 90 — chroma proportionnel
-
-| Stop | OKLCH | Usage |
+| Token | Valeur | Usage |
 |---|---|---|
-| 100 | `oklch(0.972 0.006 90)` | Fond de page, cards, modales |
-| 300 | `oklch(0.888 0.022 90)` | Sections alternées, hero, bg secondaire |
-| 500 | `oklch(0.729 0.036 84.593)` | Bordures cards, séparateurs |
-| 700 | `oklch(0.619 0.03 84.593)` | Texte secondaire sur fond très clair |
-| 900 | `oklch(0.509 0.025 84.593)` | Texte dense sur fond très clair |
+| `--color-accent` | `oklch(0.40 0.050 140)` | Fond bouton primary (identique à warm-700) |
+| `--color-accent-hover` | `oklch(0.32 0.045 140)` | Hover bouton primary |
+
+> Les stops 100/300 de l'accent n'existent pas — le bouton primary est un
+> bloc olive plein, on ne le décline pas en tintes claires. Si un besoin
+> émerge, on l'ajoute à `@theme` en gardant la cohérence monochrome.
+
+### Custom property `--glass-bg`
+
+Définie **hors** `@theme` dans `:root` (globals.css:87-100) pour pouvoir
+être surchargée au runtime via `@supports`. Ne pas la migrer dans
+`@theme`.
+
+| État | Valeur |
+|---|---|
+| Default (supports backdrop-filter) | `color-mix(in oklch, #FFF8F0 65%, transparent)` |
+| Fallback `@supports not (backdrop-filter)` | `color-mix(in oklch, #FFF8F0 95%, transparent)` |
 
 ---
 
 ## Règles d'usage couleurs
 
-| Élément | Couleur |
+| Élément | Token |
 |---|---|
-| Fond de page global | beige-100 + wash vert-300 fixed (cf. Principe d'uniformité) |
-| Cards, placeholders photo, blocs internes | beige-300 |
-| Titres H1, H2 | vert-900 |
-| Sous-titres, body, liens nav | vert-700 |
-| CTA primaire | bg vert-500, texte beige-100 |
-| CTA secondaire (outline) | bordure vert-500, texte vert-700 |
-| Cards | bg beige-100, bordure beige-500 |
-| Modales | bg beige-100, bordure beige-500 |
-| Tags / badges | bg vert-500, texte beige-100 |
-| Accent décoratif | gradient vert-500 → vert-900 |
-
----
-
-## Typographies
-
-| Rôle | Police | Source | Usage |
-|---|---|---|---|
-| Display / Titres | **Outfit** | Google Fonts · next/font | H1, H2, H3 |
-| Body / UI | **Manrope** | Google Fonts · next/font | Body, nav, boutons, labels |
-
-### Échelle typographique
-
-| Élément | Police | Taille | Graisse | Line-height | Letter-spacing |
-|---|---|---|---|---|---|
-| H1 | Outfit | 48px | 500 | 1.15 | -0.02em |
-| H2 | Outfit | 32px | 500 | 1.25 | -0.01em |
-| H3 | Outfit | 22px | 500 | 1.30 | 0 |
-| Body | Manrope | 16px | 400 | 1.70 | 0 |
-| Small | Manrope | 14px | 400 | 1.60 | 0 |
-| Nav | Manrope | 14px | 500 | 1.00 | 0.02em |
-| Bouton | Manrope | 14px | 500 | 1.00 | 0.01em |
-| Label / tag | Manrope | 11px | 500 | 1.00 | 0.06em |
+| Fond body global | `var(--color-warm-100)` — plat, uniforme, aucune section n'ajoute de bg |
+| Titres H1, H2, H3 | `text-warm-900` |
+| Body, sous-titres, nav, icônes standard | `text-warm-700` |
+| Texte muted (contact line, copyright, role témoignage) | `text-warm-700/80` · `/60` · `/30` |
+| CTA primary | `bg-accent text-warm-100 hover:bg-accent-hover` |
+| CTA secondary | glass (`var(--glass-bg)`) + `text-warm-700` + `border-white/50` |
+| Cards, tags, mini-blocs décoratifs | glass (voir recette plus bas) |
+| Bordures photos / images | `border border-warm-900` (cadre net) ou `border-warm-700/15` (discret) |
+| Hairlines (footer, séparateurs) | `bg-warm-700/15` (h-px) ou `border-t border-warm-700/15` |
+| Hover nav link (pill) | `bg-warm-500/8` |
+| Backdrop modale/menu mobile | `bg-warm-900/15 backdrop-blur-md` |
+| Avatar placeholder | `bg-warm-500/15 text-warm-700` |
 
 ---
 
 ## Principe d'uniformité — approche composant
 
-> Le site fonctionne en **approche composant**, pas en approche section. Toute la page flotte sur **un seul fond uniforme** (le body), et c'est la mise en page des composants à l'intérieur des sections qui crée le rythme visuel — jamais des changements de couleur de fond entre sections.
-
-### Le fond du body (canvas global)
-
-Le `<body>` porte un fond unique pour tout le site, défini une seule fois dans `globals.css` :
-
-- **Couleur de base** : `var(--color-beige-100)` — partout
-- **Wash décoratif** : un gradient `vert-300` à 27% d'opacité, appliqué sur 38vh du **haut** et 38vh du **bas** de la viewport
-- **`background-attachment: fixed`** — le gradient est attaché au viewport, pas au body. Conséquence : pendant que l'utilisateur scrolle, le wash vert reste **en permanence** au top et au bottom de l'écran. Le site est constamment "framé" par cette matière colorée à toutes les hauteurs de scroll.
-
-C'est la **seule source de couleur de fond** sur le projet. Aucune section ne doit en ajouter d'autre.
+Le site fonctionne en **approche composant**, pas en approche section.
+Toute la page flotte sur le **fond warm-100 uniforme du body**, et c'est
+la mise en page des composants glass à l'intérieur des sections qui
+crée le rythme visuel — jamais des changements de bg entre sections.
 
 ### Règles strictes
 
 | ❌ Interdit | ✅ À la place |
 |---|---|
-| `<section className="bg-beige-300 ...">` | `<section className="...">` (transparente, hérite du body) |
-| Alternance de couleurs entre sections | Différenciation par padding, bordures séparatrices, ou composants internes |
-| `bg-*` sur l'élément `<section>` racine | `bg-*` autorisé sur les **composants internes** (cards, photo placeholders, chips, hover pills, etc.) |
-| Tout ce qui crée une "cassure" visuelle entre deux sections successives | Transition fluide, le contenu glisse sur le canvas commun |
+| `<section className="bg-warm-300 …">` | `<section className="relative py-12 lg:py-22">` transparente |
+| Alternance de couleurs entre sections | Padding + bordures internes + cards glass |
+| `bg-*` sur l'élément `<section>` racine | `bg-*` autorisé sur **composants internes** (cards, tags, avatars) |
 
-### Différenciation visuelle entre sections (sans bg)
+### Différenciation visuelle sans bg
 
-Quand on a besoin de séparer visuellement deux sections successives :
+- **Padding rythmé** : toutes les sections de la landing utilisent
+  `py-12 lg:py-22`. Le Hero sort du lot (`pt-32 pb-12 md:pt-36 lg:pt-40 lg:pb-22`) parce qu'il démarre sous le Header flottant.
+- **Hairlines** : `border-t border-warm-700/15` (footer, séparateurs internes).
+- **Largeurs** : toutes les sections wrappent leur contenu dans
+  `mx-auto max-w-7xl px-6 md:px-8 lg:px-12`. Pour les blocs texte
+  centrés : `max-w-3xl mx-auto text-center`.
 
-- **Bordures séparatrices** : `border-t border-beige-500` en haut de la section suivante
-- **Paddings différents** : `py-24` vs `py-32` pour des respirations distinctes
-- **Composants internes** avec bg propre (cards beige-300, photos avec bordures, blocs colorés)
-- **Largeurs de container différentes** : `max-w-4xl` vs `max-w-7xl` pour varier l'amplitude visuelle
+---
 
-### Pourquoi ce choix
+## Typographie
 
-L'approche composant est plus moderne et plus élégante qu'un patchwork de sections colorées. Elle :
-- Donne une **identité visuelle forte et constante** (le canvas reste reconnaissable partout)
-- Met le **contenu au premier plan** (pas le contenant)
-- Permet une **lecture fluide** sans cassures perceptuelles
-- Évite les pièges de "trop de couleurs" qui cassent l'élégance d'une palette restreinte (vert + beige uniquement)
+| Rôle | Police | Source |
+|---|---|---|
+| Display / Titres | **Outfit** (variable) | Google Fonts via `next/font` (`layout.tsx`) |
+| Body / UI | **Manrope** (variable) | Google Fonts via `next/font` (`layout.tsx`) |
+
+### Échelle réelle (extraite des composants landing)
+
+| Élément | Classes | Détail |
+|---|---|---|
+| H1 (Hero) | `font-display text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.02em] leading-[1.05] text-warm-900` | Responsive 3 paliers |
+| H2 section | `font-display text-4xl lg:text-5xl font-medium tracking-[-0.02em] leading-[1.1] text-warm-900` | Uniforme sur toute la landing |
+| Sous-titre section (sous H2) | `font-display text-xl lg:text-2xl font-light tracking-tight text-warm-700` | Pattern "Asmaa Mansouri / Au service de la santé des femmes" — **pas de `mt`**, posé directement sous le H2 |
+| H3 card / detail | `font-display text-xl lg:text-2xl font-medium tracking-tight text-warm-900` (Specialites) · `text-2xl lg:text-3xl` (detail panel Prestations) |
+| Description longue | `font-body text-lg leading-relaxed text-warm-700` (intro body) · `text-lg lg:text-xl` (hero sub + intro section) |
+| Body card / detail | `font-body text-base leading-relaxed text-warm-700` |
+| Nav link | `font-body text-[14px] font-medium tracking-[0.02em]` |
+| Bouton | `font-body text-[14px] font-medium tracking-[0.01em]` |
+| Tag / chip | `font-body text-xs lg:text-sm font-medium text-warm-700` |
+| Footer section title | `font-display text-xs font-medium uppercase tracking-[0.18em] text-warm-900` |
+| Logo wordmark | `font-display text-[17px] font-medium tracking-[-0.01em] text-warm-900` + sous-titre `text-[10px] font-light uppercase tracking-[0.18em] text-warm-700` |
 
 ---
 
@@ -117,89 +123,271 @@ L'approche composant est plus moderne et plus élégante qu'un patchwork de sect
 
 ### Système de radius adaptatif
 
-> Le radius n'est pas une valeur unique — c'est une échelle de **5 tokens** qui s'adapte à la taille des composants. Chaque élément choisit son radius dans cette échelle pour rester "presque carré" tout en gagnant un léger arrondi proportionnel à sa taille.
+Le radius n'est pas une valeur unique — c'est une échelle de 5 tokens
+qui s'adapte à la **hauteur typique** du composant. Ratio radius/hauteur
+autour de **10-15 %** partout.
 
-| Token | Pixels | Cible (hauteur) | Exemples |
+| Token | Pixels | Cible (hauteur) | Exemples landing |
 |---|---|---|---|
-| `--radius-sm` | **4px** | ≤40px | Boutons standards, inputs, tags, badges |
-| `--radius-md` | **6px** | 40-56px | CTA primaires, hover pills nav, boutons larges |
-| `--radius-lg` | **8px** | 56-100px | Cards, sections moyennes |
-| `--radius-xl` | **10px** | 100-300px | Header pill, modales, blocs larges |
-| `--radius-2xl` | **14px** | 300px+ | Hero, sections géantes, fullscreen |
+| `--radius-sm` | `4px` | ≤40px | Inputs, tags fins (non utilisé directement actuellement) |
+| `--radius-md` | `6px` | 40-56px | **Tous les boutons (h-10)**, tags glass, cards Specialites, ReviewCard, Cabinet map, mini-cards Prestations, items accordion mobile |
+| `--radius-lg` | `8px` | 56-100px | (réservé) |
+| `--radius-xl` | `10px` | 100-300px | Header pill (h-16), HeaderMobile box, panel mobile, photo Presentation |
+| `--radius-2xl` | `14px` | 300px+ | (réservé futures sections larges) |
 
-**Principe :** Chaque composant choisit le token correspondant à sa **hauteur typique**. Le ratio radius/hauteur reste autour de **10-15%** — assez pour adoucir les coins, jamais assez pour ressembler à une pill.
+**Règle stricte** : pas de `rounded-full` (sauf avatar initiale
+`Temoignages`). Tous les composants utilisent l'échelle ci-dessus pour
+préserver le look "angles assumés".
 
-**Règle stricte :** Pas de `rounded-full` dans le projet (sauf cas exceptionnel documenté type avatar circulaire). Tous les composants restent dans l'échelle ci-dessus pour préserver le look "angles assumés".
+### Recette glass (recette maîtresse du projet)
 
-### Application sur les composants existants
+Utilisée partout où un bloc doit flotter sur le fond : Header, cards
+Specialites, detail panel et mini-cards Prestations, items accordion
+mobile, ReviewCard, tags Hero, chips Presentation, bouton secondary.
 
-| Composant | Hauteur | Token | Pixels |
-|---|---|---|---|
-| Header pill flottante | h-16 (64px) | `rounded-xl` | 10px |
-| ButtonLink primary (CTA) | h-10 (40px) | `rounded-md` | 6px |
-| Nav link hover pill | ~40px | `rounded-md` | 6px |
-| Logo Link wrap | ~40px | `rounded-md` | 6px |
-| Skip link | ~44px | `rounded-md` | 6px |
+```tsx
+// Bloc glass standard (cards, tags, bouton secondary)
+"bg-[var(--glass-bg)]",
+"backdrop-blur-xl backdrop-saturate-[1.8]",
+"border-[0.5px] border-white/50",
+// Shadow allégée (3-layer)
+"shadow-[inset_0_1px_0_rgba(255,255,255,0.7),inset_0_-1px_0_rgba(60,30,25,0.04),0_4px_16px_-6px_rgba(60,30,25,0.15)]",
+// Hover standard
+"hover:border-white/70",
+"transition-colors duration-200 ease-out",
+```
+
+**Pour un élément qui flotte (Header pill, modale, panel mobile)** : même
+base, shadow 4-layer renforcée :
+
+```tsx
+"shadow-[inset_0_1px_0_rgba(255,255,255,0.7),inset_0_-1px_0_rgba(60,30,25,0.04),0_12px_32px_-10px_rgba(60,30,25,0.20),0_2px_6px_-2px_rgba(60,30,25,0.10)]",
+```
+
+**Pour un élément actif / sélectionné** (mini-card Prestations active) :
+border blanche quasi-opaque, shadow externe plus présente, léger scale :
+
+```tsx
+"border-white/95 opacity-100 saturate-100 scale-[1.015]",
+"shadow-[inset_0_1px_0_rgba(255,255,255,0.85),inset_0_-1px_0_rgba(60,30,25,0.04),0_8px_24px_-8px_rgba(60,30,25,0.25)]",
+```
+
+> **Convention shadow** : la teinte sombre est toujours `rgba(60, 30, 25, α)`
+> (sRGB ~terracotta foncé, aligné sur le ressenti warm). Ne pas
+> introduire d'autres teintes de shadow dans le projet — si besoin de
+> plus de présence, on joue sur l'opacité ou l'offset.
+
+### Boutons (ButtonLink)
+
+Deux variantes — voir `src/components/ui/ButtonLink.tsx`. Toutes les CTA
+du site **doivent** passer par ce composant.
+
+**Base commune**
+```
+inline-flex items-center justify-center gap-1.5 h-10 px-5 rounded-md
+font-body text-[14px] font-medium tracking-[0.01em] whitespace-nowrap
+transition-colors duration-150 ease-out
+focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700
+```
+
+**Variant primary** — CTA de conversion (Resalib, "Prendre RDV", "Appeler")
+```
+text-warm-100 bg-accent hover:bg-accent-hover
+shadow-[0_4px_12px_-2px_rgba(40,60,30,0.25),inset_0_1px_0_0_rgba(255,255,255,0.12)]
+```
+
+**Variant secondary** — action secondaire (En savoir plus, Itinéraire,
+Suivre Instagram) — **glass** (pas outline plat) :
+```
+text-warm-700 bg-[var(--glass-bg)]
+backdrop-blur-xl backdrop-saturate-[1.8]
+border-[0.5px] border-white/50
+shadow-[inset_0_1px_0_rgba(255,255,255,0.7),inset_0_-1px_0_rgba(60,30,25,0.04),0_4px_16px_-6px_rgba(60,30,25,0.15)]
+hover:border-white/70 hover:text-warm-900
+```
+
+**Usages observés sur la landing** :
+- Primary : Header, Hero ("Prendre RDV"), Specialites "En savoir plus",
+  Cabinet "Appeler", Prestations "Découvrir les ateliers", selector
+  (detail desktop + accordion mobile), Temoignages "Écrire avis Resalib".
+- Secondary : Hero "Appeler", Presentation "Découvrir mon approche",
+  Cabinet "Itinéraire", Prestations "Voir toutes les prestations",
+  Temoignages "Écrire avis Google" + "Suivre Instagram".
+
+> Les variantes primary et secondary ont la **même hauteur (h-10)** et
+> le **même radius (`rounded-md` = 6px)**. Elles s'alignent visuellement
+> côte à côte dans tous les contextes.
+
+### Tags / chips glass
+
+Recette glass identique aux cards, taille réduite :
+
+```tsx
+"inline-flex items-center px-2.5 py-1 lg:px-3 lg:py-1.5 rounded-md",
+"bg-[var(--glass-bg)] backdrop-blur-xl backdrop-saturate-[1.8]",
+"border-[0.5px] border-white/50",
+"shadow-[inset_0_1px_0_rgba(255,255,255,0.7),inset_0_-1px_0_rgba(60,30,25,0.04),0_4px_16px_-6px_rgba(60,30,25,0.15)]",
+"font-body text-xs lg:text-sm font-medium text-warm-700",
+"hover:border-white/70 hover:text-warm-900",
+```
+
+Vu dans : Hero tags (conditions), Presentation chips spécialités.
+
+### Cards avec icône "ghost" en watermark
+
+Pattern Specialites + detail panel PrestationsSelector. Deux couches
+dans un parent `relative overflow-hidden rounded-md` :
+
+1. **Layer 1** — icône géante en `absolute inset-0 w-full h-full text-warm-700/50 pointer-events-none`, en `strokeWidth={2}`.
+2. **Layer 2** — card glass posée par-dessus. Son `backdrop-blur-xl`
+   floute l'icône derrière → effet "watermark flouté" sans post-process.
+
+Le LogoMark peut remplacer l'icône quand la card est générique (detail
+panel de PrestationsSelector → LogoMark right-aligned à 80% de hauteur).
 
 ### Bordures
 
 | Élément | Épaisseur |
 |---|---|
-| Cards / inputs | 1px |
-| Séparateurs | 0.5px |
-| Header glass (Apple-style) | 0.5px |
-
-> L'angle "presque carré" reste un choix design assumé qui contraste avec la douceur de la typographie. L'échelle adaptative permet de garder cette identité tout en évitant l'incohérence visuelle qui apparaîtrait si tous les composants utilisaient strictement 4px.
+| Cards glass | `border-[0.5px]` (Apple Retina, valeur exacte) |
+| Photo portrait Presentation | `border border-warm-900` (1px, cadre net) |
+| Map Cabinet + hairlines Footer | `border-[0.5px]` ou `border` + `warm-700/15` |
 
 ---
 
-## globals.css — @theme Tailwind v4
+## Section types — templates réutilisables
 
-```css
-@theme {
-  /* Vert — usage 500 → 900 uniquement */
-  --color-vert-500: oklch(0.414 0.058 154.34);
-  --color-vert-700: oklch(0.232 0.032 154.34);
-  --color-vert-900: oklch(0.05  0.007 154.34);
+### Section standard centrée (Specialites, Temoignages, Prestations)
 
-  /* Beige — usage complet */
-  --color-beige-100: oklch(0.972 0.006 90);
-  --color-beige-300: oklch(0.888 0.022 90);
-  --color-beige-500: oklch(0.729 0.036 84.593);
-  --color-beige-700: oklch(0.619 0.03  84.593);
-  --color-beige-900: oklch(0.509 0.025 84.593);
-
-  /* Typographies */
-  --font-display: 'Outfit', sans-serif;
-  --font-body:    'Manrope', sans-serif;
-
-  /* Radius — système adaptatif (cf. section "Composants UI") */
-  --radius-sm:  4px;   /* ≤40px : boutons, inputs, tags */
-  --radius-md:  6px;   /* 40-56px : CTA, hover pills */
-  --radius-lg:  8px;   /* 56-100px : cards */
-  --radius-xl:  10px;  /* 100-300px : Header pill, modales */
-  --radius-2xl: 14px;  /* 300px+ : hero, blocs géants */
-}
+```tsx
+<section id="…" aria-labelledby="…-titre" className="relative py-12 lg:py-22">
+  <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
+    <div className="text-center max-w-3xl mx-auto">
+      <h2 id="…-titre" className="font-display text-4xl lg:text-5xl font-medium tracking-[-0.02em] leading-[1.1] text-warm-900">
+        …
+      </h2>
+      <p className="mt-6 font-body text-lg lg:text-xl leading-relaxed text-warm-700">…</p>
+    </div>
+    {/* grid / selector / contenu spécifique */}
+  </div>
+</section>
 ```
+
+### Section split (photo/texte — Presentation, Cabinet)
+
+```tsx
+<div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+  <div className="lg:col-span-5">{/* photo */}</div>
+  <div className="lg:col-span-7 text-center lg:text-left">
+    <h2 className="font-display text-4xl lg:text-5xl font-medium tracking-[-0.02em] leading-[1.1] text-warm-900">…</h2>
+    <p className="font-display text-xl lg:text-2xl font-light tracking-tight text-warm-700">sous-titre</p>
+    {/* tags, description, CTA */}
+  </div>
+</div>
+```
+
+### Patterns récurrents
+
+- **Rating stars** : 5 étoiles lucide `Star` en `text-warm-700 fill-currentColor stroke-none`, gap compact (`gap-0.5 lg:gap-1`), + texte underline `decoration-warm-500/60` ou `decoration-warm-700/40`.
+- **CTA row** : `flex flex-col-reverse sm:flex-row items-center gap-4` (mobile primary au-dessus malgré ordre DOM inverse).
+- **Stack mobile / row desktop** : pattern order-1 / order-2 / order-3 dans un grid pour réordonner sans dupliquer le DOM.
 
 ---
 
 ## Logo
 
-- **Statut :** À créer via Quiver AI
-- **Format :** SVG monochrome inline (composant React)
-- **Version claire :** vert-900 (sur fonds beige)
-- **Version sombre :** beige-100 (sur fonds verts)
-- **Nom affiché :** Asmaa Mansouri · Naturopathe
+- **Logo** (wordmark texte) : `src/components/ui/Logo.tsx` — placeholder texte Outfit stacké. SVG définitif viendra via Quiver AI, l'API du composant ne changera pas.
+- **LogoMark** (glyphe SVG, 250×250) : `src/components/ui/LogoMark.tsx` — `currentColor` + pas de dimensions figées, le parent décide (text-*/w-*/h-*).
+
+Usages LogoMark : Hero centerpiece (294×294), Footer brand block (w-10) + watermark décoratif (420×420 opacité 0.08), detail panel PrestationsSelector (80% de hauteur, right-aligned, opacité 0.50 floutée).
 
 ---
 
 ## Photos
 
-- **Statut :** En attente — à recevoir d'Asmaa
-- **Traitement :** Tons chauds cohérents avec la palette, pas de filtre froid
-- **Format cible :** WebP, optimisé via next/image
+- **Portrait Asmaa** : `public/asmaa-mansouri.jpg` (951×1280, ratio 3/4). `next/image` en mode `fill`, `object-cover object-top`, container à aspect ratio fixe (mobile `aspect-[3/2]`, desktop `aspect-auto lg:h-full`).
+- **Cabinet** : en attente.
+- **Format cible** : WebP, optimisé via `next/image`. Traitement tons chauds cohérent avec la palette warm.
 
 ---
 
-*Fichier évolutif · Ne valider que les éléments confirmés · Avril 2026*
+## Carte (Map cabinet)
+
+Style positron CartoDN (grayscale) recolorisé au runtime vers la
+palette warm — voir `src/components/ui/Map.tsx`. Pattern remap :
+
+| Layer | Token |
+|---|---|
+| `background` | `warm-100` |
+| `fill` (water/park/building) | `warm-100 @ 10%` |
+| `fill` (autres) | `warm-100` |
+| `line` (routes) | `warm-100 @ 10%` |
+| `symbol` text | `warm-700` + halo `warm-100` |
+| Marker pin (lucide MapPin SVG) | `warm-700` + point inner `warm-100` |
+
+Scroll-zoom désactivé. Client component.
+
+---
+
+## Accessibilité — rappels concrets
+
+- Tous les éléments focusables ont un ring : `focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700`.
+- Chaque `<section>` de landing a un `id` + `aria-labelledby` pointant vers le `id` de son H2.
+- Icônes décoratives : `aria-hidden="true"`.
+- Skip link dans `layout.tsx` (premier élément focusable du body).
+- Accordéon mobile PrestationsSelector : `aria-expanded` + `aria-controls`.
+- Burger HeaderMobile : `aria-label` dynamique + `aria-expanded`.
+- Tap targets mobile : `min-h-14` (56px) sur les headers accordion (WCAG 2.5.5).
+
+---
+
+## Animations
+
+- **Transitions colors/borders** : `transition-colors duration-150 ease-out` (boutons) ou `duration-200 ease-out` (cards, tags, nav).
+- **Framer Motion** : PrestationsSelector (AnimatePresence mode="wait" sur le swap desktop, height auto sur l'accordion mobile, layoutId spring sur l'indicateur actif), HeaderMobile (panel height auto), backdrop fade.
+- **Marquee** : animation CSS pure (`@utility animate-marquee` + `@keyframes marquee` / `marquee-vertical`), zero JS. Duration via `[--duration:30s]`. `pauseOnHover` supporté par le composant `Marquee`.
+
+---
+
+## globals.css — état actuel (résumé)
+
+```css
+@theme {
+  /* warm — monochrome beige → olive */
+  --color-warm-100: #F2E4CF;
+  --color-warm-300: #FEF5E7;
+  --color-warm-500: oklch(0.84  0.030 78);
+  --color-warm-700: oklch(0.40  0.050 140);
+  --color-warm-900: oklch(0.28  0.045 140);
+
+  /* CTA olive */
+  --color-accent:       oklch(0.40 0.050 140);
+  --color-accent-hover: oklch(0.32 0.045 140);
+
+  /* Typographies (injectées par next/font sur <html>) */
+  --font-display: var(--font-outfit), "Outfit", sans-serif;
+  --font-body:    var(--font-manrope), "Manrope", sans-serif;
+
+  /* Radius adaptatif */
+  --radius-sm:  4px;
+  --radius-md:  6px;
+  --radius-lg:  8px;
+  --radius-xl:  10px;
+  --radius-2xl: 14px;
+}
+
+:root {
+  --header-height: 64px;
+  --glass-bg: color-mix(in oklch, #FFF8F0 65%, transparent);
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  :root { --glass-bg: color-mix(in oklch, #FFF8F0 95%, transparent); }
+}
+```
+
+Body : `background-color: var(--color-warm-100)` + `color: var(--color-warm-700)` + `font-family: var(--font-body)`. Aucun gradient wash au niveau du body — les rares washes (fade overlays Temoignages) sont locaux et inline-style.
+
+---
+
+*Figé au 2026-04-14 après validation landing · Source de vérité technique : `src/app/globals.css`*

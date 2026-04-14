@@ -1,5 +1,12 @@
 # Audit palette — landing page
 
+> ⚠️ **OBSOLÈTE (2026-04-14)** — Ce document audite l'ancienne palette
+> `vert-*` / `beige-*` qui **n'existe plus** dans `globals.css`. La
+> palette actuelle est `warm-*` + `accent-*` (voir `DESIGN.md` et
+> `globals.css`). Tous les tokens, chemins de ligne et recettes ci-dessous
+> sont conservés **uniquement comme référence historique** du refactor.
+> **Ne pas s'en servir pour coder de nouvelles pages.**
+
 ## 1. Tokens définis
 
 ### Vert (`globals.css:7-13`)

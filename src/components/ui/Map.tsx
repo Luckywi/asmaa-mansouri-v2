@@ -58,11 +58,16 @@ interface MapProps {
  * en bouclant sur les layers et en remappant chaque type vers les
  * tokens du thème :
  *   - background → warm-100 (terrain neutre, aligné sur le fond body)
- *   - fill (water/park/building) → warm-100 à 10% d'opacité (cohérence
- *     avec le fond body, filigrane discret)
+ *   - fill (water/park) → warm-300 à 40% d'opacité (environnement discret)
+ *   - fill (building) → warm-300 à 55% d'opacité (formes crème visibles)
  *   - fill (tout le reste) → warm-100 (fond uniforme, no clutter)
- *   - line (routes) → warm-100 à 10% d'opacité (filigrane discret)
+ *   - line (routes) → warm-300 à 70% d'opacité (crème glass, plus marqué
+ *     que l'environnement pour guider la lecture)
  *   - symbol text → warm-700 + halo warm-100 (lisibilité)
+ *
+ * La teinte warm-300 (#FEF5E7) rejoint visuellement la couleur des cards
+ * glass du reste du site (base #FFF8F0 mixée avec le body warm-100) pour
+ * que la map respire la même matière pâle que l'UI.
  *
  * Le marker est un SVG inline avec le path lucide MapPin (pas iconoir),
  * peint en warm-700 (accent du thème) avec un point inner warm-100.
@@ -84,10 +89,11 @@ export default function Map({ className }: MapProps) {
     const ACCENT = resolveCssColor("--color-warm-700");
     // BG = warm-100 (terrain neutre, aligné sur le fond body)
     const BG = resolveCssColor("--color-warm-100");
-    // SUBTLE = warm-500 plein, appliqué avec fill-opacity / line-opacity 0.1.
-    // Plus foncé que le fond (warm-100) pour que le filigrane reste visible,
-    // tout en gardant la même famille de teinte.
-    const SUBTLE = resolveCssColor("--color-warm-500");
+    // GLASS = warm-300 (#FEF5E7), le crème clair de la palette. Proche du
+    // rendu visuel des cards glass (#FFF8F0 à 65% sur warm-100) pour que
+    // les routes / bâtiments / eau partagent la même texture pâle que
+    // le reste de l'UI. Les opacités sont réglées ci-dessous selon le rôle.
+    const GLASS = resolveCssColor("--color-warm-300");
     const LABEL = resolveCssColor("--color-warm-700");
 
     const map = new maplibregl.Map({
@@ -114,22 +120,24 @@ export default function Map({ className }: MapProps) {
           if (type === "background") {
             map.setPaintProperty(id, "background-color", BG);
           } else if (type === "fill") {
-            // Eau, parcs et bâtiments en warm-100 à 10% d'opacité ;
-            // tout le reste (terre, landuse résidentiel) fond dans le BG.
-            if (
-              id.includes("water") ||
-              id.includes("park") ||
-              id.includes("building")
-            ) {
-              map.setPaintProperty(id, "fill-color", SUBTLE);
-              map.setPaintProperty(id, "fill-opacity", 0.1);
+            // Eau / parcs : crème glass à 40% (environnement discret).
+            // Bâtiments : crème glass à 55% (formes visibles, cohérentes
+            // avec les cards glass du site). Le reste (terre, landuse)
+            // fond dans le background warm-100.
+            if (id.includes("water") || id.includes("park")) {
+              map.setPaintProperty(id, "fill-color", GLASS);
+              map.setPaintProperty(id, "fill-opacity", 0.4);
+            } else if (id.includes("building")) {
+              map.setPaintProperty(id, "fill-color", GLASS);
+              map.setPaintProperty(id, "fill-opacity", 0.55);
             } else {
               map.setPaintProperty(id, "fill-color", BG);
             }
           } else if (type === "line") {
-            // Routes en warm-100 à 10% d'opacité — filigrane discret
-            map.setPaintProperty(id, "line-color", SUBTLE);
-            map.setPaintProperty(id, "line-opacity", 0.1);
+            // Routes en crème glass à 70% — guides de lecture plus marqués
+            // que l'environnement, dans la même teinte que les bâtiments.
+            map.setPaintProperty(id, "line-color", GLASS);
+            map.setPaintProperty(id, "line-opacity", 0.7);
           } else if (type === "symbol" && layer.layout?.["text-field"]) {
             map.setPaintProperty(id, "text-color", LABEL);
             map.setPaintProperty(id, "text-halo-color", BG);

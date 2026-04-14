@@ -42,4 +42,17 @@ export const site: SiteData = {
   verifiedReviewsCount: 24,
   googleMapsDirectionsUrl:
     "https://www.google.com/maps/dir/?api=1&destination=48+rue+Francisco+Ferrer%2C+69150+D%C3%A9cines-Charpieu",
+  // Horaires placeholder — à valider avec Asmaa avant publication. On garde
+  // le dimanche fermé (jour de repos par défaut pour un cabinet libéral) et
+  // le samedi matin seul pour matcher le pattern classique naturopathie/MTC
+  // (consultations longues en semaine, matinée fin de semaine).
+  openingHours: [
+    { day: "Lundi", open: "09:00", close: "19:00" },
+    { day: "Mardi", open: "09:00", close: "19:00" },
+    { day: "Mercredi", open: "09:00", close: "19:00" },
+    { day: "Jeudi", open: "09:00", close: "19:00" },
+    { day: "Vendredi", open: "09:00", close: "19:00" },
+    { day: "Samedi", open: "09:00", close: "13:00" },
+    { day: "Dimanche", open: null, close: null },
+  ],
 } as const;

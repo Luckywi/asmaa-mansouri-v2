@@ -74,6 +74,19 @@ export type SiteData = {
   readonly verifiedReviewsCount: number;
   /** Lien Google Maps pré-rempli avec l'adresse comme destination */
   readonly googleMapsDirectionsUrl: string;
+  /**
+   * Horaires d'ouverture du cabinet. Une entrée par jour de la semaine, dans
+   * l'ordre lundi → dimanche. `open`/`close` en `HH:mm` (24h), ou `null` pour
+   * un jour fermé. Affiché sur la page /cabinet et utilisé Phase 2 pour le
+   * schema.org LocalBusiness.openingHoursSpecification.
+   *
+   * ⚠️ Valeurs placeholder — à valider avec Asmaa avant publication.
+   */
+  readonly openingHours: readonly {
+    readonly day: string;
+    readonly open: string | null;
+    readonly close: string | null;
+  }[];
 };
 
 /**
@@ -123,4 +136,67 @@ export type Prestation = {
    * (ex: "En savoir plus sur les consultations", "Comprendre le Tuina").
    */
   readonly ctaLabel: string;
+};
+
+/**
+ * Une spécialité (problématique de santé féminine) accompagnée par Asmaa.
+ *
+ * Affichée :
+ *   - en card sur le hub `/specialites` (champs `title` + `shortDescription`)
+ *   - en article complet sur sa page dédiée `/specialites/[slug]`
+ *     (tous les champs structurés en sections SEO).
+ *
+ * Stratégie de contenu **plug-and-play** :
+ *   - Champs "structure" rédigés en interne (titres, descriptions,
+ *     intro hero, titres de section, questions FAQ) — pilotent le SEO
+ *     long-tail et le rendu visuel.
+ *   - Champs "fond" laissés à Asmaa (definition.content, symptomes.items,
+ *     approche.content, faq[].answer) — repérables dans le data file via
+ *     le marqueur "À COMPLÉTER PAR ASMAA — …" pour une édition directe.
+ *
+ * Toute édition se fait dans `src/data/specialites.ts`, sans toucher
+ * aux composants de rendu.
+ */
+export type Specialite = {
+  /** Slug pour la URL et la React key (kebab-case, sans stopwords) */
+  readonly slug: string;
+  /** Titre court — H1 de la page dédiée et titre de card du hub */
+  readonly title: string;
+  /** Phrase courte (1-2 lignes) affichée sur la card du hub */
+  readonly shortDescription: string;
+  /**
+   * Paragraphe d'intro sous le H1 de la page dédiée. Densité SEO :
+   * mention "naturopathe + Décines-Charpieu/Lyon + mot-clé spécialité"
+   * pour capter les SERPs locales.
+   */
+  readonly intro: string;
+  /** Section 1 — "Le SOPK, c'est quoi ?" : titre rédigé, content à compléter */
+  readonly definition: {
+    readonly title: string;
+    readonly content: string;
+  };
+  /**
+   * Section 2 — "Les symptômes" : titre + intro rédigés, items à compléter.
+   * `items` est rendu en liste à puces ; minimum 1 item pour ne pas
+   * laisser un bloc vide à la publication.
+   */
+  readonly symptomes: {
+    readonly title: string;
+    readonly intro: string;
+    readonly items: readonly string[];
+  };
+  /** Section 3 — "Mon approche" : titre rédigé, content à compléter */
+  readonly approche: {
+    readonly title: string;
+    readonly content: string;
+  };
+  /**
+   * Bloc FAQ — questions rédigées (long-tail SEO ciblé pain points
+   * locaux), réponses à compléter par Asmaa avec ses vraies réponses
+   * cabinet (durées, cas concrets, méthodes).
+   */
+  readonly faq: readonly {
+    readonly question: string;
+    readonly answer: string;
+  }[];
 };

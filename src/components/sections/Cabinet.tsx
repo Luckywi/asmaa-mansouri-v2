@@ -75,7 +75,7 @@ export function Cabinet() {
           </div>
 
           {/* Map */}
-          <div className="w-[480px] h-[320px] shrink-0 rounded-md overflow-hidden border border-warm-700/15">
+          <div className="w-[480px] h-[320px] shrink-0 rounded-md overflow-hidden">
             <Map className="w-full h-full" />
           </div>
         </div>
@@ -94,7 +94,7 @@ export function Cabinet() {
             </p>
           </div>
 
-          <div className="w-full h-[220px] rounded-md overflow-hidden border border-warm-700/15">
+          <div className="w-full h-[220px] rounded-md overflow-hidden">
             <Map className="w-full h-full" />
           </div>
 
