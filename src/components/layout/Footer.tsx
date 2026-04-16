@@ -24,11 +24,11 @@ import { site } from "@/data/site";
  * pour rendre la migration triviale (search/replace de la colonne).
  */
 const specialitesLinks = [
-  { label: "SOPK", href: "/#specialites", futureHref: "/specialites/sopk" },
-  { label: "Endométriose", href: "/#specialites", futureHref: "/specialites/endometriose" },
-  { label: "Ménopause", href: "/#specialites", futureHref: "/specialites/premenopause" },
-  { label: "Post-partum", href: "/#specialites", futureHref: "/specialites/post-partum" },
-  { label: "Fertilité", href: "/#specialites", futureHref: "/specialites/fertilite" },
+  { label: "SOPK", href: "/specialites/sopk" },
+  { label: "Endométriose", href: "/specialites/endometriose" },
+  { label: "Ménopause", href: "/specialites/premenopause-menopause" },
+  { label: "Post-partum", href: "/specialites/post-partum" },
+  { label: "Fertilité", href: "/specialites/fertilite" },
 ] as const;
 
 /**
@@ -57,6 +57,7 @@ const PRESTATION_FOOTER_LABELS: Record<string, string> = {
  * utilisé partout ailleurs (navLinks, specialitesLinks).
  */
 const legalLinks = [
+  { label: "Contact", href: "/contact" },
   { label: "Mentions légales", href: "/mentions-legales" },
   { label: "Politique de confidentialité", href: "/politique-confidentialite" },
 ] as const;
@@ -235,7 +236,7 @@ export function Footer() {
 
           <FooterSection title="Prestations">
             {prestations.map((p) => (
-              <FooterLink key={p.id} href="/#prestations">
+              <FooterLink key={p.id} href={`/prestations/${p.slug}`}>
                 {PRESTATION_FOOTER_LABELS[p.id] ?? p.title}
               </FooterLink>
             ))}
@@ -276,7 +277,7 @@ export function Footer() {
 
             <FooterSection title="Prestations">
               {prestations.map((p) => (
-                <FooterLink key={p.id} href="/#prestations">
+                <FooterLink key={p.id} href={`/prestations/${p.slug}`}>
                   {PRESTATION_FOOTER_LABELS[p.id] ?? p.title}
                 </FooterLink>
               ))}

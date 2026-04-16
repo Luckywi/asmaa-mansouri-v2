@@ -90,24 +90,97 @@ export type SiteData = {
 };
 
 /**
- * Témoignage client affiché dans la section Temoignages de la landing.
- * Stockés en `src/data/temoignages.ts`.
+ * Prestations auxquelles un témoignage peut être associé. Strictement
+ * limité aux 4 services proposés par Asmaa (cf. `data/prestations.ts`),
+ * pour éviter des rôles "sauvages" (atelier, soin bien-être, troubles
+ * digestifs, etc.) qui fragmenteraient l'affichage et ne renverraient
+ * vers aucune page de prestation dédiée.
  *
- * ⚠️ Les témoignages actuels sont des placeholders. À remplacer par des
- * avis réels collectés par Asmaa avant publication.
+ * Ajouter une valeur ici implique de créer la prestation correspondante
+ * dans `data/prestations.ts` — et inversement.
+ */
+export type TemoignageRole =
+  | "Consultation"
+  | "Suivi naturopathique"
+  | "Massage Tuina"
+  | "Cupping thérapie";
+
+/**
+ * Témoignage client affiché dans la section Temoignages de la landing et
+ * sur la page dédiée `/temoignages`. Stockés en `src/data/temoignages.ts`.
+ *
+ * Les champs `rating`, `date` et `source` sont optionnels et alimentent la
+ * page `/temoignages` (étoiles, modale détaillée, lien vers l'avis d'origine).
+ * La landing n'en a pas besoin — elle lit `name`, `role`, `body`.
  */
 export type Temoignage = {
   /** Nom (typiquement prénom + initiale, ex: "Marie L.") */
   name: string;
-  /** Description courte du contexte (ex: "SOPK", "Préménopause"). Optionnel. */
-  role?: string;
+  /** Prestation associée à l'avis — contrainte aux 4 types via `TemoignageRole`. */
+  role?: TemoignageRole;
   /** Texte du témoignage */
   body: string;
+  /** Note sur 5. Par défaut 5 dans l'UI quand omise. */
+  rating?: number;
+  /**
+   * Date ISO (YYYY-MM-DD) de publication. Omise tant que les vraies dates
+   * Resalib/Google ne sont pas renseignées — la modale affiche alors un
+   * libellé neutre sans date.
+   */
+  date?: string;
+  /**
+   * Plateforme source de l'avis. Par défaut "resalib" dans l'UI quand omise.
+   * Le CTA "Voir le commentaire" de la modale pointe vers l'URL
+   * correspondante (`site.resalibReviewsUrl` ou `site.googleReviewsUrl`).
+   */
+  source?: "resalib" | "google";
 };
 
 /**
- * Une prestation proposée par Asmaa, affichée dans la section
- * <Prestations /> et (Phase 2) sur sa propre page /prestations/{id}.
+ * Ligne du tableau de tarifs affiché dans le Hero de chaque page
+ * slug `/prestations/[slug]`. Structure pensée "tableau propre" mais
+ * rendue en cards glass horizontales (stack mobile, row desktop).
+ */
+export type PrestationTariff = {
+  /** Ex: "Appel découverte", "Consultation bilan", "Suivi" */
+  readonly label: string;
+  /** Ex: "Gratuit", "80 €", "50 €". Texte brut, on le stylise côté vue. */
+  readonly price: string;
+  /** Ex: "15 min", "1h", "1h30" */
+  readonly duration: string;
+  /** Ex: "Cabinet", "Cabinet ou visio", "Téléphone" */
+  readonly location?: string;
+};
+
+/**
+ * Étape du déroulé d'une séance — rendue en card numérotée sur la
+ * page slug. 3 ou 4 étapes par prestation.
+ */
+export type PrestationStep = {
+  /** Numéro affiché en gros sur la card — "01", "02"... */
+  readonly number: string;
+  readonly title: string;
+  readonly description: string;
+};
+
+/**
+ * Bridge de maillage interne en bas de chaque page slug. 3 entrées
+ * par prestation, variées selon le contexte (autres prestations,
+ * /specialites, /qui-suis-je, /cabinet).
+ */
+export type PrestationBridge = {
+  readonly href: string;
+  readonly iconKey: "user" | "flower" | "map" | "gallery" | "massage" | "cupping" | "heart" | "message";
+  readonly title: string;
+  readonly description: string;
+  readonly ctaLabel: string;
+};
+
+/**
+ * Une prestation proposée par Asmaa, affichée à 3 endroits :
+ *   - section <Prestations /> de la landing (selector master-detail)
+ *   - hub /prestations (card avec tag prix + "En savoir plus")
+ *   - page slug /prestations/[slug] (article complet)
  *
  * Le champ `icon` est un composant lucide-react importé directement
  * dans `src/data/prestations.ts`. Comme ce n'est pas serializable (c'est
@@ -116,8 +189,10 @@ export type Temoignage = {
  * un Server Component à travers la frontière RSC.
  */
 export type Prestation = {
-  /** Slug pour la URL et la React key */
+  /** Slug pour la React key, cohérent avec le segment d'URL */
   readonly id: string;
+  /** Slug URL complet (segment après `/prestations/`) */
+  readonly slug: string;
   /** Composant lucide-react pour l'icône (référence directe) */
   readonly icon: LucideIcon;
   /** Catégorie courte affichée dans la mini-card du selector */
@@ -126,16 +201,48 @@ export type Prestation = {
   readonly tagline: string;
   /** Titre long pour la detail card */
   readonly title: string;
-  /** Description complète (3-5 lignes) pour la detail card */
+  /** Description complète (3-5 lignes) pour la detail card landing */
   readonly description: string;
-  /** URL détail (futureHref Phase 2) */
+  /** Description courte (2-3 lignes) pour la card du hub /prestations */
+  readonly shortDescription: string;
+  /** Prix plancher en euros, affiché "À partir de X €" sur le hub */
+  readonly priceFrom: number;
+  /** URL détail */
   readonly detailHref: string;
-  /**
-   * Label custom du bouton "En savoir plus" de la detail card. Doit
-   * avoir un sens contextualisé pour la prestation, pas un générique
-   * (ex: "En savoir plus sur les consultations", "Comprendre le Tuina").
-   */
+  /** Label custom du bouton "En savoir plus" de la detail card */
   readonly ctaLabel: string;
+  /** H1 SEO de la page slug (inclure mot-clé local "Décines-Charpieu") */
+  readonly seoH1: string;
+  /** Sous-titre du Hero page slug (paragraphe d'intro, contexte) */
+  readonly seoSubtitle: string;
+  /** Tableau de tarifs (1 à 3 lignes selon prestation) */
+  readonly tariffs: readonly PrestationTariff[];
+  /** Section "Qu'est-ce que la [service]" — titre + contenu long-form */
+  readonly whatIs: {
+    readonly title: string;
+    readonly content: string;
+  };
+  /** Section "Déroulé d'une séance" — 3-4 étapes numérotées */
+  readonly steps: {
+    readonly title: string;
+    readonly items: readonly PrestationStep[];
+  };
+  /**
+   * FAQ spécifique à la prestation, orientée SERP et GEO (Décines,
+   * Lyon, tarifs, contre-indications). 4 à 5 questions par prestation.
+   */
+  readonly faq: readonly {
+    readonly question: string;
+    readonly answer: string;
+  }[];
+  /** 3 bridges de maillage interne bas de page */
+  readonly bridges: readonly PrestationBridge[];
+  /**
+   * Filtre `role` pour la sélection des témoignages pertinents à
+   * afficher dans le carousel d'avis. Chaque entrée est matchée
+   * case-insensitive sur le champ `role` de Temoignage.
+   */
+  readonly testimonialRoles: readonly string[];
 };
 
 /**
@@ -199,4 +306,48 @@ export type Specialite = {
     readonly question: string;
     readonly answer: string;
   }[];
+};
+
+/**
+ * Atelier animé par Asmaa au sein de l'association "Le Cœur du Mas
+ * Cuisine" (Vaulx-en-Velin). Thématique alimentation / bien-être.
+ *
+ * Affiché :
+ *   - en card cliquable sur la page `/ateliers` (titre + theme +
+ *     shortDescription)
+ *   - en modale de détail au clic (longDescription + champs optionnels
+ *     date / duration / location / highlights)
+ *
+ * Toute édition se fait dans `src/data/ateliers.ts`.
+ */
+export type Atelier = {
+  /** Slug pour la React key (kebab-case) */
+  readonly slug: string;
+  /** Titre de l'atelier — affiché sur la card et en titre de modale */
+  readonly title: string;
+  /** Catégorie / thème court — affiché en tag au-dessus du titre */
+  readonly theme?: string;
+  /** Description courte (1-2 lignes) pour la card */
+  readonly shortDescription: string;
+  /** Description complète (multi-paragraphes possibles via \n) pour la modale */
+  readonly longDescription: string;
+  /** Date ISO (YYYY-MM-DD) ou texte libre — affiché en footer de modale */
+  readonly date?: string;
+  /** Durée indicative, ex: "2h" */
+  readonly duration?: string;
+  /**
+   * Lieu — par défaut "Le Cœur du Mas Cuisine, Vaulx-en-Velin"
+   * si non renseigné (rendu côté composant).
+   */
+  readonly location?: string;
+  /** Points clés listés en bullets dans la modale */
+  readonly highlights?: readonly string[];
+  /**
+   * Galerie photo de l'atelier — chemins relatifs à `/public`. Quand
+   * renseigné (≥1 image), la modale affiche une grille de miniatures
+   * cliquables qui ouvrent un lightbox plein écran (cf. `ateliers/Gallery.tsx`).
+   * Toutes les photos doivent être en orientation portrait pour la
+   * cohérence de la grille ; rotater côté source si besoin.
+   */
+  readonly images?: readonly string[];
 };

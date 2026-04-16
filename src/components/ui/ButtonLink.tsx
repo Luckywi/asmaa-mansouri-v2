@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 
-type ButtonLinkVariant = "primary" | "secondary";
+type ButtonLinkVariant = "primary" | "secondary" | "secondary-on-glass";
 
 type ButtonLinkProps = {
   href: string;
@@ -17,12 +17,30 @@ type ButtonLinkProps = {
 };
 
 /**
- * Bouton-lien primitif réutilisable, déclinaison `primary | secondary`.
+ * Bouton-lien primitif réutilisable — 3 déclinaisons.
  *
- * - **primary** : CTA principal (Resalib, "Prendre RDV") — fond warm-700,
- *   texte warm-100. Utilisé Header, Hero, fin de chaque section, Footer.
- * - **secondary** : action secondaire (En savoir plus, lien vers page) —
- *   bordure warm-500, texte warm-700, fond transparent.
+ * - **primary** : CTA principal (Resalib, "Prendre RDV") — fond accent
+ *   olive, texte warm-100. Utilisé Header, Hero, fin de chaque section,
+ *   Footer.
+ * - **secondary** : action secondaire (En savoir plus, etc.) — glass
+ *   avec `backdrop-filter`, `--glass-bg` (65% warm white) + border
+ *   white/50. **À utiliser UNIQUEMENT sur le body du site** (fond
+ *   warm-100 beige) où le backdrop-filter peut échantillonner la
+ *   couleur chaude du body.
+ * - **secondary-on-glass** : même intention visuelle que `secondary`
+ *   mais pour les surfaces déjà en glass (modale, panel mobile du
+ *   Header, et plus largement tout conteneur qui a lui-même
+ *   `--glass-bg` + `backdrop-filter`). La recette est identique à
+ *   `secondary` à une exception : pas de `backdrop-filter`. Les
+ *   backdrop-filter ne se composent pas à travers les stacking
+ *   contexts — un glass dans un glass échantillonne l'output déjà
+ *   dilué du parent, ce qui efface la teinte warm du body. En
+ *   retirant juste le filtre, le fond semi-transparent `--glass-bg`
+ *   (65% warm white) se compose naturellement avec le cream du
+ *   conteneur parent et le bouton ressort ~10 % plus clair que sa
+ *   surface — exactement le même écart que `secondary` vs body
+ *   warm-100. Border et shadows sont inchangées pour garder le
+ *   highlight "vitre" attendu.
  *
  * Toutes les CTA du site doivent passer par ce composant pour garantir
  * la cohérence visuelle (radius, padding, transitions, focus rings,
@@ -56,6 +74,15 @@ export function ButtonLink({
     secondary:
       "text-warm-700 bg-[var(--glass-bg)] " +
       "backdrop-blur-xl backdrop-saturate-[1.8] " +
+      "border-[0.5px] border-white/50 " +
+      "shadow-[inset_0_1px_0_rgba(255,255,255,0.7),inset_0_-1px_0_rgba(60,30,25,0.04),0_4px_16px_-6px_rgba(60,30,25,0.15)] " +
+      "hover:border-white/70 hover:text-warm-900",
+    // Identique à `secondary` moins `backdrop-filter` (cf. JSDoc).
+    // Le fond `--glass-bg` se compose directement avec la couleur
+    // composite du parent glass → bouton ~10 % plus clair que sa
+    // surface, même rapport que secondary vs body warm-100.
+    "secondary-on-glass":
+      "text-warm-700 bg-[var(--glass-bg)] " +
       "border-[0.5px] border-white/50 " +
       "shadow-[inset_0_1px_0_rgba(255,255,255,0.7),inset_0_-1px_0_rgba(60,30,25,0.04),0_4px_16px_-6px_rgba(60,30,25,0.15)] " +
       "hover:border-white/70 hover:text-warm-900",

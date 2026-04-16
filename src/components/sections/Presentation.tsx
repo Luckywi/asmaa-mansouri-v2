@@ -1,6 +1,21 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Microscope } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+
+/**
+ * Tags pratiques d'Asmaa — chaque tag pointe vers la page la plus
+ * représentative de sa discipline :
+ *   - Naturopathie → /prestations/consultation (service cœur)
+ *   - Médecine traditionnelle chinoise → /qui-suis-je (parcours et
+ *     formation MTC, pas de page /prestations/mtc dédiée)
+ *   - Massage thérapeutique Tuina → /prestations/massage-tuina
+ */
+const disciplineTags = [
+  { label: "Naturopathie", href: "/prestations/consultation" },
+  { label: "Médecine traditionnelle chinoise", href: "/qui-suis-je" },
+  { label: "Massage thérapeutique Tuina", href: "/prestations/massage-tuina" },
+] as const;
 
 /**
  * Presentation — section "Qui suis-je" (extrait) sur la landing.
@@ -87,16 +102,24 @@ export function Presentation() {
                 justify-center sur mobile (text-center ne marche pas sur les
                 flex containers, faut le justify explicite) */}
             <ul className="mt-6 flex flex-wrap gap-2 justify-center lg:justify-start">
-              {[
-                "Naturopathie",
-                "Médecine traditionnelle chinoise",
-                "Massage thérapeutique Tuina",
-              ].map((label) => (
-                <li
-                  key={label}
-                  className="rounded-md bg-[var(--glass-bg)] backdrop-blur-xl backdrop-saturate-[1.8] border-[0.5px] border-white/50 shadow-[inset_0_1px_0_rgba(255,255,255,0.7),inset_0_-1px_0_rgba(60,30,25,0.04),0_4px_16px_-6px_rgba(60,30,25,0.15)] px-2 lg:px-3 py-1 lg:py-1.5 font-body text-xs lg:text-sm text-warm-700"
-                >
-                  {label}
+              {disciplineTags.map(({ label, href }) => (
+                <li key={label}>
+                  <Link
+                    href={href}
+                    className={[
+                      "inline-flex items-center rounded-md px-2 lg:px-3 py-1 lg:py-1.5",
+                      "bg-[var(--glass-bg)]",
+                      "backdrop-blur-xl backdrop-saturate-[1.8]",
+                      "border-[0.5px] border-white/50",
+                      "shadow-[inset_0_1px_0_rgba(255,255,255,0.7),inset_0_-1px_0_rgba(60,30,25,0.04),0_4px_16px_-6px_rgba(60,30,25,0.15)]",
+                      "font-body text-xs lg:text-sm text-warm-700",
+                      "hover:border-white/70 hover:text-warm-900",
+                      "transition-colors duration-200 ease-out",
+                      "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700",
+                    ].join(" ")}
+                  >
+                    {label}
+                  </Link>
                 </li>
               ))}
             </ul>

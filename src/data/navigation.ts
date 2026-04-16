@@ -33,13 +33,15 @@ export const navLinks: NavLink[] = [
   },
   {
     label: "Prestations",
-    href: "#prestations",
+    href: "/prestations",
     futureHref: "/prestations",
   },
   {
     label: "Témoignages",
-    href: "#temoignages",
-    // Pas de futureHref : les témoignages restent une section landing,
-    // pas une page dédiée même Phase 2.
+    href: "/temoignages",
+    futureHref: "/temoignages",
+    // Page dédiée avec liste complète et modale de détail par avis.
+    // La section `#temoignages` de la landing reste présente (preuve
+    // sociale inline) et reste joignable en URL directe si besoin.
   },
 ];

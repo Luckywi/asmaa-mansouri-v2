@@ -1,4 +1,5 @@
-import { Flower2, ScanSearch, Sunrise, Wind } from "lucide-react";
+import Link from "next/link";
+import { ArrowUpRight, Flower2, ScanSearch, Sunrise, Wind } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 
 /**
@@ -96,8 +97,52 @@ export function Specialites() {
           </p>
         </div>
 
-        {/* ─── Grid de 3 cards glass ───────────────────────── */}
-        <ul className="mt-16 lg:mt-20 grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+        {/* ─── Mobile (< md) : liste éditoriale ─────────────
+            Pattern repris de cabinet/AllerPlusLoin et des bridges
+            /prestations : hairlines warm-700/15, gros titre display,
+            description, ArrowUpRight qui glisse au hover. Pas de
+            glass, pas d'icône watermark, pas de bouton chrome. */}
+        <ul className="mt-12 md:hidden border-y border-warm-700/15">
+          {specialitesBuckets.map(({ title, description }, i) => (
+            <li
+              key={title}
+              className={i > 0 ? "border-t border-warm-700/15" : ""}
+            >
+              <Link
+                href="/specialites"
+                className={[
+                  "group relative flex items-center gap-6",
+                  "py-7",
+                  "transition-colors duration-200 ease-out",
+                  "hover:text-warm-900",
+                  "focus-visible:outline-none",
+                ].join(" ")}
+              >
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-display text-2xl font-medium tracking-[-0.02em] leading-[1.15] text-warm-900">
+                    {title}
+                  </h3>
+                  <p className="mt-2 font-body text-sm leading-relaxed text-warm-700">
+                    {description}
+                  </p>
+                </div>
+                <ArrowUpRight
+                  aria-hidden="true"
+                  strokeWidth={1.5}
+                  className={[
+                    "w-7 h-7 shrink-0 text-warm-700",
+                    "transition-all duration-300 ease-out",
+                    "group-hover:translate-x-1 group-hover:-translate-y-1",
+                    "group-hover:text-warm-900",
+                  ].join(" ")}
+                />
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        {/* ─── md+ : grid de 3 cards glass watermark ──────── */}
+        <ul className="hidden md:grid mt-16 lg:mt-20 md:grid-cols-3 gap-6 lg:gap-8">
           {specialitesBuckets.map(({ icon: Icon, title, description }) => (
             <li
               key={title}

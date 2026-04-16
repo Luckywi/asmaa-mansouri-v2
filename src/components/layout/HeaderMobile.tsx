@@ -164,7 +164,7 @@ export function HeaderMobile() {
 
                   <ButtonLink
                     href={phoneHref}
-                    variant="secondary"
+                    variant="secondary-on-glass"
                     className="w-full h-12"
                   >
                     Appeler Asmaa

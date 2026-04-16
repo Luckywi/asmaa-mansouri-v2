@@ -7,21 +7,22 @@ import { site } from "@/data/site";
 /**
  * Tags mots-clés affichés dans le Hero — conditions/spécialités sur
  * lesquelles Asmaa accompagne. Inlinés ici parce qu'ils ne sont utilisés
- * qu'à cet endroit pour l'instant. Si on les réutilise ailleurs (page
- * spécialités, footer, etc.), on déplacera vers `src/data/specialites.ts`.
+ * qu'à cet endroit pour l'instant. Si on les réutilise ailleurs (footer,
+ * page dédiée, etc.), on déplacera vers `src/data/specialites.ts`.
  *
- * Chaque tag pointe vers `#specialites` (l'ancre placeholder) en attendant
- * que les pages dédiées /specialites/sopk, /specialites/endometriose, etc.
- * existent en Phase 2.
+ * Chaque tag pointe vers sa page dédiée `/specialites/[slug]`. Le label
+ * affiché peut différer légèrement du `title` de la spécialité (ex :
+ * "Stress chronique" → page "Charge mentale & épuisement chronique")
+ * pour garder des labels courts et SERP-friendly dans le Hero.
  */
 const heroTags = [
-  "SOPK",
-  "Endométriose",
-  "Préménopause",
-  "Stress chronique",
-  "Troubles digestifs",
-  "Cycles irréguliers",
-  "Fertilité",
+  { label: "SOPK", slug: "sopk" },
+  { label: "Endométriose", slug: "endometriose" },
+  { label: "Préménopause", slug: "premenopause-menopause" },
+  { label: "Stress chronique", slug: "charge-mentale-epuisement" },
+  { label: "Troubles digestifs", slug: "troubles-digestifs" },
+  { label: "Cycles irréguliers", slug: "cycles-irreguliers" },
+  { label: "Fertilité", slug: "fertilite" },
 ] as const;
 
 /**
@@ -81,10 +82,10 @@ export function Hero() {
           */}
           <div className="lg:col-span-4 order-2 lg:order-1">
             <ul className="flex flex-wrap justify-center gap-2">
-              {heroTags.map((tag) => (
-                <li key={tag}>
+              {heroTags.map(({ label, slug }) => (
+                <li key={slug}>
                   <Link
-                    href="#specialites"
+                    href={`/specialites/${slug}`}
                     className={[
                       "inline-flex items-center px-2.5 py-1 lg:px-3 lg:py-1.5 rounded-md",
                       "bg-[var(--glass-bg)]",
@@ -97,7 +98,7 @@ export function Hero() {
                       "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700",
                     ].join(" ")}
                   >
-                    {tag}
+                    {label}
                   </Link>
                 </li>
               ))}
@@ -120,7 +121,9 @@ export function Hero() {
           */}
           <div className="lg:col-span-4 order-3 flex flex-col items-center gap-6">
             {/*
-              Lien étoiles + "Lire les 24 avis vérifiés".
+              Lien étoiles + "Lire les X témoignages" (compteur dérivé
+              de `site.verifiedReviewsCount`, lui-même calé sur
+              `temoignages.length` — une seule source de vérité).
               Anchor natif (pas ButtonLink) parce que c'est un lien texte
               avec affordance discrète, pas un CTA. Les étoiles sont
               aria-hidden : seul le texte porte l'info pour les lecteurs
@@ -159,7 +162,7 @@ export function Hero() {
                   "transition-colors duration-200 ease-out",
                 ].join(" ")}
               >
-                Lire les 24 témoignages
+                Lire les {site.verifiedReviewsCount} témoignages
               </span>
             </a>
 

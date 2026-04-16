@@ -2,35 +2,28 @@ import Link from "next/link";
 import {
   ArrowUpRight,
   Eye,
-  Flower2,
   GalleryVerticalEnd,
+  MapPin,
   PhoneCall,
   Sparkles,
+  UserRound,
   type LucideIcon,
 } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { site } from "@/data/site";
 
 /**
- * AllerPlusLoin — section finale de /cabinet.
+ * AllerPlusLoin — section finale de `/contact`.
  *
- * Architecture en 2 blocs, alignée sur le pattern "Comprendre mon
- * approche" de /prestations :
+ * Même pattern visuel que `cabinet/AllerPlusLoin.tsx` (header centré
+ * + CTA primary Resalib + 3 cards en row desktop, liste éditoriale
+ * mobile) mais pointe vers 3 cibles cohérentes avec le parcours d'un
+ * visiteur qui vient de la page contact :
+ *   - /qui-suis-je : pour situer l'accompagnement avant de prendre RDV
+ *   - /cabinet     : pour visualiser le lieu
+ *   - /ateliers    : pour explorer les formats collectifs
  *
- *   1. Header centré (H2 + sous-titre + CTA primary Resalib) — pose
- *      l'invitation conversationnelle et l'action de conversion à
- *      portée de clic, sans avoir à scroller jusqu'aux cards.
- *
- *   2. Liste 3 entrées (Spécialités / Prestations / Ateliers) en
- *      rendu adaptatif :
- *        - Mobile (< md) : pattern éditorial — hairlines warm-700/15,
- *          gros titre display, description, ArrowUpRight qui glisse
- *          en diagonale au hover. Pas de glass, pas d'icône
- *          watermark. Le rythme vient uniquement de la typo.
- *        - md+ : 3 cards glass watermark + header icône + description
- *          + ButtonLink primary, identiques aux bridges /prestations.
- *
- * Server Component pur — aucun state, aucun JS.
+ * Server Component pur — aucun state, aucun JS shipé.
  */
 
 type Step = {
@@ -43,26 +36,26 @@ type Step = {
 
 const steps: readonly Step[] = [
   {
-    icon: Flower2,
-    title: "Mes spécialités",
+    icon: UserRound,
+    title: "Qui suis-je",
     description:
-      "SOPK, endométriose, fertilité, préménopause et toutes les problématiques de santé féminine que j'accompagne au cabinet.",
-    ctaLabel: "Voir les spécialités",
-    href: "/specialites",
+      "Mon parcours, ma formation en naturopathie et en médecine traditionnelle chinoise, et ma vision de l'accompagnement.",
+    ctaLabel: "Faire connaissance",
+    href: "/qui-suis-je",
   },
   {
-    icon: GalleryVerticalEnd,
-    title: "Mes prestations",
+    icon: MapPin,
+    title: "Le cabinet",
     description:
-      "Consultations naturopathie, massage Tuina, cupping-thérapie et accompagnements sur plusieurs mois.",
-    ctaLabel: "Voir les prestations",
-    href: "/prestations",
+      "Découvrir le lieu de consultation, l'accès depuis Lyon, le stationnement et tout ce qui entoure la séance.",
+    ctaLabel: "Voir le cabinet",
+    href: "/cabinet",
   },
   {
     icon: Sparkles,
     title: "Les ateliers",
     description:
-      "Ateliers collectifs autour de l'alimentation anti-inflammatoire, du soutien de l'immunité et de la santé féminine au quotidien.",
+      "Ateliers collectifs autour de l'alimentation anti-inflammatoire, du soutien de l'immunité et de la santé féminine.",
     ctaLabel: "Découvrir les ateliers",
     href: "/ateliers",
   },
@@ -72,21 +65,20 @@ export function AllerPlusLoin() {
   return (
     <section
       id="aller-plus-loin"
-      aria-labelledby="aller-plus-loin-titre"
+      aria-labelledby="contact-aller-plus-loin-titre"
       className="relative py-12 lg:py-22"
     >
       <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
-        {/* ─── Header centré : H2 + sous-titre + CTA primary ──── */}
         <div className="text-center max-w-3xl mx-auto">
           <h2
-            id="aller-plus-loin-titre"
+            id="contact-aller-plus-loin-titre"
             className="font-display text-4xl lg:text-5xl font-medium tracking-[-0.02em] leading-[1.1] text-warm-900"
           >
             Aller plus loin
           </h2>
           <p className="mt-6 font-body text-lg lg:text-xl leading-relaxed text-warm-700">
-            Spécialités, prestations en cabinet et ateliers collectifs :
-            trois manières de poursuivre la découverte.
+            Découvrir mon parcours, le lieu de consultation et les ateliers
+            que j&apos;anime en parallèle du cabinet.
           </p>
           <div className="mt-8 flex justify-center">
             <ButtonLink href={site.resalibUrl} variant="primary">
@@ -100,7 +92,6 @@ export function AllerPlusLoin() {
           </div>
         </div>
 
-        {/* ─── Mobile (< md) : liste éditoriale ───────────────── */}
         <ul className="mt-14 md:hidden border-y border-warm-700/15">
           {steps.map(({ title, description, href }, i) => (
             <li
@@ -140,7 +131,6 @@ export function AllerPlusLoin() {
           ))}
         </ul>
 
-        {/* ─── md+ : 3 cards glass watermark ──────────────────── */}
         <ul className="hidden md:grid mt-14 lg:mt-20 md:grid-cols-3 gap-6 lg:gap-8">
           {steps.map(({ icon: Icon, title, description, ctaLabel, href }) => (
             <li

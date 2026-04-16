@@ -11,15 +11,10 @@ import { site } from "@/data/site";
 /**
  * 3 bridges de maillage interne pour prolonger la visite après /qui-suis-je.
  *
- * **Phase 1** — `href` pointe vers les ancres de la landing (pattern aligné
- * sur Footer.tsx : /#specialites, /#cabinet, /#prestations). Dès que les
- * pages dédiées existent (/specialites, /cabinet, /prestations), on switch
- * ces href vers les vraies routes — on garde `futureHref` en doc pour
- * faciliter ce swap.
- *
- * Inlinés ici parce que cette section est l'unique consommatrice de ces
- * bridges. Si on les réutilise ailleurs (page /prestations, etc.),
- * extraire vers `src/data/bridges.ts`.
+ * Chaque bridge pointe directement vers sa page dédiée. Inlinés ici parce
+ * que cette section est l'unique consommatrice de ces bridges. Si on les
+ * réutilise ailleurs (page /prestations, etc.), extraire vers
+ * `src/data/bridges.ts`.
  */
 const bridges = [
   {
@@ -28,8 +23,7 @@ const bridges = [
     description:
       "Déséquilibres hormonaux, troubles digestifs et transitions de vie.",
     ctaLabel: "Voir les spécialités",
-    href: "/#specialites",
-    futureHref: "/specialites",
+    href: "/specialites",
   },
   {
     icon: MapPin,
@@ -37,8 +31,7 @@ const bridges = [
     description:
       "À Décines-Charpieu, à quelques minutes de Lyon. Consultations en cabinet ou en visio.",
     ctaLabel: "Voir le cabinet",
-    href: "/#cabinet",
-    futureHref: "/cabinet",
+    href: "/cabinet",
   },
   {
     icon: GalleryVerticalEnd,
@@ -46,8 +39,7 @@ const bridges = [
     description:
       "Consultations, massages Tuina, cupping therapy, accompagnement sur trois mois.",
     ctaLabel: "Voir les prestations",
-    href: "/#prestations",
-    futureHref: "/prestations",
+    href: "/prestations",
   },
 ] as const;
 
