@@ -1,34 +1,35 @@
 import Link from "next/link";
-import { ArrowUpRight, Flower2, ScanSearch, Sunrise, Wind } from "lucide-react";
+import { ArrowUpRight, Flame, Flower2, Leaf, ScanSearch, Wind } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 
-/**
- * Données des 3 buckets affichés en cards. Inlinés ici parce que cette
- * section est l'unique consommateur. Si on les réutilise ailleurs (page
- * /specialites Phase 2, footer, etc.), on extraira vers
- * `src/data/specialites.ts` avec un type partagé dans `src/types`.
- *
- * Chaque bucket regroupe plusieurs des tags individuels du Hero pour
- * offrir une lecture macro de l'expertise d'Asmaa.
- */
 const specialitesBuckets = [
   {
     icon: Flower2,
+    href: "/specialites/desequilibres-hormonaux",
     title: "Déséquilibres hormonaux",
     description:
-      "SOPK, endométriose, syndrome prémenstruel, cycles irréguliers, fertilité. Un accompagnement ciblé pour rééquilibrer naturellement le terrain hormonal et apaiser les symptômes au quotidien.",
+      "SOPK, endométriose, SPM, cycles irréguliers, fertilité, post-partum, préménopause. Un accompagnement pour rééquilibrer le terrain hormonal à chaque étape.",
+  },
+  {
+    icon: Flame,
+    href: "/specialites/troubles-digestifs",
+    title: "Troubles digestifs",
+    description:
+      "Ballonnements, reflux, intestin irritable, transit perturbé, fatigue après les repas. Un travail de fond sur le terrain digestif pour retrouver un confort durable.",
   },
   {
     icon: Wind,
-    title: "Stress & digestion",
+    href: "/specialites/stress-burn-out",
+    title: "Stress & burn-out",
     description:
-      "Stress chronique, troubles digestifs, ballonnements, syndrome de l'intestin irritable, sommeil perturbé. Des protocoles personnalisés pour apaiser le système nerveux et restaurer un confort digestif au quotidien.",
+      "Fatigue chronique, sommeil perturbé, charge mentale saturée, tensions accumulées. Un accompagnement pour restaurer l'énergie et renouer avec ses propres besoins.",
   },
   {
-    icon: Sunrise,
-    title: "Périodes de transition",
+    icon: Leaf,
+    href: "/specialites/allergies-saisonnieres",
+    title: "Allergies saisonnières",
     description:
-      "Post-partum, préménopause, ménopause. Un soutien sur mesure pour traverser sereinement les grandes étapes de la vie de femme.",
+      "Rhinite, sinusite, maux de tête liés aux pollens, fatigue saisonnière. Un travail en amont de la saison pour rééquilibrer le terrain allergique.",
   },
 ] as const;
 
@@ -90,10 +91,9 @@ export function Specialites() {
             Ce que j&apos;accompagne
           </h2>
           <p className="mt-6 font-body text-lg lg:text-xl leading-relaxed text-warm-700">
-            Trois grands axes d&apos;accompagnement reliés par une même
-            approche holistique : rééquilibrer le terrain hormonal, apaiser
-            le stress et la digestion, traverser sereinement les transitions
-            de vie.
+            Quatre spécialités reliées par une même approche&nbsp;:
+            comprendre le terrain, identifier les causes profondes et
+            accompagner chaque femme vers un équilibre durable.
           </p>
         </div>
 
@@ -103,13 +103,13 @@ export function Specialites() {
             description, ArrowUpRight qui glisse au hover. Pas de
             glass, pas d'icône watermark, pas de bouton chrome. */}
         <ul className="mt-12 md:hidden border-y border-warm-700/15">
-          {specialitesBuckets.map(({ title, description }, i) => (
+          {specialitesBuckets.map(({ title, description, href }, i) => (
             <li
               key={title}
               className={i > 0 ? "border-t border-warm-700/15" : ""}
             >
               <Link
-                href="/specialites"
+                href={href}
                 className={[
                   "group relative flex items-center gap-6",
                   "py-7",
@@ -142,8 +142,8 @@ export function Specialites() {
         </ul>
 
         {/* ─── md+ : grid de 3 cards glass watermark ──────── */}
-        <ul className="hidden md:grid mt-16 lg:mt-20 md:grid-cols-3 gap-6 lg:gap-8">
-          {specialitesBuckets.map(({ icon: Icon, title, description }) => (
+        <ul className="hidden md:grid mt-16 lg:mt-20 md:grid-cols-2 gap-6 lg:gap-8">
+          {specialitesBuckets.map(({ icon: Icon, title, description, href }) => (
             <li
               key={title}
               className="group relative flex flex-col rounded-md overflow-hidden"
@@ -212,7 +212,7 @@ export function Specialites() {
                   même si les descriptions ont des longueurs différentes.
                 */}
                 <div className="mt-auto pt-6">
-                  <ButtonLink href="/specialites" variant="primary">
+                  <ButtonLink href={href} variant="primary">
                     En savoir plus
                     <ScanSearch
                       aria-hidden="true"

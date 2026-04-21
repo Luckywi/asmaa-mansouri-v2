@@ -27,19 +27,13 @@ export function AteliersListe() {
 
   return (
     <section
-      aria-labelledby="ateliers-derniers-titre"
+      aria-label="Grille des ateliers passés"
       className="relative pb-12 lg:pb-22"
     >
       <div className="mx-auto max-w-6xl px-6 md:px-8 lg:px-12">
-        <h2
-          id="ateliers-derniers-titre"
-          className="font-display text-3xl sm:text-4xl lg:text-5xl font-medium tracking-[-0.02em] leading-[1.1] text-warm-900 text-center mb-10 lg:mb-14"
-        >
-          Les derniers ateliers
-        </h2>
-        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
+        <ul className="flex flex-col lg:flex-row lg:flex-wrap lg:justify-center gap-5 lg:gap-6">
           {ateliers.map((atelier) => (
-            <li key={atelier.slug} className="flex">
+            <li key={atelier.slug} className="flex lg:w-fit lg:max-w-md">
               <AtelierCard
                 atelier={atelier}
                 onOpenDetails={() => setSelected(atelier)}

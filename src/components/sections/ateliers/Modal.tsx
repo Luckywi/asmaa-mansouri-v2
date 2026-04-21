@@ -2,9 +2,9 @@
 
 import { useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { CalendarDays, Clock, MapPin, Phone, X } from "lucide-react";
+import { CalendarDays, Clock, Phone, X } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
-import { association } from "@/data/ateliers";
+import { site } from "@/data/site";
 import type { Atelier } from "@/types";
 import { AtelierGallery } from "./Gallery";
 
@@ -33,9 +33,9 @@ function formatDateLong(iso: string): string {
  * Structure interne :
  *   - header : tag theme + titre
  *   - description longue (scrollable si dépasse `max-h`)
- *   - bloc meta : date / durée / lieu (affichés seulement si renseignés)
+ *   - bloc meta : date / durée (affichés seulement si renseignés)
  *   - highlights en liste à puces (si renseignés)
- *   - footer : CTA "Réserver au [tel]" → tel: de la présidente de l'asso
+ *   - footer : CTA "Me contacter" → tel: cabinet Asmaa
  *
  * Client Component — useEffect pour Escape + scroll lock, framer-motion.
  */
@@ -143,7 +143,7 @@ export function AtelierModal({ atelier, onClose }: ModalProps) {
                 </div>
               )}
 
-              {(atelier.date || atelier.duration || atelier.location) && (
+              {(atelier.date || atelier.duration) && (
                 <ul className="mt-6 space-y-2.5 border-t border-warm-500/20 pt-5 font-body text-sm text-warm-700">
                   {atelier.date && (
                     <li className="flex items-center gap-2.5">
@@ -165,32 +165,18 @@ export function AtelierModal({ atelier, onClose }: ModalProps) {
                       {atelier.duration}
                     </li>
                   )}
-                  <li className="flex items-start gap-2.5">
-                    <MapPin
-                      aria-hidden="true"
-                      className="w-4 h-4 shrink-0 text-warm-700/70 mt-[3px]"
-                      strokeWidth={1.5}
-                    />
-                    <span>
-                      {atelier.location ?? `${association.name}, ${association.address}`}
-                    </span>
-                  </li>
                 </ul>
               )}
             </div>
 
             <footer className="mt-6 flex flex-col items-center gap-3 border-t border-warm-500/20 pt-5">
               <ButtonLink
-                href={association.phoneHref}
+                href={site.phoneHref}
                 variant="secondary-on-glass"
               >
-                Infos et réservations au {association.phone}
+                Me contacter au {site.phone}
                 <Phone aria-hidden="true" className="w-4 h-4" strokeWidth={1.5} />
               </ButtonLink>
-              <p className="font-body text-xs text-warm-700/70 whitespace-nowrap">
-                Adhésion annuelle à l&apos;association :{" "}
-                {association.adhesionAmount}.
-              </p>
             </footer>
           </motion.div>
         </>

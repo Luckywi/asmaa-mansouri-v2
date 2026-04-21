@@ -1,6 +1,5 @@
-import { CalendarRange, CircleFadingPlus, Mail, Phone, Users } from "lucide-react";
+import { CalendarRange, CircleFadingPlus, Mail, Phone } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
-import { association } from "@/data/ateliers";
 import { site } from "@/data/site";
 
 /**
@@ -12,11 +11,7 @@ import { site } from "@/data/site";
  *   1. Téléphone cabinet (Asmaa, consultations)
  *   2. Email cabinet
  *   3. Instagram (canal informel)
- *   4. Téléphone association Le Cœur du Mas Cuisine (ateliers) —
- *      volontairement distinct du tel cabinet pour éviter la confusion
- *      entre Asmaa et la présidente de l'association, point de contact
- *      officiel pour les réservations d'ateliers.
- *   5. CTA Resalib "Appel découverte gratuit" en bas — conversion.
+ *   4. CTA Resalib "Appel découverte gratuit" en bas — conversion.
  *
  * Le conteneur est en `h-full flex flex-col` pour que :
  *   - Sur desktop, la card s'étire à la hauteur du formulaire (grid
@@ -102,22 +97,6 @@ export function Coordonnees() {
           </a>
         </li>
 
-        <li className="py-4">
-          <p className="flex items-center gap-2 font-body text-xs font-medium uppercase tracking-widest text-warm-700/70">
-            <Users
-              aria-hidden="true"
-              className="w-3.5 h-3.5"
-              strokeWidth={1.8}
-            />
-            Ateliers collectifs
-          </p>
-          <a
-            href={association.phoneHref}
-            className="mt-2 inline-block font-body text-base lg:text-lg text-warm-900 underline underline-offset-4 decoration-1 decoration-warm-700/30 hover:decoration-warm-900 transition-colors duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700"
-          >
-            {association.phone}
-          </a>
-        </li>
       </ul>
 
       <div className="pt-6 border-t border-warm-700/15 flex">

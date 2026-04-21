@@ -7,22 +7,23 @@ import { site } from "@/data/site";
 /**
  * Tags mots-clés affichés dans le Hero — conditions/spécialités sur
  * lesquelles Asmaa accompagne. Inlinés ici parce qu'ils ne sont utilisés
- * qu'à cet endroit pour l'instant. Si on les réutilise ailleurs (footer,
- * page dédiée, etc.), on déplacera vers `src/data/specialites.ts`.
+ * qu'à cet endroit. Si on les réutilise ailleurs (schema.org, sitemap),
+ * on déplacera vers `src/data/specialites.ts`.
  *
- * Chaque tag pointe vers sa page dédiée `/specialites/[slug]`. Le label
- * affiché peut différer légèrement du `title` de la spécialité (ex :
- * "Stress chronique" → page "Charge mentale & épuisement chronique")
- * pour garder des labels courts et SERP-friendly dans le Hero.
+ * Depuis la refonte 4 spécialités parapluies, plusieurs labels pointent
+ * vers la même page `/specialites/desequilibres-hormonaux` avec une ancre
+ * qui ouvre directement sur la sous-section pertinente (SOPK, endométriose,
+ * fertilité, post-partum, cycles irréguliers). Les tags conservent leurs
+ * mots-clés SEO individuels sans multiplier les pages.
  */
 const heroTags = [
-  { label: "SOPK", slug: "sopk" },
-  { label: "Endométriose", slug: "endometriose" },
-  { label: "Préménopause", slug: "premenopause-menopause" },
-  { label: "Stress chronique", slug: "charge-mentale-epuisement" },
-  { label: "Troubles digestifs", slug: "troubles-digestifs" },
-  { label: "Cycles irréguliers", slug: "cycles-irreguliers" },
-  { label: "Fertilité", slug: "fertilite" },
+  { label: "SOPK", href: "/specialites/desequilibres-hormonaux#sopk" },
+  { label: "Endométriose", href: "/specialites/desequilibres-hormonaux#endometriose" },
+  { label: "Préménopause", href: "/specialites/desequilibres-hormonaux" },
+  { label: "Stress chronique", href: "/specialites/stress-burn-out" },
+  { label: "Troubles digestifs", href: "/specialites/troubles-digestifs" },
+  { label: "Cycles irréguliers", href: "/specialites/desequilibres-hormonaux#cycles-irreguliers" },
+  { label: "Fertilité", href: "/specialites/desequilibres-hormonaux#fertilite" },
 ] as const;
 
 /**
@@ -82,10 +83,10 @@ export function Hero() {
           */}
           <div className="lg:col-span-4 order-2 lg:order-1">
             <ul className="flex flex-wrap justify-center gap-2">
-              {heroTags.map(({ label, slug }) => (
-                <li key={slug}>
+              {heroTags.map(({ label, href }) => (
+                <li key={label}>
                   <Link
-                    href={`/specialites/${slug}`}
+                    href={href}
                     className={[
                       "inline-flex items-center px-2.5 py-1 lg:px-3 lg:py-1.5 rounded-md",
                       "bg-[var(--glass-bg)]",

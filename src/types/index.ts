@@ -246,6 +246,19 @@ export type Prestation = {
 };
 
 /**
+ * Sous-section pathologie à l'intérieur d'une Specialite "parapluie".
+ * Rendue en H3 + paragraphe court dans l'Article, avec `id={slug}` pour
+ * permettre l'ancrage URL direct (ex: /specialites/desequilibres-hormonaux#sopk).
+ * Utile pour capter les SERPs longue-queue sur des pathologies nommées
+ * qui partagent une même approche globale.
+ */
+export type Condition = {
+  readonly slug: string;
+  readonly title: string;
+  readonly content: string;
+};
+
+/**
  * Une spécialité (problématique de santé féminine) accompagnée par Asmaa.
  *
  * Affichée :
@@ -298,6 +311,14 @@ export type Specialite = {
     readonly content: string;
   };
   /**
+   * Sous-sections pathologies optionnelles. Présent uniquement pour les
+   * spécialités "parapluie" qui regroupent plusieurs conditions cliniques
+   * partageant une même approche (ex: déséquilibres hormonaux → SOPK,
+   * endométriose, fertilité, post-partum, cycles irréguliers). Rendu en H3
+   * avec ancres URL après la section Approche.
+   */
+  readonly conditions?: readonly Condition[];
+  /**
    * Bloc FAQ — questions rédigées (long-tail SEO ciblé pain points
    * locaux), réponses à compléter par Asmaa avec ses vraies réponses
    * cabinet (durées, cas concrets, méthodes).
@@ -309,8 +330,61 @@ export type Specialite = {
 };
 
 /**
- * Atelier animé par Asmaa au sein de l'association "Le Cœur du Mas
- * Cuisine" (Vaulx-en-Velin). Thématique alimentation / bien-être.
+ * Tag de maillage interne utilisé sur les sections thématiques de la
+ * page `/ateliers`. Rendu en chip glass sous le bloc highlight. Chaque
+ * chip cliquable pointe vers une page pertinente (spécialité, bio,
+ * médecines ancestrales) pour nourrir le maillage interne SEO et
+ * suggérer une lecture associée au visiteur.
+ */
+export type AtelierLinkTag = {
+  readonly label: string;
+  readonly href: string;
+};
+
+/**
+ * Thématique d'atelier proposée par Asmaa. Contenu éditorial rédigé
+ * par Asmaa (cf. ATELIER.pdf du 2026-04). Affichée en section verticale
+ * empilée sur `/ateliers`, avec ancre URL pour les liens directs
+ * (ex : /ateliers#atelier-diy).
+ *
+ * Distincte du type `Atelier` qui représente les ateliers déjà animés
+ * (expérience passée), conservés plus bas sur la page.
+ */
+export type ThematiqueAtelier = {
+  /** Slug pour React key + ancre URL (ex: "atelier-diy") */
+  readonly slug: string;
+  /** Tag eyebrow en capitales (ex: "ATELIER DIY", "SANTÉ FÉMININE") */
+  readonly eyebrow: string;
+  /** Titre de la thématique (H2) */
+  readonly title: string;
+  /** Sous-titre italique sous le H2 */
+  readonly subtitle: string;
+  /** Paragraphes d'intro (avant le bloc highlight) */
+  readonly intro: readonly string[];
+  /** Bloc highlight encadré (citation / promesse de l'atelier) */
+  readonly highlight: string;
+  /** Paragraphes d'outro (après le bloc highlight, avant bullets) */
+  readonly outro?: readonly string[];
+  /** Bullets points (recettes, points abordés) */
+  readonly bullets?: readonly string[];
+  /** Tags de maillage interne cliquables (3 à 4 par thématique) */
+  readonly tags: readonly AtelierLinkTag[];
+  /**
+   * Présent uniquement pour la thématique "Diététique saisonnière" :
+   * 4 sous-cards (une par saison) insérées entre l'outro et les tags.
+   */
+  readonly saisons?: readonly {
+    readonly name: "Printemps" | "Été" | "Automne" | "Hiver";
+    readonly organe: string;
+    readonly description: string;
+  }[];
+};
+
+/**
+ * Atelier déjà animé par Asmaa, conservé sur `/ateliers` pour
+ * témoigner d'une expérience d'animation en place (thématiques
+ * saisonnières, kéfir, bien-être). Communication 100 % indépendante
+ * depuis avril 2026 : plus aucune mention d'association tierce.
  *
  * Affiché :
  *   - en card cliquable sur la page `/ateliers` (titre + theme +
@@ -335,10 +409,7 @@ export type Atelier = {
   readonly date?: string;
   /** Durée indicative, ex: "2h" */
   readonly duration?: string;
-  /**
-   * Lieu — par défaut "Le Cœur du Mas Cuisine, Vaulx-en-Velin"
-   * si non renseigné (rendu côté composant).
-   */
+  /** Lieu libre, affiché uniquement si renseigné. */
   readonly location?: string;
   /** Points clés listés en bullets dans la modale */
   readonly highlights?: readonly string[];

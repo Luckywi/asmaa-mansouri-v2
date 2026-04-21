@@ -1,4 +1,6 @@
+import Link from "next/link";
 import {
+  ArrowUpRight,
   Flower2,
   GalleryVerticalEnd,
   MapPin,
@@ -46,25 +48,17 @@ const bridges = [
 /**
  * FaisonsConnaissance — section de clôture de /qui-suis-je.
  *
- * Merge de deux blocs précédents (AllerPlusLoin + CTAFinal) en une seule
- * section unifiée :
+ * Architecture alignée sur `/cabinet/AllerPlusLoin` :
  *
- *   1. Header centré : H2 "Faisons connaissance" + subtitle + CTA primary
- *      "Réserver un appel découverte gratuit" (PhoneCall, → Resalib).
- *      Le CTA est posé directement sous le subtitle parce que c'est
- *      l'action de conversion principale de la page — pas à scroller
- *      pour la trouver.
+ *   1. Header centré : H2 + subtitle + CTA primary Resalib.
+ *   2. Liste 3 bridges (Spécialités / Cabinet / Prestations) en rendu
+ *      adaptatif :
+ *        - Mobile (< md) : liste éditoriale hairline warm-700/15 avec
+ *          ArrowUpRight en diagonale au hover.
+ *        - md+ : grid 3 cards glass watermark + header icône + CTA
+ *          primary.
  *
- *   2. Grid 3 bridges en dessous (Spécialités / Cabinet / Prestations)
- *      comme alternatives pour le visiteur qui souhaite encore explorer
- *      avant de prendre RDV. Chaque card reprend le pattern Specialites
- *      (watermark icon + glass par-dessus + ButtonLink primary).
- *
- * Intérêt SEO : 3 liens internes contextuels vers les hubs thématiques.
- * Intérêt UX : une action de conversion forte + 3 chemins de continuation.
- *
- * Server Component pur — aucun state, aucune interactivité en dehors des
- * Link et ButtonLink nativement gérés par Next.
+ * Server Component pur.
  */
 export function FaisonsConnaissance() {
   return (
@@ -74,7 +68,7 @@ export function FaisonsConnaissance() {
       className="relative py-12 lg:py-22"
     >
       <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
-        {/* ─── Header : H2 + subtitle + CTA primary ────────── */}
+        {/* ─── Header centré : H2 + subtitle + CTA primary ────── */}
         <div className="text-center max-w-3xl mx-auto">
           <h2
             id="faisons-connaissance-titre"
@@ -98,8 +92,48 @@ export function FaisonsConnaissance() {
           </div>
         </div>
 
-        {/* ─── Grid 3 bridges ──────────────────────────────── */}
-        <ul className="mt-14 lg:mt-20 grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+        {/* ─── Mobile (< md) : liste éditoriale ───────────────── */}
+        <ul className="mt-14 md:hidden border-y border-warm-700/15">
+          {bridges.map(({ title, description, href }, i) => (
+            <li
+              key={title}
+              className={i > 0 ? "border-t border-warm-700/15" : ""}
+            >
+              <Link
+                href={href}
+                className={[
+                  "group relative flex items-center gap-6",
+                  "py-7",
+                  "transition-colors duration-200 ease-out",
+                  "hover:text-warm-900",
+                  "focus-visible:outline-none",
+                ].join(" ")}
+              >
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-display text-2xl font-medium tracking-[-0.02em] leading-[1.15] text-warm-900">
+                    {title}
+                  </h3>
+                  <p className="mt-2 font-body text-sm leading-relaxed text-warm-700">
+                    {description}
+                  </p>
+                </div>
+                <ArrowUpRight
+                  aria-hidden="true"
+                  strokeWidth={1.5}
+                  className={[
+                    "w-7 h-7 shrink-0 text-warm-700",
+                    "transition-all duration-300 ease-out",
+                    "group-hover:translate-x-1 group-hover:-translate-y-1",
+                    "group-hover:text-warm-900",
+                  ].join(" ")}
+                />
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        {/* ─── md+ : 3 cards glass watermark ──────────────────── */}
+        <ul className="hidden md:grid mt-14 lg:mt-20 md:grid-cols-3 gap-6 lg:gap-8">
           {bridges.map(({ icon: Icon, title, description, ctaLabel, href }) => (
             <li
               key={title}

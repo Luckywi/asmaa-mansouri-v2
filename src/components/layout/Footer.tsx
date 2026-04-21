@@ -5,30 +5,11 @@ import { navLinks } from "@/data/navigation";
 import { prestations } from "@/data/prestations";
 import { site } from "@/data/site";
 
-/**
- * Spécialités individuelles exposées dans le footer.
- *
- * Inlinées ici parce que le Footer est l'unique consommateur en Phase 1.
- * Si on les réutilise ailleurs (page hub /specialites Phase 2, sitemap,
- * schema.org Service), on extraira vers `src/data/specialites.ts` avec
- * un type partagé dans `src/types`.
- *
- * Curation : 5 thématiques tirées de PERSONA.md et de la section
- * Specialites.tsx (qui les regroupe en 3 buckets macro). Le footer
- * affiche la version "individuelle" parce que ce sont les vrais mots-clés
- * SEO long-tail (SOPK, endométriose, etc.) — la lecture macro reste
- * sur la section landing.
- *
- * `href` : ancre vers #specialites de la landing en Phase 1. `futureHref`
- * documente la route dédiée Phase 2 (même pattern que `data/navigation.ts`),
- * pour rendre la migration triviale (search/replace de la colonne).
- */
 const specialitesLinks = [
-  { label: "SOPK", href: "/specialites/sopk" },
-  { label: "Endométriose", href: "/specialites/endometriose" },
-  { label: "Ménopause", href: "/specialites/premenopause-menopause" },
-  { label: "Post-partum", href: "/specialites/post-partum" },
-  { label: "Fertilité", href: "/specialites/fertilite" },
+  { label: "Troubles digestifs", href: "/specialites/troubles-digestifs" },
+  { label: "Allergies saisonnières", href: "/specialites/allergies-saisonnieres" },
+  { label: "Stress et burn-out", href: "/specialites/stress-burn-out" },
+  { label: "Déséquilibres hormonaux", href: "/specialites/desequilibres-hormonaux" },
 ] as const;
 
 /**

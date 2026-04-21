@@ -54,7 +54,7 @@ export function AtelierCard({ atelier, onOpenDetails }: CardProps) {
         </span>
       )}
 
-      <h3 className="font-display text-xl lg:text-2xl font-medium tracking-tight text-warm-900 text-balance">
+      <h3 className="font-display text-xl lg:text-2xl font-medium tracking-tight text-warm-900 whitespace-nowrap">
         {title}
       </h3>
 

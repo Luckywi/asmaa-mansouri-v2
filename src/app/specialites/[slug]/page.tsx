@@ -73,6 +73,7 @@ export default async function SpecialiteDetailPage({
         definition={specialite.definition}
         symptomes={specialite.symptomes}
         approche={specialite.approche}
+        conditions={specialite.conditions}
       />
       <FAQ faq={specialite.faq} />
       <CTAFinal />

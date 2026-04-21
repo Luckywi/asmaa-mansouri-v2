@@ -29,13 +29,15 @@ const photos = [
 ] as const;
 
 /**
- * 3 tags diplômes / formations affichés sous le titre. Factuels, pas
- * des slogans. Si on doit en ajouter (acupuncture en cours, cupping
- * therapy), extraire vers `src/data/diplomes.ts`.
+ * Tags diplômes / formations affichés sous le titre. Factuels, pas
+ * des slogans. Asmaa est diplômée en naturopathie et formée au Tuina ;
+ * elle termine actuellement son cursus en médecine traditionnelle
+ * chinoise, d'où la formulation "En formation" (conforme au document
+ * rédigé par Asmaa).
  */
 const tags = [
   "Diplômée en naturopathie",
-  "Diplômée en médecine traditionnelle chinoise",
+  "En formation en médecine traditionnelle chinoise",
   "Formée au massage Tuina",
 ] as const;
 
@@ -75,7 +77,7 @@ const stackVariants = {
  *
  *   Mobile         deck empilé au centre, texte en dessous (stack vertical)
  *
- * **Deck de cartes photo** (colonne gauche) : 3 photos absolute dans un
+ * **Deck de cartes photo** (colonne droite) : 3 photos absolute dans un
  * container aspect-[3/4]. Leur transform (rotate + translate + scale)
  * dépend de leur `stackPos` relatif à l'activeIndex (cf. stackVariants).
  * Click sur n'importe quelle carte la porte au-dessus — framer-motion
@@ -84,7 +86,17 @@ const stackVariants = {
  * Auto-advance toutes les 6 s. Le click reset le cycle via la dep
  * [activeIndex] du useEffect.
  *
- * Client Component obligatoire — useState + useEffect.
+ * **Colonne gauche** : H2 "Asmaa Mansouri" + 3 tags (diplômes et
+ * formations en cours) + récit narratif issu du document rédigé par
+ * Asmaa, filtré anti-slop et structuré en 4 H3 (Mon histoire / La
+ * transmission / Le chemin / Pourquoi les femmes). La section "Ma
+ * philosophie" du document source est omise volontairement : les 3
+ * citations qu'elle contenait vivent déjà une fois chacune sur les
+ * sous-pages (/la-naturopathie, /medecines-ancestrales,
+ * /specialites/desequilibres-hormonaux), accessibles via les cards
+ * Exploration positionnées sous ce Portrait.
+ *
+ * Client Component obligatoire — useState + useEffect pour le deck.
  */
 export function Portrait() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -109,7 +121,7 @@ export function Portrait() {
           Colonnes ordonnées order-1/2 pour remonter le deck au-dessus du
           texte en mobile (stack vertical), et l'envoyer à droite en lg.
         */}
-        <div className="grid grid-cols-1 lg:grid-cols-[7fr_3fr] gap-[52px] lg:gap-[70px] items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-[7fr_3fr] gap-[52px] lg:gap-[70px] lg:items-stretch">
           {/* ─── Colonne gauche : titre + tags + description ── */}
           <div className="order-2 lg:order-1 text-center lg:text-left">
             <h2
@@ -138,41 +150,137 @@ export function Portrait() {
               ))}
             </ul>
 
-            <div className="mt-8 flex flex-col gap-5 font-body text-base lg:text-lg leading-relaxed text-warm-700">
-              <p>
-                Je suis Asmaa Mansouri, naturopathe à Décines-Charpieu. Mère
-                de famille, je ne reçois que des femmes. Cycle, fertilité,
-                transitions hormonales, intimité corporelle&nbsp;: ce sont des
-                sujets qui demandent un cadre dédié et un temps qui leur sont
-                propres.
-              </p>
-              <p>
-                Mon approche s&apos;appuie sur trois pratiques
-                complémentaires&nbsp;: la naturopathie (alimentation,
-                phytothérapie, hygiène de vie), la médecine traditionnelle
-                chinoise et le massage Tuina, que je pratique en cabinet. Je
-                me forme actuellement à l&apos;acupuncture.
-              </p>
-              <p>
-                En consultation, je prends le temps d&apos;observer, de
-                questionner, de recouper. Je construis ensuite avec vous un
-                protocole sur mesure, en cabinet ou en visio.
-              </p>
+            {/*
+              Récit narratif issu du document rédigé par Asmaa (section
+              "Qui suis-je"). Filtré anti-slop : em dashes convertis en
+              virgules/deux-points, triplets AI-typiques supprimés,
+              tournures mystiques ("le hasard n'existe pas") retirées.
+              Section "Ma philosophie" (3 citations) volontairement
+              omise : les citations vivent déjà sur les sous-pages
+              /la-naturopathie, /medecines-ancestrales et
+              /specialites/desequilibres-hormonaux, une seule occurrence
+              par citation pour éviter les doublons.
+
+              Quatre H3 structurent la lecture (l'Asmaa Mansouri H2 reste
+              le titre maître). Les <div> assurent un rythme vertical
+              `mt-10` entre les blocs tandis que les <p> à l'intérieur
+              d'un bloc respirent en `mt-5`.
+            */}
+            <div className="mt-10 font-body text-base lg:text-lg leading-relaxed text-warm-700 text-left">
+              {/* ── Mon histoire ── */}
+              <div>
+                <h3 className="font-display text-xl lg:text-2xl font-medium tracking-[-0.01em] leading-[1.2] text-warm-900">
+                  Mon histoire
+                </h3>
+                <p className="mt-5">
+                  Tout a commencé par un détour, ou plutôt par un chemin qui
+                  était le mien sans que je le sache encore.
+                </p>
+                <p className="mt-5">
+                  Jeune, j&apos;ai entrepris des études de médecine. Le désir
+                  de soigner était là, sincère et entier. Mais c&apos;est
+                  lors d&apos;un stage hospitalier que tout a basculé. Je me
+                  suis retrouvée à travailler dans un bloc opératoire, face
+                  à une situation que je n&apos;oublierai jamais&nbsp;: une
+                  jeune fille de 16 ans, une vie qui s&apos;est éteinte
+                  cette nuit-là.
+                </p>
+                <p className="mt-5">
+                  J&apos;ai ressenti ce soir-là une impuissance profonde,
+                  essentielle. Je ne voulais pas intervenir à ce stade du
+                  parcours d&apos;une personne. Je voulais être là avant,
+                  bien avant, dans la prévention, dans l&apos;accompagnement,
+                  dans ce moment encore possible où l&apos;on peut changer
+                  quelque chose. Cette nuit-là a dessiné, sans que je
+                  m&apos;en rende compte, toute la direction de ma vie
+                  professionnelle.
+                </p>
+              </div>
+
+              {/* ── La transmission ── */}
+              <div className="mt-10">
+                <h3 className="font-display text-xl lg:text-2xl font-medium tracking-[-0.01em] leading-[1.2] text-warm-900">
+                  La transmission
+                </h3>
+                <p className="mt-5">
+                  Je suis issue d&apos;une famille où la santé naturelle
+                  n&apos;était pas un concept, c&apos;était un quotidien. Mon
+                  père, profondément ancré dans la médecine prophétique,
+                  m&apos;a transmis dès l&apos;enfance cet art de prendre
+                  soin de soi selon les enseignements du Prophète.
+                  L&apos;odeur du miel, de la nigelle, de l&apos;encens
+                  naturel&nbsp;: ces trésors ont bercé mon enfance. Il est
+                  également commerçant de ces produits naturels, et
+                  c&apos;est dans cette atmosphère que j&apos;ai grandi,
+                  avec le corps perçu comme un dépôt sacré et la guérison
+                  comme un acte de foi autant que de raison.
+                </p>
+              </div>
+
+              {/* ── Le chemin ── */}
+              <div className="mt-10">
+                <h3 className="font-display text-xl lg:text-2xl font-medium tracking-[-0.01em] leading-[1.2] text-warm-900">
+                  Le chemin
+                </h3>
+                <p className="mt-5">
+                  Je me suis mariée et j&apos;ai eu quatre enfants.
+                  C&apos;est pour eux, d&apos;abord, que j&apos;ai
+                  approfondi ma démarche naturopathique, avec le désir de
+                  leur transmettre le meilleur en matière de santé. Quatre
+                  naissances naturelles, quatre allaitements. Mes enfants
+                  ont rarement eu besoin de consulter un pédiatre en
+                  dehors du suivi habituel, non par dogmatisme, mais parce
+                  que les bons gestes au quotidien, appliqués tôt et avec
+                  constance, font une différence réelle.
+                </p>
+                <p className="mt-5">
+                  Je suis naturopathe formée et certifiée, et je termine
+                  actuellement mon cursus en médecine traditionnelle
+                  chinoise pour enrichir ma démarche d&apos;une vision
+                  énergétique complète.
+                </p>
+              </div>
+
+              {/* ── Pourquoi les femmes ── */}
+              <div className="mt-10">
+                <h3 className="font-display text-xl lg:text-2xl font-medium tracking-[-0.01em] leading-[1.2] text-warm-900">
+                  Pourquoi les femmes
+                </h3>
+                <p className="mt-5">
+                  Parce que je suis femme. Parce que j&apos;ai vécu de
+                  l&apos;intérieur ce que vivent mes patientes&nbsp;: les
+                  cycles, la maternité, la charge mentale, les transitions
+                  hormonales, les allergies saisonnières que j&apos;ai
+                  moi-même traversées et surmontées grâce à la
+                  naturopathie. Mon cabinet est un espace dédié
+                  exclusivement aux femmes, parce que c&apos;est là que
+                  mon accompagnement peut être le plus juste et le plus
+                  utile.
+                </p>
+              </div>
             </div>
           </div>
 
-          {/* ─── Colonne droite : deck de cartes ────────────── */}
+          {/* ─── Colonne droite : photos ─────────────────────── */}
           {/*
-            order-1 en mobile pour que le deck passe au-dessus du texte en
-            stack vertical (lecture visuelle "photo d'abord puis bio") ;
-            order-2 en lg pour revenir en colonne droite du split classique.
+            Deux rendus selon le breakpoint :
+            - < lg : deck empilé auto-advance (comportement d'origine,
+              compact pour le mobile où le récit suit dessous).
+            - lg+ : stack vertical de 3 photos individuelles qui longe
+              le long récit à gauche. Pas d'interactivité, chaque photo
+              est autonome et respire le long du texte.
+
+            order-1 en mobile pour que les photos passent au-dessus du
+            texte en stack vertical ; order-2 en lg pour revenir en
+            colonne droite du split classique.
           */}
           <div className="order-1 lg:order-2">
+            {/* ── < lg : deck empilé auto-advance ── */}
             <div
               role="region"
               aria-roledescription="carrousel en deck"
               aria-label="Photos d'Asmaa Mansouri"
-              className="relative aspect-[3/4] w-full max-w-[260px] lg:max-w-[300px] mx-auto"
+              className="relative aspect-[3/4] w-full max-w-[260px] mx-auto lg:hidden"
             >
               {photos.map((photo, i) => {
                 const stackPos = (i - activeIndex + photos.length) % photos.length;
@@ -195,16 +303,9 @@ export function Portrait() {
                     className={[
                       "absolute inset-0 overflow-hidden rounded-xl",
                       "border-[0.5px] border-warm-900",
-                      // Shadow alignée sur les cards flottantes du projet
                       "shadow-[0_12px_32px_-10px_rgba(60,30,25,0.25),0_2px_6px_-2px_rgba(60,30,25,0.10)]",
                       "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-warm-700",
-                      // La carte du dessus n'est pas cliquable en navigation
-                      // pointer (pas d'intérêt) ; les cartes du fond gardent
-                      // un cursor pointer pour signaler l'affordance "click
-                      // pour me porter au-dessus".
-                      isActive
-                        ? "cursor-default"
-                        : "cursor-pointer",
+                      isActive ? "cursor-default" : "cursor-pointer",
                     ].join(" ")}
                   >
                     <Image
@@ -212,13 +313,46 @@ export function Portrait() {
                       alt={photo.alt}
                       fill
                       className="object-cover object-center pointer-events-none"
-                      sizes="(min-width: 1024px) 300px, 260px"
+                      sizes="260px"
                       priority={i === 0}
                     />
                   </motion.button>
                 );
               })}
             </div>
+
+            {/* ── lg+ : stack vertical de 3 photos individuelles ── */}
+            {/*
+              `lg:h-full` + `lg:justify-between` : les 3 photos s'étalent
+              sur toute la hauteur du grid item droit, qui est étiré à
+              la hauteur de la colonne gauche (texte) via `lg:items-stretch`
+              sur le grid parent. L'espacement entre les photos s'adapte
+              automatiquement à la hauteur du récit : plus le texte est
+              long, plus les photos respirent.
+            */}
+            <ul
+              aria-label="Photos d'Asmaa Mansouri"
+              className="hidden lg:flex lg:flex-col lg:h-full lg:justify-between"
+            >
+              {photos.map((photo) => (
+                <li
+                  key={photo.src}
+                  className={[
+                    "relative aspect-[3/4] w-full max-w-[300px] mx-auto overflow-hidden rounded-xl",
+                    "border-[0.5px] border-warm-900",
+                    "shadow-[0_12px_32px_-10px_rgba(60,30,25,0.25),0_2px_6px_-2px_rgba(60,30,25,0.10)]",
+                  ].join(" ")}
+                >
+                  <Image
+                    src={photo.src}
+                    alt={photo.alt}
+                    fill
+                    className="object-cover object-center"
+                    sizes="300px"
+                  />
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>

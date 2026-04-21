@@ -11,17 +11,17 @@ import { site } from "@/data/site";
 export const metadata: Metadata = {
   title: "Spécialités — Asmaa Mansouri, naturopathe à Décines-Charpieu",
   description:
-    "SOPK, endométriose, fertilité, post-partum, préménopause, cycles irréguliers, charge mentale, troubles digestifs : 8 spécialités pour accompagner naturellement la santé féminine.",
+    "Troubles digestifs, allergies saisonnières, stress et burn-out, déséquilibres hormonaux (SOPK, endométriose, fertilité, post-partum) : 4 grands univers pour accompagner la santé féminine à Décines, Lyon et l'Est lyonnais.",
   robots: { index: false, follow: false },
 };
 
 /**
- * /specialites — page hub des 8 spécialités d'Asmaa.
+ * /specialites — page hub des 4 spécialités d'Asmaa.
  *
  * Architecture en 2 sections, conformément au pattern landing :
  *   1. Hero — H1 "Mes spécialités" + intro descriptive + CTA primary
  *      "Réserver un appel découverte gratuit" (→ Resalib).
- *   2. Grid — 8 cards glass uniformes en lignes de 2 (1 col mobile / 2 cols sm+).
+ *   2. Grid — 4 cards glass uniformes en 2×2 (1 col mobile / 2 cols sm+).
  *
  * **Cards interactives** : la card entière est un `<Link>` (next/link)
  * vers `/specialites/[slug]`. Au lieu d'un `<ButtonLink>` à l'intérieur,
@@ -54,9 +54,9 @@ export default function SpecialitesPage() {
 
             <p className="mt-8 max-w-2xl mx-auto font-body text-lg md:text-xl leading-relaxed text-warm-700">
               Naturopathe à Décines-Charpieu, j&apos;accompagne exclusivement
-              les femmes sur huit grandes problématiques de santé : équilibre
-              hormonal, transitions de vie, charge mentale, fertilité.
-              Choisissez votre situation pour découvrir mon approche.
+              les femmes autour de quatre grands univers de santé&nbsp;:
+              troubles digestifs, allergies saisonnières, stress et burn-out,
+              déséquilibres hormonaux.
             </p>
 
             <div className="mt-10 flex justify-center">
@@ -161,7 +161,7 @@ export default function SpecialitesPage() {
 
             <p className="mt-8 font-body text-lg lg:text-xl leading-relaxed text-warm-700">
               La naturopathie accompagne bien d&apos;autres situations
-              que ces huit thématiques. Qu&apos;il s&apos;agisse
+              que ces quatre univers. Qu&apos;il s&apos;agisse
               d&apos;une problématique moins fréquente ou d&apos;un
               simple besoin de détente et de repos, un premier appel
               gratuit permet d&apos;évaluer ensemble si je peux vous

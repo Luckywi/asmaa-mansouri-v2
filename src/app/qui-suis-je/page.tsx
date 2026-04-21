@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Hero } from "@/components/sections/qui-suis-je/Hero";
+import { Exploration } from "@/components/sections/qui-suis-je/Exploration";
+import { Engagement } from "@/components/sections/qui-suis-je/Engagement";
 import { Portrait } from "@/components/sections/qui-suis-je/Portrait";
 import { Demarche } from "@/components/sections/qui-suis-je/Demarche";
 import { FaisonsConnaissance } from "@/components/sections/qui-suis-je/FaisonsConnaissance";
@@ -19,8 +21,11 @@ export const metadata: Metadata = {
  * Architecture :
  *   1. Hero — citation d'Asmaa en H1 + attribution + subtitle + 2 CTAs
  *   2. Portrait — "Asmaa Mansouri" + deck photos + tags diplômes + bio
- *   3. Demarche — H2 "Ma démarche" + 4 Q/A (accordéon glass, grid 2 cols)
- *   4. FaisonsConnaissance — H2 "Faisons connaissance" + subtitle + CTA
+ *   3. Exploration — 2 cards glass vers les sous-pages thématiques
+ *      (La naturopathie / Mes médecines ancestrales). Garde la nav à 5
+ *      entrées en rangeant ces pages en sous-sections de /qui-suis-je.
+ *   4. Demarche — H2 "Ma démarche" + 4 Q/A (accordéon glass, grid 2 cols)
+ *   5. FaisonsConnaissance — H2 "Faisons connaissance" + subtitle + CTA
  *      primary "Réserver un appel découverte gratuit" (→ Resalib) + 3
  *      bridges (Spécialités / Cabinet / Prestations) pour le maillage
  *      interne SEO. Merge des anciens blocs AllerPlusLoin + CTAFinal.
@@ -35,6 +40,8 @@ export default function QuiSuisJePage() {
     <main id="contenu-principal" className="flex-1">
       <Hero />
       <Portrait />
+      <Exploration />
+      <Engagement />
       <Demarche />
       <FaisonsConnaissance />
     </main>

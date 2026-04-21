@@ -1,22 +1,13 @@
-import { ExternalLink, Phone } from "lucide-react";
-import { ButtonLink } from "@/components/ui/ButtonLink";
-import { association } from "@/data/ateliers";
+import Link from "next/link";
 
-/**
- * Hero de la page `/ateliers`.
- *
- * H1 "Les ateliers" + paragraphe explicatif (association, thématique,
- * adhésion requise) + 2 CTAs :
- *   - primary : "Réserver un atelier" → tel: de la présidente de l'asso
- *   - secondary : "Voir l'association" → fiche externe mairie de Vaulx
- *
- * Le numéro de l'association est volontairement mis en avant sous les
- * CTAs : la présidente (Jacqueline) est le point de contact pour les
- * réservations, pas Asmaa. Distinction importante pour éviter la
- * confusion avec le téléphone du cabinet (cf. `site.phone`).
- *
- * Server Component — aucun state, aucune interaction côté client.
- */
+const heroTags = [
+  { label: "Naturopathie", href: "/qui-suis-je/la-naturopathie" },
+  { label: "Gestion du stress", href: "/specialites/stress-burn-out" },
+  { label: "Équilibre hormonal", href: "/specialites/desequilibres-hormonaux" },
+  { label: "Médecines ancestrales", href: "/qui-suis-je/medecines-ancestrales" },
+  { label: "Troubles digestifs", href: "/specialites/troubles-digestifs" },
+] as const;
+
 export function AteliersHero() {
   return (
     <section
@@ -28,38 +19,40 @@ export function AteliersHero() {
           id="ateliers-titre"
           className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.02em] leading-[1.05] text-warm-900"
         >
-          Les ateliers
+          Ateliers bien-être
         </h1>
 
-        <p className="mt-8 font-body text-lg md:text-xl leading-relaxed text-warm-700">
-          Au fil des saisons, j&apos;anime des ateliers d&apos;alimentation
-          et de bien-être avec l&apos;association{" "}
-          <span className="text-warm-900">{association.name}</span>, à
-          Vaulx-en-Velin. Des temps conviviaux pour partager recettes et
-          gestes simples.
-        </p>
-
-        <div className="mt-10 flex flex-col-reverse sm:flex-row sm:justify-center items-center gap-4">
-          <ButtonLink href={association.externalUrl} variant="secondary" external>
-            Voir l&apos;association
-            <ExternalLink aria-hidden="true" className="w-4 h-4" strokeWidth={1.5} />
-          </ButtonLink>
-          <ButtonLink href={association.phoneHref} variant="primary">
-            Réserver un atelier
-            <Phone aria-hidden="true" className="w-4 h-4" strokeWidth={1.5} />
-          </ButtonLink>
+        <div className="mt-6 space-y-5 text-left sm:text-center">
+          <p className="font-body text-base md:text-lg leading-relaxed text-warm-700">
+            Parce que prendre soin de soi ne s&apos;arrête pas à la salle de consultation, je vous propose des ateliers pratiques conçus pour vous redonner le pouvoir sur votre santé au quotidien. Fabriquer ses cosmétiques, nourrir son microbiote, se réconcilier avec les saveurs saines, comprendre ses cycles hormonaux&nbsp;: autant de gestes simples qui transforment profondément notre relation au corps et à la nature.
+          </p>
+          <p className="font-body text-base md:text-lg leading-relaxed text-warm-700">
+            Chaque atelier est pensé dans une approche globale, à la croisée de la naturopathie et de la médecine chinoise, pour que vous repartiez non seulement avec des recettes ou des outils, mais avec une véritable compréhension de votre terrain.
+          </p>
         </div>
 
-        <p className="mt-6 font-body text-sm text-warm-700/75">
-          Informations et réservations au{" "}
-          <a
-            href={association.phoneHref}
-            className="text-warm-900 underline underline-offset-4 decoration-warm-500/60 hover:decoration-warm-900 transition-colors"
-          >
-            {association.phone}
-          </a>
-          .
-        </p>
+        <ul className="mt-8 flex flex-wrap justify-center gap-2">
+          {heroTags.map(({ label, href }) => (
+            <li key={label}>
+              <Link
+                href={href}
+                className={[
+                  "inline-flex items-center px-2.5 py-1 lg:px-3 lg:py-1.5 rounded-md",
+                  "bg-[var(--glass-bg)]",
+                  "backdrop-blur-xl backdrop-saturate-[1.8]",
+                  "border-[0.5px] border-white/50",
+                  "shadow-[inset_0_1px_0_rgba(255,255,255,0.7),inset_0_-1px_0_rgba(60,30,25,0.04),0_4px_16px_-6px_rgba(60,30,25,0.15)]",
+                  "font-body text-xs lg:text-sm font-medium text-warm-700",
+                  "hover:border-white/70 hover:text-warm-900",
+                  "transition-colors duration-200 ease-out",
+                  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700",
+                ].join(" ")}
+              >
+                {label}
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

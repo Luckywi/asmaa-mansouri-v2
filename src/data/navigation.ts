@@ -22,9 +22,10 @@ export const navLinks: NavLink[] = [
     label: "Spécialités",
     href: "/specialites",
     futureHref: "/specialites",
-    // Hub des 8 spécialités (SOPK, endométriose, préménopause/ménopause,
-    // fertilité, post-partum, cycles irréguliers, charge mentale, troubles
-    // digestifs). Pages dédiées /specialites/[slug] à venir.
+    // Hub des 4 spécialités parapluies : troubles digestifs, allergies
+    // saisonnières, stress & burn-out, déséquilibres hormonaux. Cette
+    // dernière regroupe SOPK, endométriose, fertilité, post-partum et
+    // cycles irréguliers en sous-sections ancrées (#sopk, #endometriose…).
   },
   {
     label: "Cabinet",

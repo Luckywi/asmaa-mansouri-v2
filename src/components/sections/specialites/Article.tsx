@@ -4,6 +4,7 @@ type Props = {
   definition: Specialite["definition"];
   symptomes: Specialite["symptomes"];
   approche: Specialite["approche"];
+  conditions?: Specialite["conditions"];
 };
 
 /**
@@ -25,7 +26,7 @@ type Props = {
  *
  * Server Component pur.
  */
-export function Article({ definition, symptomes, approche }: Props) {
+export function Article({ definition, symptomes, approche, conditions }: Props) {
   return (
     <section className="relative pb-12 lg:pb-22">
       <div className="mx-auto max-w-3xl px-6 md:px-8">
@@ -76,6 +77,35 @@ export function Article({ definition, symptomes, approche }: Props) {
             {approche.content}
           </p>
         </article>
+
+        {/* ─── Conditions (sous-sections pathologies) ───────────────
+            Rendu uniquement pour les spécialités "parapluie" qui
+            déclarent un champ `conditions` (ex: déséquilibres hormonaux
+            → SOPK, endométriose, fertilité, post-partum, cycles).
+            Chaque item expose un H3 + `id={slug}` pour l'ancrage URL
+            direct type `/specialites/[slug]#sopk` — SEO longue-queue
+            et partage de lien profond.
+            `scroll-mt-28` compense le Header sticky au scroll vers l'ancre.
+        */}
+        {conditions && conditions.length > 0 && (
+          <article className="mt-16 lg:mt-20">
+            <h2 className="font-display text-3xl lg:text-4xl font-medium tracking-[-0.02em] leading-[1.15] text-warm-900">
+              Des situations spécifiques que j&apos;accompagne
+            </h2>
+            <div className="mt-8 space-y-10 lg:space-y-12">
+              {conditions.map(({ slug, title, content }) => (
+                <div key={slug} id={slug} className="scroll-mt-28">
+                  <h3 className="font-display text-2xl lg:text-3xl font-medium tracking-[-0.01em] leading-[1.2] text-warm-900">
+                    {title}
+                  </h3>
+                  <p className="mt-4 font-body text-base lg:text-lg leading-relaxed text-warm-700 whitespace-pre-line">
+                    {content}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </article>
+        )}
       </div>
     </section>
   );
