@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { Reveal } from "@/components/motion/Reveal";
 
 /**
  * 3 photos d'Asmaa affichées en "deck de cartes" empilé. Hébergées dans
@@ -123,7 +124,7 @@ export function Portrait() {
         */}
         <div className="grid grid-cols-1 lg:grid-cols-[7fr_3fr] gap-[52px] lg:gap-[70px] lg:items-stretch">
           {/* ─── Colonne gauche : titre + tags + description ── */}
-          <div className="order-2 lg:order-1 text-center lg:text-left">
+          <Reveal as="div" className="order-2 lg:order-1 text-center lg:text-left">
             <h2
               id="portrait-titre"
               className="font-display text-4xl lg:text-5xl font-medium tracking-[-0.02em] leading-[1.1] text-warm-900"
@@ -259,7 +260,7 @@ export function Portrait() {
                 </p>
               </div>
             </div>
-          </div>
+          </Reveal>
 
           {/* ─── Colonne droite : photos ─────────────────────── */}
           {/*
@@ -274,7 +275,7 @@ export function Portrait() {
             texte en stack vertical ; order-2 en lg pour revenir en
             colonne droite du split classique.
           */}
-          <div className="order-1 lg:order-2">
+          <Reveal as="div" delay={0.1} className="order-1 lg:order-2">
             {/* ── < lg : deck empilé auto-advance ── */}
             <div
               role="region"
@@ -353,7 +354,7 @@ export function Portrait() {
                 </li>
               ))}
             </ul>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

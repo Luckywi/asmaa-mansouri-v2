@@ -1,6 +1,7 @@
 import { CalendarRange, Phone } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { InstagramLogo } from "@/components/ui/InstagramLogo";
+import { FadeInUp } from "@/components/motion/FadeInUp";
 import { site } from "@/data/site";
 
 /**
@@ -21,37 +22,43 @@ export function ContactHero() {
       className="relative pt-32 pb-12 md:pt-36 lg:pt-40 lg:pb-16"
     >
       <div className="mx-auto max-w-3xl px-6 text-center">
-        <h1
-          id="contact-titre"
-          className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.02em] leading-[1.05] text-warm-900"
-        >
-          Prendre contact
-        </h1>
+        <FadeInUp duration={0.6}>
+          <h1
+            id="contact-titre"
+            className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.02em] leading-[1.05] text-warm-900"
+          >
+            Prendre contact
+          </h1>
+        </FadeInUp>
 
-        <p className="mt-8 font-body text-lg md:text-xl leading-relaxed text-warm-700">
-          Pour une question, une prise de rendez-vous ou un échange avant
-          votre première séance, écrivez-moi ou téléphonez. Je vous réponds
-          personnellement sous 48 heures ouvrées.
-        </p>
+        <FadeInUp delay={0.1} duration={0.6} className="mt-8">
+          <p className="font-body text-lg md:text-xl leading-relaxed text-warm-700">
+            Pour une question, une prise de rendez-vous ou un échange avant
+            votre première séance, écrivez-moi ou téléphonez. Je vous réponds
+            personnellement sous 48 heures ouvrées.
+          </p>
+        </FadeInUp>
 
-        <div className="mt-10 flex flex-col-reverse sm:flex-row sm:flex-wrap sm:justify-center items-center gap-4">
-          <ButtonLink href={site.instagramUrl} variant="secondary" external>
-            Suivre sur
-            <InstagramLogo className="h-4 w-auto translate-y-[1.5px]" />
-          </ButtonLink>
-          <ButtonLink href={site.phoneHref} variant="secondary">
-            Appelez-moi
-            <Phone aria-hidden="true" className="w-4 h-4" strokeWidth={1.5} />
-          </ButtonLink>
-          <ButtonLink href={site.resalibUrl} variant="primary">
-            Prendre rendez-vous
-            <CalendarRange
-              aria-hidden="true"
-              className="w-4 h-4"
-              strokeWidth={1.5}
-            />
-          </ButtonLink>
-        </div>
+        <FadeInUp delay={0.25} duration={0.6} className="mt-10">
+          <div className="flex flex-col-reverse sm:flex-row sm:flex-wrap sm:justify-center items-center gap-4">
+            <ButtonLink href={site.instagramUrl} variant="secondary" external>
+              Suivre sur
+              <InstagramLogo className="h-4 w-auto translate-y-[1.5px]" />
+            </ButtonLink>
+            <ButtonLink href={site.phoneHref} variant="secondary">
+              Appelez-moi
+              <Phone aria-hidden="true" className="w-4 h-4" strokeWidth={1.5} />
+            </ButtonLink>
+            <ButtonLink href={site.resalibUrl} variant="primary">
+              Prendre rendez-vous
+              <CalendarRange
+                aria-hidden="true"
+                className="w-4 h-4"
+                strokeWidth={1.5}
+              />
+            </ButtonLink>
+          </div>
+        </FadeInUp>
       </div>
     </section>
   );

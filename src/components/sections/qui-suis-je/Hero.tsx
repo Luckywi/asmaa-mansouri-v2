@@ -1,5 +1,6 @@
 import { CalendarRange, Phone } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { FadeInUp } from "@/components/motion/FadeInUp";
 import { site } from "@/data/site";
 
 /**
@@ -28,7 +29,8 @@ export function Hero() {
     >
       <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
         <div className="text-center max-w-4xl mx-auto">
-          <blockquote>
+          <FadeInUp duration={0.6}>
+            <blockquote>
             <h1
               id="qui-suis-je-titre"
               className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.02em] leading-[1.1] text-warm-900 italic"
@@ -43,15 +45,19 @@ export function Hero() {
               </cite>
             </footer>
           </blockquote>
+          </FadeInUp>
 
-          <p className="mt-12 max-w-2xl mx-auto font-body text-lg md:text-xl leading-relaxed text-warm-700">
+          <FadeInUp delay={0.1} duration={0.6} className="mt-12 max-w-2xl mx-auto">
+          <p className="font-body text-lg md:text-xl leading-relaxed text-warm-700">
             Naturopathe à Décines-Charpieu, j'accompagne exclusivement les
             femmes. Cycles, SOPK, endométriose, post-partum, préménopause,
             troubles digestifs : mon approche associe naturopathie, médecine
             traditionnelle chinoise et massage Tuina.
           </p>
+          </FadeInUp>
 
-          <div className="mt-10 flex flex-col-reverse sm:flex-row sm:justify-center items-center gap-4">
+          <FadeInUp delay={0.25} duration={0.6} className="mt-10">
+          <div className="flex flex-col-reverse sm:flex-row sm:justify-center items-center gap-4">
             <ButtonLink href={site.phoneHref} variant="secondary">
               Appeler Asmaa
               <Phone aria-hidden="true" className="w-4 h-4" strokeWidth={1.5} />
@@ -65,6 +71,7 @@ export function Hero() {
               />
             </ButtonLink>
           </div>
+          </FadeInUp>
         </div>
       </div>
     </section>

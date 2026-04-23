@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect } from "react";
+import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
-import { CalendarDays, Clock, Phone, X } from "lucide-react";
+import { CalendarDays, Clock, MapPin, Phone, X } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { site } from "@/data/site";
 import type { Atelier } from "@/types";
@@ -120,6 +121,19 @@ export function AtelierModal({ atelier, onClose }: ModalProps) {
             </header>
 
             <div className="mt-6 max-h-[55vh] overflow-y-auto pr-1 scroll-elegant">
+              {atelier.poster && (
+                <div className="mb-5 overflow-hidden rounded-lg border-[0.5px] border-warm-500/25 bg-warm-500/10">
+                  <Image
+                    src={atelier.poster}
+                    alt={`Affiche de l'atelier ${atelier.title}`}
+                    width={940}
+                    height={788}
+                    className="w-full h-auto"
+                    sizes="(max-width: 640px) 100vw, 576px"
+                  />
+                </div>
+              )}
+
               <p className="font-body text-sm leading-relaxed text-warm-700 whitespace-pre-line">
                 {atelier.longDescription}
               </p>
@@ -143,7 +157,7 @@ export function AtelierModal({ atelier, onClose }: ModalProps) {
                 </div>
               )}
 
-              {(atelier.date || atelier.duration) && (
+              {(atelier.date || atelier.duration || atelier.location) && (
                 <ul className="mt-6 space-y-2.5 border-t border-warm-500/20 pt-5 font-body text-sm text-warm-700">
                   {atelier.date && (
                     <li className="flex items-center gap-2.5">
@@ -163,6 +177,16 @@ export function AtelierModal({ atelier, onClose }: ModalProps) {
                         strokeWidth={1.5}
                       />
                       {atelier.duration}
+                    </li>
+                  )}
+                  {atelier.location && (
+                    <li className="flex items-center gap-2.5">
+                      <MapPin
+                        aria-hidden="true"
+                        className="w-4 h-4 shrink-0 text-warm-700/70"
+                        strokeWidth={1.5}
+                      />
+                      {atelier.location}
                     </li>
                   )}
                 </ul>

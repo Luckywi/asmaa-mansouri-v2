@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import { CalendarRange, Flower2, Leaf, UserRound } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import {
   Bridges,
   type QuiSuisJeBridge,
 } from "@/components/sections/qui-suis-je/Bridges";
+import { FadeInUp } from "@/components/motion/FadeInUp";
+import { Reveal } from "@/components/motion/Reveal";
 import { site } from "@/data/site";
 
 /**
@@ -69,37 +72,53 @@ const bridges: readonly QuiSuisJeBridge[] = [
 export default function MedecinesAncestralesPage() {
   return (
     <main id="contenu-principal" className="flex-1">
+      <Breadcrumbs
+        items={[
+          { label: "Qui suis-je ?", href: "/qui-suis-je" },
+          {
+            label: "Médecines ancestrales",
+            href: "/qui-suis-je/medecines-ancestrales",
+          },
+        ]}
+      />
+
       {/* ─── Hero ────────────────────────────────────────────────── */}
       <section
         aria-labelledby="medecines-ancestrales-titre"
-        className="relative pt-32 pb-12 md:pt-36 lg:pt-40 lg:pb-16"
+        className="relative pt-8 pb-12 md:pt-10 lg:pt-12 lg:pb-16"
       >
         <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
           <div className="text-center max-w-4xl mx-auto">
-            <h1
-              id="medecines-ancestrales-titre"
-              className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.02em] leading-[1.05] text-warm-900 text-balance"
-            >
-              Mes médecines ancestrales
-            </h1>
+            <FadeInUp duration={0.6}>
+              <h1
+                id="medecines-ancestrales-titre"
+                className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.02em] leading-[1.05] text-warm-900 text-balance"
+              >
+                Mes médecines ancestrales
+              </h1>
+            </FadeInUp>
 
-            <p className="mt-8 max-w-2xl mx-auto font-body text-lg md:text-xl leading-relaxed text-warm-700">
-              Ma pratique s&apos;enracine dans deux traditions médicales
-              anciennes qui partagent une même conviction fondamentale&nbsp;:
-              le corps possède en lui-même les ressources pour guérir, à
-              condition qu&apos;on lui en donne les moyens.
-            </p>
+            <FadeInUp delay={0.1} duration={0.6} className="mt-8 max-w-2xl mx-auto">
+              <p className="font-body text-lg md:text-xl leading-relaxed text-warm-700">
+                Ma pratique s&apos;enracine dans deux traditions médicales
+                anciennes qui partagent une même conviction fondamentale&nbsp;:
+                le corps possède en lui-même les ressources pour guérir, à
+                condition qu&apos;on lui en donne les moyens.
+              </p>
+            </FadeInUp>
 
-            <div className="mt-10 flex justify-center">
-              <ButtonLink href={site.resalibUrl} variant="primary">
-                Réserver un appel découverte gratuit
-                <CalendarRange
-                  aria-hidden="true"
-                  className="w-4 h-4"
-                  strokeWidth={1.5}
-                />
-              </ButtonLink>
-            </div>
+            <FadeInUp delay={0.25} duration={0.6} className="mt-10">
+              <div className="flex justify-center">
+                <ButtonLink href={site.resalibUrl} variant="primary">
+                  Réserver un appel découverte gratuit
+                  <CalendarRange
+                    aria-hidden="true"
+                    className="w-4 h-4"
+                    strokeWidth={1.5}
+                  />
+                </ButtonLink>
+              </div>
+            </FadeInUp>
           </div>
         </div>
       </section>
@@ -108,7 +127,7 @@ export default function MedecinesAncestralesPage() {
       <section className="relative pb-12 lg:pb-22">
         <div className="mx-auto max-w-3xl px-6 md:px-8">
           {/* ── La Médecine Traditionnelle Chinoise ── */}
-          <article>
+          <Reveal as="article">
             <h2 className="font-display text-3xl lg:text-4xl font-medium tracking-[-0.02em] leading-[1.15] text-warm-900">
               La Médecine Traditionnelle Chinoise
             </h2>
@@ -157,10 +176,10 @@ export default function MedecinesAncestralesPage() {
                 cru reste une exception estivale.
               </p>
             </div>
-          </article>
+          </Reveal>
 
           {/* ── La Médecine Prophétique ── */}
-          <article className="mt-16 lg:mt-20">
+          <Reveal as="article" className="mt-16 lg:mt-20">
             <h2 className="font-display text-3xl lg:text-4xl font-medium tracking-[-0.02em] leading-[1.15] text-warm-900">
               La Médecine Prophétique{" "}
               <span className="font-body text-lg lg:text-xl text-warm-700 italic">
@@ -216,10 +235,10 @@ export default function MedecinesAncestralesPage() {
                 équilibre.
               </p>
             </div>
-          </article>
+          </Reveal>
 
           {/* ── Ce qui relie ces traditions ── */}
-          <article className="mt-16 lg:mt-20">
+          <Reveal as="article" className="mt-16 lg:mt-20">
             <h2 className="font-display text-3xl lg:text-4xl font-medium tracking-[-0.02em] leading-[1.15] text-warm-900">
               Ce qui relie ces traditions
             </h2>
@@ -255,7 +274,7 @@ export default function MedecinesAncestralesPage() {
               terrain, le profil et les besoins de chaque femme que
               j&apos;accompagne.
             </p>
-          </article>
+          </Reveal>
         </div>
       </section>
 
@@ -268,7 +287,7 @@ export default function MedecinesAncestralesPage() {
         className="relative py-12 lg:py-22"
       >
         <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
-          <div className="text-center max-w-3xl mx-auto">
+          <Reveal as="div" className="text-center max-w-3xl mx-auto">
             <h2 className="font-display text-4xl lg:text-5xl font-medium tracking-[-0.02em] leading-[1.1] text-warm-900">
               Envie d&apos;en parler concrètement&nbsp;?
             </h2>
@@ -293,7 +312,7 @@ export default function MedecinesAncestralesPage() {
                 />
               </ButtonLink>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
     </main>

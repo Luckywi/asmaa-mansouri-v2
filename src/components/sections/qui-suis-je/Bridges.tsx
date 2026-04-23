@@ -5,6 +5,8 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { Reveal } from "@/components/motion/Reveal";
+import { Stagger, StaggerItem } from "@/components/motion/Stagger";
 
 export type QuiSuisJeBridge = {
   readonly href: string;
@@ -43,18 +45,26 @@ export function Bridges({ bridges }: Props) {
       className="relative py-12 lg:py-22"
     >
       <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
-        <h2
-          id="qui-suis-je-bridges-titre"
-          className="font-display text-3xl lg:text-4xl font-medium tracking-[-0.02em] leading-[1.15] text-warm-900 text-center text-balance"
-        >
-          Pour aller plus loin
-        </h2>
+        <Reveal>
+          <h2
+            id="qui-suis-je-bridges-titre"
+            className="font-display text-3xl lg:text-4xl font-medium tracking-[-0.02em] leading-[1.15] text-warm-900 text-center text-balance"
+          >
+            Pour aller plus loin
+          </h2>
+        </Reveal>
 
         {/* ─── Mobile (< md) : liste éditoriale ────────────── */}
-        <ul className="mt-12 md:hidden border-y border-warm-700/15">
+        <Stagger
+          as="ul"
+          trigger="inView"
+          staggerChildren={0.06}
+          className="mt-12 md:hidden border-y border-warm-700/15"
+        >
           {bridges.map(({ href, title, description }, i) => (
-            <li
+            <StaggerItem
               key={href}
+              as="li"
               className={i > 0 ? "border-t border-warm-700/15" : ""}
             >
               <Link
@@ -86,11 +96,17 @@ export function Bridges({ bridges }: Props) {
                   ].join(" ")}
                 />
               </Link>
-            </li>
+            </StaggerItem>
           ))}
-        </ul>
+        </Stagger>
 
         {/* ─── md+ : grille de cards glass watermark ──────── */}
+        {/*
+          Cards statiques, contenu interne animé via Reveal (pattern
+          identique à Specialites / FaisonsConnaissance). Évite le flash
+          du backdrop-filter qui perd son watermark sibling pendant
+          un transform sur le <li>.
+        */}
         <ul
           className={[
             "hidden md:grid mt-14 lg:mt-16 gap-6 lg:gap-8 mx-auto",
@@ -101,7 +117,7 @@ export function Bridges({ bridges }: Props) {
                 : "md:grid-cols-3",
           ].join(" ")}
         >
-          {bridges.map(({ href, icon: Icon, title, description, ctaLabel }) => (
+          {bridges.map(({ href, icon: Icon, title, description, ctaLabel }, i) => (
             <li
               key={href}
               className="group relative flex flex-col rounded-md overflow-hidden"
@@ -124,31 +140,33 @@ export function Bridges({ bridges }: Props) {
                   "transition-colors duration-200 ease-out",
                 ].join(" ")}
               >
-                <div className="flex items-center gap-3">
-                  <Icon
-                    aria-hidden="true"
-                    className="w-7 h-7 text-warm-700 shrink-0"
-                    strokeWidth={1.5}
-                  />
-                  <h3 className="font-display text-xl lg:text-2xl font-medium tracking-tight text-warm-900">
-                    {title}
-                  </h3>
-                </div>
-
-                <p className="mt-4 font-body text-base leading-relaxed text-warm-700">
-                  {description}
-                </p>
-
-                <div className="mt-auto pt-6">
-                  <ButtonLink href={href} variant="primary">
-                    {ctaLabel}
-                    <Eye
+                <Reveal delay={i * 0.08} className="flex flex-col flex-1">
+                  <div className="flex items-center gap-3">
+                    <Icon
                       aria-hidden="true"
-                      className="w-4 h-4"
+                      className="w-7 h-7 text-warm-700 shrink-0"
                       strokeWidth={1.5}
                     />
-                  </ButtonLink>
-                </div>
+                    <h3 className="font-display text-xl lg:text-2xl font-medium tracking-tight text-warm-900">
+                      {title}
+                    </h3>
+                  </div>
+
+                  <p className="mt-4 font-body text-base leading-relaxed text-warm-700">
+                    {description}
+                  </p>
+
+                  <div className="mt-auto pt-6">
+                    <ButtonLink href={href} variant="primary">
+                      {ctaLabel}
+                      <Eye
+                        aria-hidden="true"
+                        className="w-4 h-4"
+                        strokeWidth={1.5}
+                      />
+                    </ButtonLink>
+                  </div>
+                </Reveal>
               </div>
             </li>
           ))}

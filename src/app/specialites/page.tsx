@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CalendarRange, GalleryVerticalEnd, MousePointerClick, Phone } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { FadeInUp } from "@/components/motion/FadeInUp";
+import { Reveal } from "@/components/motion/Reveal";
 import { specialites } from "@/data/specialites";
 import { site } from "@/data/site";
 
@@ -45,30 +47,36 @@ export default function SpecialitesPage() {
       >
         <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
           <div className="text-center max-w-4xl mx-auto">
-            <h1
-              id="specialites-titre"
-              className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.02em] leading-[1.05] text-warm-900"
-            >
-              Mes spécialités
-            </h1>
+            <FadeInUp duration={0.6}>
+              <h1
+                id="specialites-titre"
+                className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.02em] leading-[1.05] text-warm-900"
+              >
+                Mes spécialités
+              </h1>
+            </FadeInUp>
 
-            <p className="mt-8 max-w-2xl mx-auto font-body text-lg md:text-xl leading-relaxed text-warm-700">
-              Naturopathe à Décines-Charpieu, j&apos;accompagne exclusivement
-              les femmes autour de quatre grands univers de santé&nbsp;:
-              troubles digestifs, allergies saisonnières, stress et burn-out,
-              déséquilibres hormonaux.
-            </p>
+            <FadeInUp delay={0.1} duration={0.6} className="mt-8 max-w-2xl mx-auto">
+              <p className="font-body text-lg md:text-xl leading-relaxed text-warm-700">
+                Naturopathe à Décines-Charpieu, j&apos;accompagne exclusivement
+                les femmes autour de quatre grands univers de santé&nbsp;:
+                troubles digestifs, allergies saisonnières, stress et burn-out,
+                déséquilibres hormonaux.
+              </p>
+            </FadeInUp>
 
-            <div className="mt-10 flex justify-center">
-              <ButtonLink href={site.resalibUrl} variant="primary">
-                Réserver un appel découverte gratuit
-                <CalendarRange
-                  aria-hidden="true"
-                  className="w-4 h-4"
-                  strokeWidth={1.5}
-                />
-              </ButtonLink>
-            </div>
+            <FadeInUp delay={0.25} duration={0.6} className="mt-10">
+              <div className="flex justify-center">
+                <ButtonLink href={site.resalibUrl} variant="primary">
+                  Réserver un appel découverte gratuit
+                  <CalendarRange
+                    aria-hidden="true"
+                    className="w-4 h-4"
+                    strokeWidth={1.5}
+                  />
+                </ButtonLink>
+              </div>
+            </FadeInUp>
           </div>
         </div>
       </section>
@@ -79,8 +87,18 @@ export default function SpecialitesPage() {
         className="relative pb-12 lg:pb-22"
       >
         <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
+          {/*
+            Cards statiques, contenu interne animé via Reveal avec délai
+            croissant par card (`i * 0.08s`). Le glass n'a pas de
+            watermark derrière mais son backdrop-filter met une frame
+            ou deux à s'initialiser au premier paint — animer les
+            cards produirait un flash. En gardant le container Link
+            statique, le backdrop-filter est peint dès que la section
+            entre dans le viewport ; seuls H2, description et CTA
+            cascadent en fade+translateY.
+          */}
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8">
-            {specialites.map(({ slug, title, shortDescription }) => (
+            {specialites.map(({ slug, title, shortDescription }, i) => (
               <li
                 key={slug}
                 className="group relative flex flex-col rounded-md overflow-hidden"
@@ -105,34 +123,36 @@ export default function SpecialitesPage() {
                     "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700",
                   ].join(" ")}
                 >
-                  <h2 className="font-display text-xl lg:text-2xl font-medium tracking-tight text-warm-900 text-balance">
-                    {title}
-                  </h2>
+                  <Reveal delay={i * 0.08} className="flex flex-col flex-1">
+                    <h2 className="font-display text-xl lg:text-2xl font-medium tracking-tight text-warm-900 text-balance">
+                      {title}
+                    </h2>
 
-                  <p className="mt-4 font-body text-base leading-relaxed text-warm-700">
-                    {shortDescription}
-                  </p>
+                    <p className="mt-4 font-body text-base leading-relaxed text-warm-700">
+                      {shortDescription}
+                    </p>
 
-                  {/*
-                    "En savoir plus" + MousePointerClick (en lieu et place
-                    d'une flèche) en couleur titre (warm-900), aligné
-                    bottom-right via `mt-auto` + `justify-end`. L'icône
-                    signale la clickability — le clic est porté par tout
-                    le <Link>. `aria-hidden` car visuellement redondant
-                    avec le titre côté lecteur d'écran.
-                  */}
-                  <div className="mt-auto pt-6 flex justify-end">
-                    <span
-                      aria-hidden="true"
-                      className="font-display text-base lg:text-lg font-medium text-warm-900 inline-flex items-center gap-2"
-                    >
-                      En savoir plus
-                      <MousePointerClick
-                        className="w-4 h-4 lg:w-5 lg:h-5 transition-transform duration-200 group-hover:translate-x-1"
-                        strokeWidth={2}
-                      />
-                    </span>
-                  </div>
+                    {/*
+                      "En savoir plus" + MousePointerClick (en lieu et place
+                      d'une flèche) en couleur titre (warm-900), aligné
+                      bottom-right via `mt-auto` + `justify-end`. L'icône
+                      signale la clickability — le clic est porté par tout
+                      le <Link>. `aria-hidden` car visuellement redondant
+                      avec le titre côté lecteur d'écran.
+                    */}
+                    <div className="mt-auto pt-6 flex justify-end">
+                      <span
+                        aria-hidden="true"
+                        className="font-display text-base lg:text-lg font-medium text-warm-900 inline-flex items-center gap-2"
+                      >
+                        En savoir plus
+                        <MousePointerClick
+                          className="w-4 h-4 lg:w-5 lg:h-5 transition-transform duration-200 group-hover:translate-x-1"
+                          strokeWidth={2}
+                        />
+                      </span>
+                    </div>
+                  </Reveal>
                 </Link>
               </li>
             ))}
@@ -154,7 +174,7 @@ export default function SpecialitesPage() {
         className="relative py-12 lg:py-22"
       >
         <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
-          <div className="text-center max-w-3xl mx-auto">
+          <Reveal as="div" className="text-center max-w-3xl mx-auto">
             <h2 className="font-display text-4xl lg:text-5xl font-medium tracking-[-0.02em] leading-[1.1] text-warm-900 text-balance">
               Vous n&apos;êtes concernée par aucune de ces problématiques&nbsp;?
             </h2>
@@ -186,7 +206,7 @@ export default function SpecialitesPage() {
                 />
               </ButtonLink>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
     </main>

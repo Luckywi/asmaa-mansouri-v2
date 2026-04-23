@@ -1,5 +1,6 @@
 import { TicketPlus, TicketCheck, type LucideIcon } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { Reveal } from "@/components/motion/Reveal";
 
 type ExplorationBlock = {
   readonly title: string;
@@ -33,7 +34,7 @@ export function AteliersExploration() {
   return (
     <section aria-label="Explorer les ateliers" className="relative py-12 lg:py-22">
       <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
-        <div className="mx-auto max-w-5xl grid grid-cols-1 md:grid-cols-2 md:divide-x md:divide-warm-700/15">
+        <Reveal as="div" className="mx-auto max-w-5xl grid grid-cols-1 md:grid-cols-2 md:divide-x md:divide-warm-700/15">
           {blocks.map(({ title, description, href, icon: Icon, ctaLabel }, i) => (
             <div
               key={href}
@@ -62,7 +63,7 @@ export function AteliersExploration() {
               </div>
             </div>
           ))}
-        </div>
+        </Reveal>
 
       </div>
     </section>

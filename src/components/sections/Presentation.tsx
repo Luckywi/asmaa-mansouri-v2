@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Microscope } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { Reveal } from "@/components/motion/Reveal";
 
 /**
  * Tags pratiques d'Asmaa — chaque tag pointe vers la page la plus
@@ -58,7 +59,7 @@ export function Presentation() {
       className="relative py-12 lg:py-22"
     >
       <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+        <Reveal as="div" className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
           {/* ─── Colonne photo ────────────────────────────── */}
           <div className="lg:col-span-5">
             {/*
@@ -146,7 +147,7 @@ export function Presentation() {
               </ButtonLink>
             </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

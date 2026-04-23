@@ -1,5 +1,6 @@
 import { CalendarRange, ScanSearch } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { Reveal } from "@/components/motion/Reveal";
 import { site } from "@/data/site";
 
 /**
@@ -27,7 +28,7 @@ export function CTAFinal() {
       className="relative py-12 lg:py-22"
     >
       <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
-        <div className="text-center max-w-3xl mx-auto">
+        <Reveal as="div" className="text-center max-w-3xl mx-auto">
           <h2 className="font-display text-4xl lg:text-5xl font-medium tracking-[-0.02em] leading-[1.1] text-warm-900">
             Vous vous reconnaissez dans ces symptômes&nbsp;?
           </h2>
@@ -61,7 +62,7 @@ export function CTAFinal() {
               />
             </ButtonLink>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

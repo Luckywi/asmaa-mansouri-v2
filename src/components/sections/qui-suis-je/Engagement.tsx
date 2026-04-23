@@ -1,7 +1,9 @@
+import { Reveal } from "@/components/motion/Reveal";
+
 export function Engagement() {
   return (
     <section aria-labelledby="engagement-titre" className="relative py-12 lg:py-22">
-      <div className="mx-auto max-w-3xl px-6 md:px-8">
+      <Reveal as="div" className="mx-auto max-w-3xl px-6 md:px-8">
         <h2
           id="engagement-titre"
           className="font-display text-3xl lg:text-4xl font-medium tracking-[-0.02em] leading-[1.15] text-warm-900 text-center"
@@ -55,7 +57,7 @@ export function Engagement() {
             C&apos;est là que je veux être. C&apos;est là que je suis.
           </p>
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }

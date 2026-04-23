@@ -1,4 +1,5 @@
 import { Star } from "lucide-react";
+import { Reveal } from "@/components/motion/Reveal";
 import type { Temoignage } from "@/types";
 
 /**
@@ -29,6 +30,18 @@ function getInitials(name: string): string {
 }
 
 /**
+ * Hash stable djb2-like pour dériver des paramètres "aléatoires"
+ * déterministes à partir du nom. Stable SSR + même rendu côté client.
+ */
+function hashName(name: string): number {
+  let h = 5381;
+  for (let i = 0; i < name.length; i++) {
+    h = ((h << 5) + h + name.charCodeAt(i)) | 0;
+  }
+  return Math.abs(h);
+}
+
+/**
  * TemoignageCard — carte individuelle sur la page `/temoignages`.
  *
  * Recette glass standard (DESIGN.md — même que les cards Specialites,
@@ -43,30 +56,56 @@ export function TemoignageCard({ temoignage, onOpenDetails }: CardProps) {
   const { name, role, body, rating = 5 } = temoignage;
   const isLong = body.length > TRUNCATE_THRESHOLD;
 
+  /*
+    Watermark Star aléatoire mais déterministe (stable SSR/CSR) :
+    - `hasStar`  : ~60 % des cards en portent une (modulo 5 sur le hash).
+    - `rotation` : -25° à +25°, varie par card pour casser la symétrie.
+    Pattern repris de la card avis sur /cabinet (Experiences) et des
+    cards Specialites de la landing.
+  */
+  const h = hashName(name + body.slice(0, 6));
+  const hasStar = h % 5 < 3;
+  const rotation = (h % 51) - 25;
+
   return (
-    <button
-      type="button"
-      onClick={onOpenDetails}
-      aria-label={`Voir le témoignage complet de ${name}`}
+    <div
       className={[
-        // Toute la card est le bouton : `text-left w-full` pour garder le
-        // layout, `cursor-pointer` explicite, `group` pour propager le
-        // hover sur les enfants (chevron "Voir plus" qui change de teinte).
-        "group text-left w-full cursor-pointer",
-        "flex flex-col gap-4 p-6",
-        "rounded-md",
-        "bg-[var(--glass-bg)]",
-        "backdrop-blur-xl backdrop-saturate-[1.8]",
-        "border-[0.5px] border-white/50",
-        "shadow-[inset_0_1px_0_rgba(255,255,255,0.7),inset_0_-1px_0_rgba(60,30,25,0.04),0_4px_16px_-6px_rgba(60,30,25,0.15)]",
-        // Signaux d'interactivité : bordure qui gagne en opacité + léger
-        // zoom desktop uniquement (même pattern que les cards /specialites).
-        "hover:border-white/70",
+        "group relative w-full rounded-md overflow-hidden",
         "lg:hover:scale-[1.02]",
-        "transition-all duration-200 ease-out",
-        "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700",
+        "transition-transform duration-200 ease-out",
       ].join(" ")}
     >
+      {hasStar && (
+        <Star
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full text-warm-700/50 pointer-events-none"
+          strokeWidth={2}
+          style={{ transform: `rotate(${rotation}deg)` }}
+        />
+      )}
+      <button
+        type="button"
+        onClick={onOpenDetails}
+        aria-label={`Voir le témoignage complet de ${name}`}
+        className={[
+          "relative text-left w-full cursor-pointer",
+          "flex flex-col gap-4 p-6",
+          "bg-[var(--glass-bg)]",
+          "backdrop-blur-xl backdrop-saturate-[1.8]",
+          "border-[0.5px] border-white/50",
+          "shadow-[inset_0_1px_0_rgba(255,255,255,0.7),inset_0_-1px_0_rgba(60,30,25,0.04),0_4px_16px_-6px_rgba(60,30,25,0.15)]",
+          "group-hover:border-white/70",
+          "transition-colors duration-200 ease-out",
+          "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700",
+        ].join(" ")}
+      >
+      {/*
+        Reveal à l'intérieur du button glass — la card et le Star
+        watermark restent statiques, seul le contenu texte (header +
+        body + "Voir plus") cascade à l'apparition. Pattern partagé
+        avec Specialites/FaisonsConnaissance/AllerPlusLoin.
+      */}
+      <Reveal className="flex flex-col gap-4 w-full">
       <header className="flex items-center gap-3">
         <div
           aria-hidden="true"
@@ -123,6 +162,8 @@ export function TemoignageCard({ temoignage, onOpenDetails }: CardProps) {
       >
         Voir plus
       </span>
-    </button>
+      </Reveal>
+      </button>
+    </div>
   );
 }

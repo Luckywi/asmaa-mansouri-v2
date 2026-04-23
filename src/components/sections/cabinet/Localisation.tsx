@@ -1,6 +1,7 @@
 import { CalendarRange, Clock, MapPin, Navigation, Phone } from "lucide-react";
 import Map from "@/components/ui/Map";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { Reveal } from "@/components/motion/Reveal";
 import { site } from "@/data/site";
 
 /**
@@ -29,7 +30,7 @@ export function Localisation() {
     >
       <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
         {/* ─── Header ─────────────────────────────────────────── */}
-        <div className="text-center max-w-3xl mx-auto">
+        <Reveal as="div" className="text-center max-w-3xl mx-auto">
           <h2
             id="localisation-titre"
             className="font-display text-4xl lg:text-5xl font-medium tracking-[-0.02em] leading-[1.1] text-warm-900"
@@ -40,10 +41,10 @@ export function Localisation() {
             À Décines-Charpieu, à 15 minutes de la Part-Dieu et facilement
             accessible depuis tout l&apos;est lyonnais.
           </p>
-        </div>
+        </Reveal>
 
         {/* ─── Row map + infos ───────────────────────────────── */}
-        <div className="mt-12 lg:mt-16 flex flex-col lg:flex-row lg:items-stretch gap-8 lg:gap-12">
+        <Reveal as="div" delay={0.1} className="mt-12 lg:mt-16 flex flex-col lg:flex-row lg:items-stretch gap-8 lg:gap-12">
           {/* Map — hauteur réduite en mobile (stack), h-full en desktop (row) */}
           <div className="w-full lg:w-1/2 h-[260px] lg:h-auto lg:min-h-[440px] rounded-md overflow-hidden">
             <Map className="w-full h-full" />
@@ -114,12 +115,12 @@ export function Localisation() {
               </ul>
             </div>
           </div>
-        </div>
+        </Reveal>
 
         {/* ─── CTAs ───────────────────────────────────────────── */}
         {/* flex-wrap + justify-center : 3 CTAs en ligne sur desktop, wrap
             naturel sur écrans étroits sans casser l'alignement */}
-        <div className="mt-12 lg:mt-16 flex flex-wrap items-center justify-center gap-4">
+        <Reveal as="div" className="mt-12 lg:mt-16 flex flex-wrap items-center justify-center gap-4">
           <ButtonLink href={site.resalibUrl} variant="primary">
             Prendre rendez-vous
             <CalendarRange
@@ -143,7 +144,7 @@ export function Localisation() {
             Appeler Asmaa
             <Phone aria-hidden="true" className="w-4 h-4" strokeWidth={1.5} />
           </ButtonLink>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

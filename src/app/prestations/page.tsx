@@ -12,6 +12,9 @@ import {
   UserRound,
 } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { FadeInUp } from "@/components/motion/FadeInUp";
+import { Reveal } from "@/components/motion/Reveal";
+import { Stagger, StaggerItem } from "@/components/motion/Stagger";
 import { prestations } from "@/data/prestations";
 import { site } from "@/data/site";
 
@@ -40,38 +43,44 @@ export default function PrestationsPage() {
       >
         <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
           <div className="text-center max-w-4xl mx-auto">
-            <h1
-              id="prestations-titre"
-              className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.02em] leading-[1.05] text-warm-900"
-            >
-              Mes prestations
-            </h1>
+            <FadeInUp duration={0.6}>
+              <h1
+                id="prestations-titre"
+                className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.02em] leading-[1.05] text-warm-900"
+              >
+                Mes prestations
+              </h1>
+            </FadeInUp>
 
-            <p className="mt-8 max-w-2xl mx-auto font-body text-lg md:text-xl leading-relaxed text-warm-700">
-              Quatre manières d&apos;entrer dans la naturopathie selon
-              votre situation : une consultation ponctuelle, un travail
-              manuel sur le corps, ou un suivi rapproché sur plusieurs
-              mois. Chaque prestation a son intention propre.
-            </p>
+            <FadeInUp delay={0.1} duration={0.6} className="mt-8 max-w-2xl mx-auto">
+              <p className="font-body text-lg md:text-xl leading-relaxed text-warm-700">
+                Quatre manières d&apos;entrer dans la naturopathie selon
+                votre situation : une consultation ponctuelle, un travail
+                manuel sur le corps, ou un suivi rapproché sur plusieurs
+                mois. Chaque prestation a son intention propre.
+              </p>
+            </FadeInUp>
 
-            <div className="mt-10 flex flex-col-reverse sm:flex-row sm:justify-center items-center gap-4">
-              <ButtonLink href={site.phoneHref} variant="secondary">
-                Appeler Asmaa
-                <Phone
-                  aria-hidden="true"
-                  className="w-4 h-4"
-                  strokeWidth={1.5}
-                />
-              </ButtonLink>
-              <ButtonLink href={site.resalibUrl} variant="primary">
-                Prendre rendez-vous
-                <CalendarRange
-                  aria-hidden="true"
-                  className="w-4 h-4"
-                  strokeWidth={1.5}
-                />
-              </ButtonLink>
-            </div>
+            <FadeInUp delay={0.25} duration={0.6} className="mt-10">
+              <div className="flex flex-col-reverse sm:flex-row sm:justify-center items-center gap-4">
+                <ButtonLink href={site.phoneHref} variant="secondary">
+                  Appeler Asmaa
+                  <Phone
+                    aria-hidden="true"
+                    className="w-4 h-4"
+                    strokeWidth={1.5}
+                  />
+                </ButtonLink>
+                <ButtonLink href={site.resalibUrl} variant="primary">
+                  Prendre rendez-vous
+                  <CalendarRange
+                    aria-hidden="true"
+                    className="w-4 h-4"
+                    strokeWidth={1.5}
+                  />
+                </ButtonLink>
+              </div>
+            </FadeInUp>
           </div>
         </div>
       </section>
@@ -82,9 +91,15 @@ export default function PrestationsPage() {
         className="relative pb-12 lg:pb-22"
       >
         <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
+          {/*
+            Cards glass statiques, contenu interne animé via Reveal avec
+            délai par card. Pattern aligné sur /specialites et la grille
+            Specialites landing : évite tout flash au premier paint du
+            backdrop-filter.
+          */}
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8">
             {prestations.map(
-              ({ id, title, shortDescription, priceFrom, detailHref }) => (
+              ({ id, title, shortDescription, priceFrom, detailHref }, i) => (
                 <li
                   key={id}
                   className="group relative flex flex-col rounded-md overflow-hidden"
@@ -105,44 +120,46 @@ export default function PrestationsPage() {
                       "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700",
                     ].join(" ")}
                   >
-                    <h2 className="font-display text-xl lg:text-2xl font-medium tracking-tight text-warm-900 text-balance">
-                      {title}
-                    </h2>
+                    <Reveal delay={i * 0.08} className="flex flex-col flex-1">
+                      <h2 className="font-display text-xl lg:text-2xl font-medium tracking-tight text-warm-900 text-balance">
+                        {title}
+                      </h2>
 
-                    <p className="mt-4 font-body text-base leading-relaxed text-warm-700">
-                      {shortDescription}
-                    </p>
+                      <p className="mt-4 font-body text-base leading-relaxed text-warm-700">
+                        {shortDescription}
+                      </p>
 
-                    {/*
-                      Footer card : tag prix à gauche, "En savoir plus"
-                      à droite. Même recette glass que le tag Hero pour
-                      la cohérence visuelle (chip beige crème, texte
-                      warm-700). `mt-auto` colle le bloc en bas quelle
-                      que soit la hauteur de la description.
-                    */}
-                    <div className="mt-auto pt-6 flex items-center justify-between gap-4">
-                      <span
-                        className={[
-                          "inline-flex items-center px-2.5 py-1 lg:px-3 lg:py-1.5 rounded-md",
-                          "bg-accent text-warm-100",
-                          "shadow-[0_4px_12px_-2px_rgba(40,60,30,0.25),inset_0_1px_0_0_rgba(255,255,255,0.12)]",
-                          "font-body text-xs lg:text-sm font-medium tracking-[0.01em] whitespace-nowrap",
-                        ].join(" ")}
-                      >
-                        À partir de {priceFrom}&nbsp;€
-                      </span>
+                      {/*
+                        Footer card : tag prix à gauche, "En savoir plus"
+                        à droite. Même recette glass que le tag Hero pour
+                        la cohérence visuelle (chip beige crème, texte
+                        warm-700). `mt-auto` colle le bloc en bas quelle
+                        que soit la hauteur de la description.
+                      */}
+                      <div className="mt-auto pt-6 flex items-center justify-between gap-4">
+                        <span
+                          className={[
+                            "inline-flex items-center px-2.5 py-1 lg:px-3 lg:py-1.5 rounded-md",
+                            "bg-accent text-warm-100",
+                            "shadow-[0_4px_12px_-2px_rgba(40,60,30,0.25),inset_0_1px_0_0_rgba(255,255,255,0.12)]",
+                            "font-body text-xs lg:text-sm font-medium tracking-[0.01em] whitespace-nowrap",
+                          ].join(" ")}
+                        >
+                          À partir de {priceFrom}&nbsp;€
+                        </span>
 
-                      <span
-                        aria-hidden="true"
-                        className="font-display text-base lg:text-lg font-medium text-warm-900 inline-flex items-center gap-2"
-                      >
-                        En savoir plus
-                        <MousePointerClick
-                          className="w-4 h-4 lg:w-5 lg:h-5 transition-transform duration-200 group-hover:translate-x-1"
-                          strokeWidth={2}
-                        />
-                      </span>
-                    </div>
+                        <span
+                          aria-hidden="true"
+                          className="font-display text-base lg:text-lg font-medium text-warm-900 inline-flex items-center gap-2"
+                        >
+                          En savoir plus
+                          <MousePointerClick
+                            className="w-4 h-4 lg:w-5 lg:h-5 transition-transform duration-200 group-hover:translate-x-1"
+                            strokeWidth={2}
+                          />
+                        </span>
+                      </div>
+                    </Reveal>
                   </Link>
                 </li>
               ),
@@ -162,7 +179,7 @@ export default function PrestationsPage() {
         className="relative py-12 lg:py-22"
       >
         <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
-          <div className="text-center max-w-3xl mx-auto">
+          <Reveal as="div" className="text-center max-w-3xl mx-auto">
             <h2
               id="pas-sure-titre"
               className="font-display text-4xl lg:text-5xl font-medium tracking-[-0.02em] leading-[1.1] text-warm-900"
@@ -184,7 +201,7 @@ export default function PrestationsPage() {
                 />
               </ButtonLink>
             </div>
-          </div>
+          </Reveal>
 
           {(() => {
             const bridges = [
@@ -221,10 +238,16 @@ export default function PrestationsPage() {
                        watermark, pas de bouton chrome. Hairlines
                        warm-700/15, gros titre display, ArrowUpRight
                        qui glisse au hover. ── */}
-                <ul className="mt-14 md:hidden border-y border-warm-700/15">
+                <Stagger
+                  as="ul"
+                  trigger="inView"
+                  staggerChildren={0.06}
+                  className="mt-14 md:hidden border-y border-warm-700/15"
+                >
                   {bridges.map(({ title, description, href }, i) => (
-                    <li
+                    <StaggerItem
                       key={title}
+                      as="li"
                       className={i > 0 ? "border-t border-warm-700/15" : ""}
                     >
                       <Link
@@ -256,13 +279,13 @@ export default function PrestationsPage() {
                           ].join(" ")}
                         />
                       </Link>
-                    </li>
+                    </StaggerItem>
                   ))}
-                </ul>
+                </Stagger>
 
-                {/* ── md+ : 3 cards glass watermark inchangées ── */}
+                {/* ── md+ : 3 cards glass watermark — cards statiques, contenu animé ── */}
                 <ul className="hidden md:grid mt-14 lg:mt-20 md:grid-cols-3 gap-6 lg:gap-8">
-                  {bridges.map(({ icon: Icon, title, description, ctaLabel, href }) => (
+                  {bridges.map(({ icon: Icon, title, description, ctaLabel, href }, i) => (
                     <li
                       key={title}
                       className="group relative flex flex-col rounded-md overflow-hidden"
@@ -285,31 +308,33 @@ export default function PrestationsPage() {
                           "transition-colors duration-200 ease-out",
                         ].join(" ")}
                       >
-                        <div className="flex items-center gap-3">
-                          <Icon
-                            aria-hidden="true"
-                            className="w-7 h-7 text-warm-700 shrink-0"
-                            strokeWidth={1.5}
-                          />
-                          <h3 className="font-display text-xl lg:text-2xl font-medium tracking-tight text-warm-900">
-                            {title}
-                          </h3>
-                        </div>
-
-                        <p className="mt-4 font-body text-base leading-relaxed text-warm-700">
-                          {description}
-                        </p>
-
-                        <div className="mt-auto pt-6">
-                          <ButtonLink href={href} variant="primary">
-                            {ctaLabel}
-                            <Eye
+                        <Reveal delay={i * 0.08} className="flex flex-col flex-1">
+                          <div className="flex items-center gap-3">
+                            <Icon
                               aria-hidden="true"
-                              className="w-4 h-4"
+                              className="w-7 h-7 text-warm-700 shrink-0"
                               strokeWidth={1.5}
                             />
-                          </ButtonLink>
-                        </div>
+                            <h3 className="font-display text-xl lg:text-2xl font-medium tracking-tight text-warm-900">
+                              {title}
+                            </h3>
+                          </div>
+
+                          <p className="mt-4 font-body text-base leading-relaxed text-warm-700">
+                            {description}
+                          </p>
+
+                          <div className="mt-auto pt-6">
+                            <ButtonLink href={href} variant="primary">
+                              {ctaLabel}
+                              <Eye
+                                aria-hidden="true"
+                                className="w-4 h-4"
+                                strokeWidth={1.5}
+                              />
+                            </ButtonLink>
+                          </div>
+                        </Reveal>
                       </div>
                     </li>
                   ))}

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Marquee } from "@/components/ui/marquee";
+import { Reveal } from "@/components/motion/Reveal";
 
 /**
  * Photos du cabinet affichées dans le marquee.
@@ -75,6 +76,15 @@ export function Carousel() {
       aria-label="Photos du cabinet"
       className="relative py-8 lg:py-14 overflow-hidden"
     >
+      {/*
+        Reveal en opacité pure (y={0}) sur le marquee : le scroll
+        horizontal infini est piloté par une CSS `@keyframes translateX`
+        sur la track interne. Ajouter un translateY parent créerait deux
+        transforms concurrents sur le même axe compositor et pourrait
+        saccader le défilement. Un simple fade à l'apparition reste
+        discret et compatible.
+      */}
+      <Reveal y={0} duration={0.7}>
       <Marquee
         className="[--gap:0.75rem] md:[--gap:1rem] [--duration:70s]"
         repeat={2}
@@ -99,6 +109,7 @@ export function Carousel() {
           </div>
         ))}
       </Marquee>
+      </Reveal>
     </section>
   );
 }

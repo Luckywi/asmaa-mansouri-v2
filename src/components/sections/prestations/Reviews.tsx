@@ -1,6 +1,7 @@
 import { Star } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Marquee } from "@/components/ui/marquee";
+import { Reveal } from "@/components/motion/Reveal";
 import { temoignages } from "@/data/temoignages";
 import { site } from "@/data/site";
 import type { Temoignage } from "@/types";
@@ -110,7 +111,7 @@ export function Reviews({ testimonialRoles, prestationLabel }: ReviewsProps) {
     >
       {/* Header centré */}
       <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
-        <div className="text-center max-w-3xl mx-auto">
+        <Reveal as="div" className="text-center max-w-3xl mx-auto">
           <h2
             id="prestation-reviews-titre"
             className="font-display text-3xl lg:text-4xl font-medium tracking-[-0.02em] leading-[1.15] text-warm-900 text-balance"
@@ -146,13 +147,15 @@ export function Reviews({ testimonialRoles, prestationLabel }: ReviewsProps) {
               Voir tous les avis
             </ButtonLink>
           </div>
-        </div>
+        </Reveal>
       </div>
 
       {/* Marquees horizontaux — pleine largeur viewport pour que le
           défilement sorte bien des bords de la section. Mobile : 1 bande.
-          Desktop : 2 bandes en sens opposés pour l'effet visuel. */}
-      <div className="mt-12 lg:mt-16 space-y-4 lg:space-y-6">
+          Desktop : 2 bandes en sens opposés pour l'effet visuel.
+          Reveal en opacité pure (y={0}) pour ne pas interférer avec la
+          `@keyframes translateX` du Marquee. */}
+      <Reveal as="div" y={0} duration={0.7} className="mt-12 lg:mt-16 space-y-4 lg:space-y-6">
         {/* Mobile : 1 bande (affiche tous les filtered) */}
         <Marquee
           pauseOnHover
@@ -181,7 +184,7 @@ export function Reviews({ testimonialRoles, prestationLabel }: ReviewsProps) {
             <ReviewCard key={`b-${t.name}-${i}`} {...t} />
           ))}
         </Marquee>
-      </div>
+      </Reveal>
     </section>
   );
 }

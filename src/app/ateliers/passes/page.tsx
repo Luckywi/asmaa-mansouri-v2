@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { PassesHero } from "@/components/sections/ateliers/PassesHero";
 import { AteliersListe } from "@/components/sections/ateliers/Liste";
 import { PassesFAQ } from "@/components/sections/ateliers/PassesFAQ";
@@ -14,6 +15,12 @@ export const metadata: Metadata = {
 export default function AteliersPassesPage() {
   return (
     <main id="contenu-principal" className="flex-1">
+      <Breadcrumbs
+        items={[
+          { label: "Ateliers", href: "/ateliers" },
+          { label: "Ateliers passés", href: "/ateliers/passes" },
+        ]}
+      />
       <PassesHero />
       <AteliersListe />
       <PassesFAQ />

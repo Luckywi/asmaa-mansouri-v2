@@ -1,5 +1,6 @@
 import { CalendarRange } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { FadeInUp } from "@/components/motion/FadeInUp";
 import { site } from "@/data/site";
 import type { Specialite } from "@/types";
 
@@ -23,31 +24,37 @@ export function Hero({ title, intro }: Props) {
   return (
     <section
       aria-labelledby="specialite-titre"
-      className="relative pt-32 pb-12 md:pt-36 lg:pt-40 lg:pb-16"
+      className="relative pt-8 pb-12 md:pt-10 lg:pt-12 lg:pb-16"
     >
       <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
         <div className="text-center max-w-4xl mx-auto">
-          <h1
-            id="specialite-titre"
-            className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.02em] leading-[1.05] text-warm-900 text-balance"
-          >
-            {title}
-          </h1>
+          <FadeInUp duration={0.6}>
+            <h1
+              id="specialite-titre"
+              className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.02em] leading-[1.05] text-warm-900 text-balance"
+            >
+              {title}
+            </h1>
+          </FadeInUp>
 
-          <p className="mt-8 max-w-2xl mx-auto font-body text-lg md:text-xl leading-relaxed text-warm-700">
-            {intro}
-          </p>
+          <FadeInUp delay={0.1} duration={0.6} className="mt-8 max-w-2xl mx-auto">
+            <p className="font-body text-lg md:text-xl leading-relaxed text-warm-700">
+              {intro}
+            </p>
+          </FadeInUp>
 
-          <div className="mt-10 flex justify-center">
-            <ButtonLink href={site.resalibUrl} variant="primary">
-              Réserver un appel découverte gratuit
-              <CalendarRange
-                aria-hidden="true"
-                className="w-4 h-4"
-                strokeWidth={1.5}
-              />
-            </ButtonLink>
-          </div>
+          <FadeInUp delay={0.25} duration={0.6} className="mt-10">
+            <div className="flex justify-center">
+              <ButtonLink href={site.resalibUrl} variant="primary">
+                Réserver un appel découverte gratuit
+                <CalendarRange
+                  aria-hidden="true"
+                  className="w-4 h-4"
+                  strokeWidth={1.5}
+                />
+              </ButtonLink>
+            </div>
+          </FadeInUp>
         </div>
       </div>
     </section>

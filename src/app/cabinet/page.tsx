@@ -3,6 +3,7 @@ import { Hero } from "@/components/sections/cabinet/Hero";
 import { Carousel } from "@/components/sections/cabinet/Carousel";
 import { Localisation } from "@/components/sections/cabinet/Localisation";
 import { Acces } from "@/components/sections/cabinet/Acces";
+import { Experiences } from "@/components/sections/cabinet/Experiences";
 import { AllerPlusLoin } from "@/components/sections/cabinet/AllerPlusLoin";
 
 // Metadata minimale Phase 1 — schema.org LocalBusiness + Open Graph
@@ -38,6 +39,7 @@ export default function CabinetPage() {
       <Carousel />
       <Localisation />
       <Acces />
+      <Experiences />
       <AllerPlusLoin />
     </main>
   );

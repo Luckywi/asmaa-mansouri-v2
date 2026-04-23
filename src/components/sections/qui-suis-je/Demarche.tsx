@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
+import { Reveal } from "@/components/motion/Reveal";
 
 const questions = [
   {
@@ -59,7 +60,7 @@ export function Demarche() {
       className="relative py-12 lg:py-22"
     >
       <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
-        <div className="text-center max-w-3xl mx-auto">
+        <Reveal as="div" className="text-center max-w-3xl mx-auto">
           <h2
             id="demarche-titre"
             className="font-display text-4xl lg:text-5xl font-medium tracking-[-0.02em] leading-[1.1] text-warm-900"
@@ -69,7 +70,7 @@ export function Demarche() {
           <p className="mt-6 font-body text-lg lg:text-xl leading-relaxed text-warm-700">
             Quatre questions pour comprendre ma pratique au quotidien.
           </p>
-        </div>
+        </Reveal>
 
         <ul className="mt-16 lg:mt-20 grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
           {questions.map(({ question, answer }, i) => {

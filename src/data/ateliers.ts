@@ -31,6 +31,7 @@ export const ateliers: readonly Atelier[] = [
       "Aliments et boissons énergisants",
       "Conseils pour préserver son tonus",
     ],
+    poster: "/ateliers-affiches/vitalite-hydratation.jpeg",
   },
   {
     slug: "automne-2025-immunite",
@@ -47,6 +48,7 @@ export const ateliers: readonly Atelier[] = [
       "Adapter son alimentation à l'automne",
       "Gestes préventifs avant l'hiver",
     ],
+    poster: "/ateliers-affiches/immunite-changement-saison.jpeg",
   },
   {
     slug: "hiver-2025-cocooning",
@@ -63,6 +65,7 @@ export const ateliers: readonly Atelier[] = [
       "Soutenir son énergie en hiver",
       "Régénération corps et esprit",
     ],
+    poster: "/ateliers-affiches/cocooning-regeneration.jpeg",
   },
   {
     slug: "kefir-boisson-sante",
@@ -86,6 +89,28 @@ export const ateliers: readonly Atelier[] = [
       "/atelier-keffir/5.jpeg",
       "/atelier-keffir/6.jpeg",
       "/atelier-keffir/7.jpeg",
+    ],
+  },
+  {
+    slug: "baume-anti-moustique-vaulx-en-velin",
+    title: "Baume anti-moustique naturel",
+    theme: "Atelier public",
+    shortDescription:
+      "Atelier animé à l'inauguration de la pépinière du Mas du Taureau à Vaulx-en-Velin, autour d'une recette naturelle de protection contre le moustique tigre.",
+    longDescription:
+      "Atelier public animé par Asmaa lors de l'inauguration de la pépinière du Mas du Taureau, en présence des habitants de Vaulx-en-Velin, de la maire de la ville et du préfet de Lyon. L'occasion de partager des solutions naturelles pour se protéger du moustique tigre, particulièrement présent dans la région lyonnaise, avec une recette de baume que chaque participante peut refaire chez elle.\n\nApporter des réponses naturelles aux tracas du quotidien, sans inciter à la consommation de produits industriels chargés en perturbateurs endocriniens et conservateurs chimiques : c'est au cœur de ma démarche de naturopathe.",
+    date: "2023-06-23",
+    location: "Pépinière du Mas du Taureau, Vaulx-en-Velin",
+    highlights: [
+      "Protection naturelle contre le moustique tigre",
+      "Recette de baume facile à refaire à la maison",
+      "Alternative aux répulsifs industriels du commerce",
+    ],
+    images: [
+      "/atelier-moustique/1.webp",
+      "/atelier-moustique/2.webp",
+      "/atelier-moustique/3.webp",
+      "/atelier-moustique/4.webp",
     ],
   },
 ];

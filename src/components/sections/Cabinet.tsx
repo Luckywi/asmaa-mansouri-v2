@@ -1,6 +1,7 @@
 import { Navigation, Phone } from "lucide-react";
 import Map from "@/components/ui/Map";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { Reveal } from "@/components/motion/Reveal";
 import { site } from "@/data/site";
 
 /**
@@ -34,7 +35,7 @@ export function Cabinet() {
     >
       <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
         {/* ─── Desktop : flex row texte gauche / map droite ─── */}
-        <div className="hidden lg:flex lg:items-center lg:gap-16">
+        <Reveal as="div" className="hidden lg:flex lg:items-center lg:gap-16">
           {/* Texte */}
           <div className="flex-1">
             <h2
@@ -78,10 +79,10 @@ export function Cabinet() {
           <div className="w-[480px] h-[320px] shrink-0 rounded-md overflow-hidden">
             <Map className="w-full h-full" />
           </div>
-        </div>
+        </Reveal>
 
         {/* ─── Mobile : stack vertical (titre, adresse, map, texte, CTAs) ─── */}
-        <div className="lg:hidden flex flex-col gap-6 text-center">
+        <Reveal as="div" className="lg:hidden flex flex-col gap-6 text-center">
           <div>
             <h2
               id="cabinet-titre-mobile"
@@ -121,7 +122,7 @@ export function Cabinet() {
               />
             </ButtonLink>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

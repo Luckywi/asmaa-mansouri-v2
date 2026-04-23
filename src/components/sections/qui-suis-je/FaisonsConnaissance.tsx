@@ -8,6 +8,8 @@ import {
   Eye,
 } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { Reveal } from "@/components/motion/Reveal";
+import { Stagger, StaggerItem } from "@/components/motion/Stagger";
 import { site } from "@/data/site";
 
 /**
@@ -69,7 +71,7 @@ export function FaisonsConnaissance() {
     >
       <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
         {/* ─── Header centré : H2 + subtitle + CTA primary ────── */}
-        <div className="text-center max-w-3xl mx-auto">
+        <Reveal as="div" className="text-center max-w-3xl mx-auto">
           <h2
             id="faisons-connaissance-titre"
             className="font-display text-4xl lg:text-5xl font-medium tracking-[-0.02em] leading-[1.1] text-warm-900"
@@ -90,13 +92,19 @@ export function FaisonsConnaissance() {
               />
             </ButtonLink>
           </div>
-        </div>
+        </Reveal>
 
         {/* ─── Mobile (< md) : liste éditoriale ───────────────── */}
-        <ul className="mt-14 md:hidden border-y border-warm-700/15">
+        <Stagger
+          as="ul"
+          trigger="inView"
+          staggerChildren={0.06}
+          className="mt-14 md:hidden border-y border-warm-700/15"
+        >
           {bridges.map(({ title, description, href }, i) => (
-            <li
+            <StaggerItem
               key={title}
+              as="li"
               className={i > 0 ? "border-t border-warm-700/15" : ""}
             >
               <Link
@@ -128,13 +136,19 @@ export function FaisonsConnaissance() {
                   ].join(" ")}
                 />
               </Link>
-            </li>
+            </StaggerItem>
           ))}
-        </ul>
+        </Stagger>
 
         {/* ─── md+ : 3 cards glass watermark ──────────────────── */}
+        {/*
+          Cards statiques, contenu interne animé via Reveal — même
+          pattern que Specialites (landing). Anime uniquement le texte
+          DANS la card pour éviter le flash du backdrop-filter qui
+          perd le watermark sibling pendant un transform parent.
+        */}
         <ul className="hidden md:grid mt-14 lg:mt-20 md:grid-cols-3 gap-6 lg:gap-8">
-          {bridges.map(({ icon: Icon, title, description, ctaLabel, href }) => (
+          {bridges.map(({ icon: Icon, title, description, ctaLabel, href }, i) => (
             <li
               key={title}
               className="group relative flex flex-col rounded-md overflow-hidden"
@@ -146,7 +160,7 @@ export function FaisonsConnaissance() {
                 strokeWidth={2}
               />
 
-              {/* Couche 2 — card glass */}
+              {/* Couche 2 — card glass (statique, non animée) */}
               <div
                 className={[
                   "relative flex-1 flex flex-col",
@@ -159,31 +173,33 @@ export function FaisonsConnaissance() {
                   "transition-colors duration-200 ease-out",
                 ].join(" ")}
               >
-                <div className="flex items-center gap-3">
-                  <Icon
-                    aria-hidden="true"
-                    className="w-7 h-7 text-warm-700 shrink-0"
-                    strokeWidth={1.5}
-                  />
-                  <h3 className="font-display text-xl lg:text-2xl font-medium tracking-tight text-warm-900">
-                    {title}
-                  </h3>
-                </div>
-
-                <p className="mt-4 font-body text-base leading-relaxed text-warm-700">
-                  {description}
-                </p>
-
-                <div className="mt-auto pt-6">
-                  <ButtonLink href={href} variant="primary">
-                    {ctaLabel}
-                    <Eye
+                <Reveal delay={i * 0.08} className="flex flex-col flex-1">
+                  <div className="flex items-center gap-3">
+                    <Icon
                       aria-hidden="true"
-                      className="w-4 h-4"
+                      className="w-7 h-7 text-warm-700 shrink-0"
                       strokeWidth={1.5}
                     />
-                  </ButtonLink>
-                </div>
+                    <h3 className="font-display text-xl lg:text-2xl font-medium tracking-tight text-warm-900">
+                      {title}
+                    </h3>
+                  </div>
+
+                  <p className="mt-4 font-body text-base leading-relaxed text-warm-700">
+                    {description}
+                  </p>
+
+                  <div className="mt-auto pt-6">
+                    <ButtonLink href={href} variant="primary">
+                      {ctaLabel}
+                      <Eye
+                        aria-hidden="true"
+                        className="w-4 h-4"
+                        strokeWidth={1.5}
+                      />
+                    </ButtonLink>
+                  </div>
+                </Reveal>
               </div>
             </li>
           ))}

@@ -13,6 +13,8 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { Reveal } from "@/components/motion/Reveal";
+import { Stagger, StaggerItem } from "@/components/motion/Stagger";
 import type { PrestationBridge } from "@/types";
 
 /**
@@ -53,22 +55,30 @@ export function Bridges({ bridges }: BridgesProps) {
       className="relative py-12 lg:py-22"
     >
       <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
-        <h2
-          id="prestation-bridges-titre"
-          className="font-display text-3xl lg:text-4xl font-medium tracking-[-0.02em] leading-[1.15] text-warm-900 text-center text-balance"
-        >
-          Pour aller plus loin
-        </h2>
+        <Reveal>
+          <h2
+            id="prestation-bridges-titre"
+            className="font-display text-3xl lg:text-4xl font-medium tracking-[-0.02em] leading-[1.15] text-warm-900 text-center text-balance"
+          >
+            Pour aller plus loin
+          </h2>
+        </Reveal>
 
         {/* ─── Mobile (< md) : liste éditoriale ─────────────
             Pattern unifié avec /cabinet/AllerPlusLoin et la
             section Specialites de la landing : hairlines
             warm-700/15, gros titre display, description,
             ArrowUpRight qui glisse au hover. */}
-        <ul className="mt-12 md:hidden border-y border-warm-700/15">
+        <Stagger
+          as="ul"
+          trigger="inView"
+          staggerChildren={0.06}
+          className="mt-12 md:hidden border-y border-warm-700/15"
+        >
           {bridges.map(({ href, title, description }, i) => (
-            <li
+            <StaggerItem
               key={href}
+              as="li"
               className={i > 0 ? "border-t border-warm-700/15" : ""}
             >
               <Link
@@ -100,11 +110,11 @@ export function Bridges({ bridges }: BridgesProps) {
                   ].join(" ")}
                 />
               </Link>
-            </li>
+            </StaggerItem>
           ))}
-        </ul>
+        </Stagger>
 
-        {/* ─── md+ : grille de cards glass watermark ──────── */}
+        {/* ─── md+ : grille de cards glass watermark — cards statiques, contenu interne animé ── */}
         <ul
           className={[
             "hidden md:grid mt-14 lg:mt-16 gap-6 lg:gap-8 mx-auto",
@@ -118,7 +128,7 @@ export function Bridges({ bridges }: BridgesProps) {
                 : "md:grid-cols-3",
           ].join(" ")}
         >
-          {bridges.map(({ href, iconKey, title, description, ctaLabel }) => {
+          {bridges.map(({ href, iconKey, title, description, ctaLabel }, i) => {
             const Icon = iconMap[iconKey];
             return (
               <li
@@ -143,31 +153,33 @@ export function Bridges({ bridges }: BridgesProps) {
                     "transition-colors duration-200 ease-out",
                   ].join(" ")}
                 >
-                  <div className="flex items-center gap-3">
-                    <Icon
-                      aria-hidden="true"
-                      className="w-7 h-7 text-warm-700 shrink-0"
-                      strokeWidth={1.5}
-                    />
-                    <h3 className="font-display text-xl lg:text-2xl font-medium tracking-tight text-warm-900">
-                      {title}
-                    </h3>
-                  </div>
-
-                  <p className="mt-4 font-body text-base leading-relaxed text-warm-700">
-                    {description}
-                  </p>
-
-                  <div className="mt-auto pt-6">
-                    <ButtonLink href={href} variant="primary">
-                      {ctaLabel}
-                      <Eye
+                  <Reveal delay={i * 0.08} className="flex flex-col flex-1">
+                    <div className="flex items-center gap-3">
+                      <Icon
                         aria-hidden="true"
-                        className="w-4 h-4"
+                        className="w-7 h-7 text-warm-700 shrink-0"
                         strokeWidth={1.5}
                       />
-                    </ButtonLink>
-                  </div>
+                      <h3 className="font-display text-xl lg:text-2xl font-medium tracking-tight text-warm-900">
+                        {title}
+                      </h3>
+                    </div>
+
+                    <p className="mt-4 font-body text-base leading-relaxed text-warm-700">
+                      {description}
+                    </p>
+
+                    <div className="mt-auto pt-6">
+                      <ButtonLink href={href} variant="primary">
+                        {ctaLabel}
+                        <Eye
+                          aria-hidden="true"
+                          className="w-4 h-4"
+                          strokeWidth={1.5}
+                        />
+                      </ButtonLink>
+                    </div>
+                  </Reveal>
                 </div>
               </li>
             );

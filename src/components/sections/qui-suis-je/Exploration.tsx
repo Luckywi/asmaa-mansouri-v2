@@ -1,5 +1,6 @@
-import { ArrowRight } from "lucide-react";
+import { BookKey, Leaf, type LucideIcon } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { Reveal } from "@/components/motion/Reveal";
 
 /**
  * Section Exploration — posée après Portrait sur /qui-suis-je.
@@ -20,6 +21,7 @@ type ExplorationBlock = {
   readonly description: string;
   readonly href: string;
   readonly ctaLabel: string;
+  readonly Icon: LucideIcon;
 };
 
 const blocks: readonly ExplorationBlock[] = [
@@ -29,6 +31,7 @@ const blocks: readonly ExplorationBlock[] = [
       "Définition officielle, principes fondateurs, ce que la naturopathie n'est pas et pourquoi consulter.",
     href: "/qui-suis-je/la-naturopathie",
     ctaLabel: "Découvrir la naturopathie",
+    Icon: Leaf,
   },
   {
     title: "Mes médecines ancestrales",
@@ -36,6 +39,7 @@ const blocks: readonly ExplorationBlock[] = [
       "Les deux traditions qui nourrissent ma pratique au quotidien : la médecine traditionnelle chinoise et la médecine prophétique.",
     href: "/qui-suis-je/medecines-ancestrales",
     ctaLabel: "Découvrir mon approche",
+    Icon: BookKey,
   },
 ] as const;
 
@@ -52,8 +56,8 @@ export function Exploration() {
                      alignés sur la même baseline quelle que soit la
                      longueur du paragraphe de description.
         */}
-        <div className="mx-auto max-w-5xl grid grid-cols-1 md:grid-cols-2 md:divide-x md:divide-warm-700/15">
-          {blocks.map(({ title, description, href, ctaLabel }, i) => (
+        <Reveal as="div" className="mx-auto max-w-5xl grid grid-cols-1 md:grid-cols-2 md:divide-x md:divide-warm-700/15">
+          {blocks.map(({ title, description, href, ctaLabel, Icon }, i) => (
             <div
               key={href}
               className={[
@@ -73,7 +77,7 @@ export function Exploration() {
               <div className="mt-6 md:mt-auto md:pt-6 flex justify-center">
                 <ButtonLink href={href} variant="primary">
                   {ctaLabel}
-                  <ArrowRight
+                  <Icon
                     aria-hidden="true"
                     className="w-4 h-4"
                     strokeWidth={1.5}
@@ -82,7 +86,7 @@ export function Exploration() {
               </div>
             </div>
           ))}
-        </div>
+        </Reveal>
       </div>
     </section>
   );

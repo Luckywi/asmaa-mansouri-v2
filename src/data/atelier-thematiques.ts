@@ -44,6 +44,7 @@ export const thematiques: readonly ThematiqueAtelier[] = [
       "Sérum à l'huile d'argan et huiles essentielles",
       "Déodorant naturel sans bicarbonate irritant",
       "Démaquillant doux à l'hydrolat de rose ou de lavande",
+      "Baume anti-moustique naturel",
     ],
     tags: [
       {

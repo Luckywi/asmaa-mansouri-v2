@@ -1,6 +1,7 @@
 import { CalendarRange, Clock, MapPin, Navigation } from "lucide-react";
 import Map from "@/components/ui/Map";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { Reveal } from "@/components/motion/Reveal";
 import { site } from "@/data/site";
 
 /**
@@ -27,7 +28,7 @@ export function ContactLocalisation() {
       className="relative py-12 lg:py-22"
     >
       <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
-        <div className="text-center max-w-3xl mx-auto">
+        <Reveal as="div" className="text-center max-w-3xl mx-auto">
           <h2
             id="contact-localisation-titre"
             className="font-display text-4xl lg:text-5xl font-medium tracking-[-0.02em] leading-[1.1] text-warm-900"
@@ -38,12 +39,12 @@ export function ContactLocalisation() {
             Cabinet à Décines-Charpieu, à 15 minutes de la Part-Dieu,
             accessible depuis tout l&apos;est lyonnais.
           </p>
-        </div>
+        </Reveal>
 
         {/* Infos à gauche, map à droite sur desktop. Mobile : map
             en premier (via order-1), infos ensuite. items-stretch
             pour que les deux colonnes aient la même hauteur. */}
-        <div className="mt-12 lg:mt-16 flex flex-col lg:flex-row lg:items-stretch gap-8 lg:gap-12">
+        <Reveal as="div" delay={0.1} className="mt-12 lg:mt-16 flex flex-col lg:flex-row lg:items-stretch gap-8 lg:gap-12">
           <div className="w-full lg:w-1/2 flex flex-col lg:order-1 order-2">
             <div>
               <p className="flex items-center gap-2 font-body text-xs font-medium uppercase tracking-widest text-warm-700/70">
@@ -102,9 +103,9 @@ export function ContactLocalisation() {
           <div className="w-full lg:w-1/2 h-[260px] lg:h-auto rounded-md overflow-hidden lg:order-2 order-1">
             <Map className="w-full h-full" />
           </div>
-        </div>
+        </Reveal>
 
-        <div className="mt-12 lg:mt-16 flex flex-wrap items-center justify-center gap-4">
+        <Reveal as="div" className="mt-12 lg:mt-16 flex flex-wrap items-center justify-center gap-4">
           <ButtonLink href={site.resalibUrl} variant="primary">
             Prendre rendez-vous
             <CalendarRange
@@ -124,7 +125,7 @@ export function ContactLocalisation() {
               strokeWidth={1.5}
             />
           </ButtonLink>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

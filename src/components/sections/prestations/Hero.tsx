@@ -1,5 +1,7 @@
 import { CalendarRange, Phone } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { FadeInUp } from "@/components/motion/FadeInUp";
+import { Reveal } from "@/components/motion/Reveal";
 import { site } from "@/data/site";
 import type { PrestationTariff } from "@/types";
 
@@ -29,35 +31,41 @@ export function Hero({ h1, subtitle, tariffs }: HeroProps) {
   return (
     <section
       aria-labelledby="prestation-titre"
-      className="relative pt-32 pb-12 md:pt-36 lg:pt-40 lg:pb-16"
+      className="relative pt-8 pb-12 md:pt-10 lg:pt-12 lg:pb-16"
     >
       <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
         <div className="text-center max-w-4xl mx-auto">
-          <h1
-            id="prestation-titre"
-            className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.02em] leading-[1.05] text-warm-900 text-balance"
-          >
-            {h1}
-          </h1>
+          <FadeInUp duration={0.6}>
+            <h1
+              id="prestation-titre"
+              className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.02em] leading-[1.05] text-warm-900 text-balance"
+            >
+              {h1}
+            </h1>
+          </FadeInUp>
 
-          <p className="mt-8 max-w-2xl mx-auto font-body text-lg md:text-xl leading-relaxed text-warm-700">
-            {subtitle}
-          </p>
+          <FadeInUp delay={0.1} duration={0.6} className="mt-8 max-w-2xl mx-auto">
+            <p className="font-body text-lg md:text-xl leading-relaxed text-warm-700">
+              {subtitle}
+            </p>
+          </FadeInUp>
 
-          <div className="mt-10 flex flex-col-reverse sm:flex-row sm:justify-center items-center gap-4">
-            <ButtonLink href={site.phoneHref} variant="secondary">
-              Appeler Asmaa
-              <Phone aria-hidden="true" className="w-4 h-4" strokeWidth={1.5} />
-            </ButtonLink>
-            <ButtonLink href={site.resalibUrl} variant="primary">
-              Prendre rendez-vous
-              <CalendarRange
-                aria-hidden="true"
-                className="w-4 h-4"
-                strokeWidth={1.5}
-              />
-            </ButtonLink>
-          </div>
+          <FadeInUp delay={0.25} duration={0.6} className="mt-10">
+            <div className="flex flex-col-reverse sm:flex-row sm:justify-center items-center gap-4">
+              <ButtonLink href={site.phoneHref} variant="secondary">
+                Appeler Asmaa
+                <Phone aria-hidden="true" className="w-4 h-4" strokeWidth={1.5} />
+              </ButtonLink>
+              <ButtonLink href={site.resalibUrl} variant="primary">
+                Prendre rendez-vous
+                <CalendarRange
+                  aria-hidden="true"
+                  className="w-4 h-4"
+                  strokeWidth={1.5}
+                />
+              </ButtonLink>
+            </div>
+          </FadeInUp>
         </div>
 
         {/* ─── Tableau de tarifs ──────────────────────────────────
@@ -82,7 +90,7 @@ export function Hero({ h1, subtitle, tariffs }: HeroProps) {
                   : "grid-cols-1 sm:grid-cols-[1fr_1fr] lg:grid-cols-[1fr_1fr_1fr]",
             ].join(" ")}
           >
-            {tariffs.map(({ label, price, duration, location }) => (
+            {tariffs.map(({ label, price, duration, location }, i) => (
               <li
                 key={label}
                 className={[
@@ -93,16 +101,18 @@ export function Hero({ h1, subtitle, tariffs }: HeroProps) {
                   "shadow-[inset_0_1px_0_rgba(255,255,255,0.7),inset_0_-1px_0_rgba(60,30,25,0.04),0_4px_16px_-6px_rgba(60,30,25,0.15)]",
                 ].join(" ")}
               >
-                <p className="font-body text-xs lg:text-sm font-medium text-warm-700 uppercase tracking-[0.08em]">
-                  {label}
-                </p>
-                <p className="mt-2 font-display text-3xl lg:text-4xl font-medium text-warm-900">
-                  {price}
-                </p>
-                <p className="mt-2 font-body text-sm text-warm-700">
-                  {duration}
-                  {location ? ` · ${location}` : ""}
-                </p>
+                <Reveal delay={0.4 + i * 0.08} className="flex flex-col items-center text-center">
+                  <p className="font-body text-xs lg:text-sm font-medium text-warm-700 uppercase tracking-[0.08em]">
+                    {label}
+                  </p>
+                  <p className="mt-2 font-display text-3xl lg:text-4xl font-medium text-warm-900">
+                    {price}
+                  </p>
+                  <p className="mt-2 font-body text-sm text-warm-700">
+                    {duration}
+                    {location ? ` · ${location}` : ""}
+                  </p>
+                </Reveal>
               </li>
             ))}
           </ul>

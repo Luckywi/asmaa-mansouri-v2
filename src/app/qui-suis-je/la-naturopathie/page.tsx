@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import { CalendarRange, Flame, Flower2, UserRound } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import {
   Bridges,
   type QuiSuisJeBridge,
 } from "@/components/sections/qui-suis-je/Bridges";
+import { FadeInUp } from "@/components/motion/FadeInUp";
+import { Reveal } from "@/components/motion/Reveal";
 import { site } from "@/data/site";
 
 /**
@@ -61,37 +64,50 @@ const bridges: readonly QuiSuisJeBridge[] = [
 export default function LaNaturopathiePage() {
   return (
     <main id="contenu-principal" className="flex-1">
+      <Breadcrumbs
+        items={[
+          { label: "Qui suis-je ?", href: "/qui-suis-je" },
+          { label: "La naturopathie", href: "/qui-suis-je/la-naturopathie" },
+        ]}
+      />
+
       {/* ─── Hero ────────────────────────────────────────────────── */}
       <section
         aria-labelledby="la-naturopathie-titre"
-        className="relative pt-32 pb-12 md:pt-36 lg:pt-40 lg:pb-16"
+        className="relative pt-8 pb-12 md:pt-10 lg:pt-12 lg:pb-16"
       >
         <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
           <div className="text-center max-w-4xl mx-auto">
-            <h1
-              id="la-naturopathie-titre"
-              className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.02em] leading-[1.05] text-warm-900 text-balance"
-            >
-              Qu&apos;est-ce que la naturopathie&nbsp;?
-            </h1>
+            <FadeInUp duration={0.6}>
+              <h1
+                id="la-naturopathie-titre"
+                className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.02em] leading-[1.05] text-warm-900 text-balance"
+              >
+                Qu&apos;est-ce que la naturopathie&nbsp;?
+              </h1>
+            </FadeInUp>
 
-            <p className="mt-8 max-w-2xl mx-auto font-body text-lg md:text-xl leading-relaxed text-warm-700">
-              Une approche globale et personnalisée de la santé, qui considère
-              chaque femme comme un tout plutôt que comme une liste de
-              symptômes à faire taire. Voici ce qu&apos;est, et ce que
-              n&apos;est pas, la naturopathie.
-            </p>
+            <FadeInUp delay={0.1} duration={0.6} className="mt-8 max-w-2xl mx-auto">
+              <p className="font-body text-lg md:text-xl leading-relaxed text-warm-700">
+                Une approche globale et personnalisée de la santé, qui considère
+                chaque femme comme un tout plutôt que comme une liste de
+                symptômes à faire taire. Voici ce qu&apos;est, et ce que
+                n&apos;est pas, la naturopathie.
+              </p>
+            </FadeInUp>
 
-            <div className="mt-10 flex justify-center">
-              <ButtonLink href={site.resalibUrl} variant="primary">
-                Réserver un appel découverte gratuit
-                <CalendarRange
-                  aria-hidden="true"
-                  className="w-4 h-4"
-                  strokeWidth={1.5}
-                />
-              </ButtonLink>
-            </div>
+            <FadeInUp delay={0.25} duration={0.6} className="mt-10">
+              <div className="flex justify-center">
+                <ButtonLink href={site.resalibUrl} variant="primary">
+                  Réserver un appel découverte gratuit
+                  <CalendarRange
+                    aria-hidden="true"
+                    className="w-4 h-4"
+                    strokeWidth={1.5}
+                  />
+                </ButtonLink>
+              </div>
+            </FadeInUp>
           </div>
         </div>
       </section>
@@ -100,7 +116,7 @@ export default function LaNaturopathiePage() {
       <section className="relative pb-12 lg:pb-22">
         <div className="mx-auto max-w-3xl px-6 md:px-8">
           {/* ── Définition ── */}
-          <article>
+          <Reveal as="article">
             <h2 className="font-display text-3xl lg:text-4xl font-medium tracking-[-0.02em] leading-[1.15] text-warm-900">
               Une définition à partager
             </h2>
@@ -120,10 +136,10 @@ export default function LaNaturopathiePage() {
               émotions, énergie, histoire de vie. Pas une liste de symptômes
               à faire taire, une personne à comprendre.
             </p>
-          </article>
+          </Reveal>
 
           {/* ── Principes fondateurs ── */}
-          <article className="mt-16 lg:mt-20">
+          <Reveal as="article" className="mt-16 lg:mt-20">
             <h2 className="font-display text-3xl lg:text-4xl font-medium tracking-[-0.02em] leading-[1.15] text-warm-900">
               Les principes fondateurs
             </h2>
@@ -176,10 +192,10 @@ export default function LaNaturopathiePage() {
                 </p>
               </div>
             </div>
-          </article>
+          </Reveal>
 
           {/* ── Ce que la naturopathie n'est pas ── */}
-          <article className="mt-16 lg:mt-20">
+          <Reveal as="article" className="mt-16 lg:mt-20">
             <h2 className="font-display text-3xl lg:text-4xl font-medium tracking-[-0.02em] leading-[1.15] text-warm-900">
               Ce que la naturopathie n&apos;est pas
             </h2>
@@ -213,10 +229,10 @@ export default function LaNaturopathiePage() {
                 </cite>
               </footer>
             </blockquote>
-          </article>
+          </Reveal>
 
           {/* ── Pourquoi consulter ── */}
-          <article className="mt-16 lg:mt-20">
+          <Reveal as="article" className="mt-16 lg:mt-20">
             <h2 className="font-display text-3xl lg:text-4xl font-medium tracking-[-0.02em] leading-[1.15] text-warm-900">
               Pourquoi consulter une naturopathe&nbsp;?
             </h2>
@@ -246,7 +262,7 @@ export default function LaNaturopathiePage() {
                 </li>
               ))}
             </ul>
-          </article>
+          </Reveal>
         </div>
       </section>
 
@@ -259,7 +275,7 @@ export default function LaNaturopathiePage() {
         className="relative py-12 lg:py-22"
       >
         <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
-          <div className="text-center max-w-3xl mx-auto">
+          <Reveal as="div" className="text-center max-w-3xl mx-auto">
             <h2 className="font-display text-4xl lg:text-5xl font-medium tracking-[-0.02em] leading-[1.1] text-warm-900">
               Envie d&apos;en parler concrètement&nbsp;?
             </h2>
@@ -284,7 +300,7 @@ export default function LaNaturopathiePage() {
                 />
               </ButtonLink>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
     </main>

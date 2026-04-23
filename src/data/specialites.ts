@@ -227,18 +227,27 @@ export const specialites: readonly Specialite[] = [
     symptomes: {
       title: "Les signes d'un terrain hormonal déséquilibré",
       intro:
-        "Ces symptômes touchent des âges et des situations très différents. Leur point commun : ils méritent d'être explorés plutôt que banalisés.",
-      items: [
-        "Règles douloureuses, cycles trop longs ou trop courts",
-        "Syndrome prémenstruel intense : irritabilité, seins douloureux, ballonnements, crampes",
-        "Fatigue marquée et difficultés de concentration en phase lutéale",
-        "Réveils nocturnes fréquents, insomnie, sommeil non récupérateur",
-        "Bouffées de chaleur, transpiration spontanée",
-        "Anxiété, sautes d'humeur, larmes inexpliquées",
-        "Prise de poids progressive sans changement d'hygiène de vie",
-        "Sécheresse cutanée, modification de la peau et des cheveux",
-        "Difficultés de conception, cycles anovulatoires",
-        "Fatigue persistante après une grossesse ou un accouchement",
+        "Deux grands tableaux dominent les consultations : le syndrome prémenstruel, qui touche les femmes en âge de cycler, et les signaux de préménopause ou de ménopause à partir de la quarantaine. Tous méritent d'être explorés plutôt que banalisés.",
+      groups: [
+        {
+          label: "Syndrome prémenstruel",
+          items: [
+            "Irritabilité, sautes d'humeur, larmes inexpliquées avant les règles",
+            "Seins douloureux, ballonnements, rétention d'eau",
+            "Crampes abdominales, maux de tête cycliques",
+            "Fatigue et difficultés de concentration en phase lutéale",
+          ],
+        },
+        {
+          label: "Préménopause et ménopause",
+          items: [
+            "Réveils nocturnes fréquents, insomnie",
+            "Transpiration spontanée, bouffées de chaleur",
+            "Irritabilité, anxiété, sautes d'humeur",
+            "Fatigue inexpliquée, prise de poids progressive",
+            "Sécheresse cutanée, modification de la peau et des cheveux",
+          ],
+        },
       ],
     },
     approche: {
@@ -276,6 +285,12 @@ export const specialites: readonly Specialite[] = [
         title: "Cycles irréguliers",
         content:
           "Un cycle régulier dure entre 24 et 35 jours, avec une ovulation identifiable. Dès qu'il s'allonge, se raccourcit, disparaît ou devient imprévisible, c'est un message du corps. Les causes sont multiples : stress chronique, arrêt récent de pilule, SOPK sous-jacent, carence, déséquilibre thyroïdien, terrain inflammatoire.\n\nMon approche commence par comprendre ce que raconte votre cycle, puis par travailler les causes identifiées : régulation du stress, soutien du foie dans sa fonction hormonale, correction des carences, réintroduction d'une ovulation quand elle manque depuis plusieurs mois.\n\nPour les femmes de Décines-Charpieu et de l'agglomération lyonnaise, cet accompagnement se conçoit toujours en lien avec votre gynécologue, qui reste la personne de référence pour les examens médicaux éventuels.",
+      },
+      {
+        slug: "premenopause-menopause",
+        title: "Préménopause et ménopause",
+        content:
+          "La préménopause débute en moyenne vers 45 ans et peut durer plusieurs années avant la ménopause elle-même. Cycles qui s'espacent, réveils nocturnes, bouffées de chaleur, irritabilité nouvelle, prise de poids progressive : ces premiers signaux ne sont pas une fatalité, ce sont les chuchotements que le corps envoie avant d'avoir à crier.\n\nEn naturopathie, l'enjeu est de préparer le terrain avant que la transition ne s'installe pleinement. Soutien du foie dans son travail de métabolisation hormonale, correction des carences fréquentes en ferritine, magnésium et vitamine D, accompagnement doux des bouffées de chaleur et du sommeil avec des plantes adaptées à votre profil. Sauge, houblon, mélisse : rien d'universel, tout se choisit en fonction de votre terrain et en complémentarité de votre gynécologue.\n\nBeaucoup de femmes de Décines, Meyzieu, Villeurbanne ou Lyon consultent dès les premiers signaux pour aborder cette transition sereinement. Un terrain préparé, drainé et correctement nourri traverse la ménopause avec plus de douceur qu'un terrain laissé à lui-même.",
       },
     ],
     faq: [

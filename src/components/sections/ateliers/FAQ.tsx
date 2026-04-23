@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
+import { Reveal } from "@/components/motion/Reveal";
 
 const faqItems = [
   {
@@ -41,12 +42,14 @@ export function AteliersFAQ() {
       className="relative py-12 lg:py-22"
     >
       <div className="mx-auto max-w-3xl px-6 md:px-8">
-        <h2
-          id="ateliers-faq-titre"
-          className="font-display text-3xl lg:text-4xl font-medium tracking-[-0.02em] leading-[1.15] text-warm-900 text-center"
-        >
-          Questions fréquentes
-        </h2>
+        <Reveal>
+          <h2
+            id="ateliers-faq-titre"
+            className="font-display text-3xl lg:text-4xl font-medium tracking-[-0.02em] leading-[1.15] text-warm-900 text-center"
+          >
+            Questions fréquentes
+          </h2>
+        </Reveal>
 
         <ul className="mt-12 lg:mt-16 space-y-3 lg:space-y-4">
           {faqItems.map(({ question, answer }, i) => {

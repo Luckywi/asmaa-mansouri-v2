@@ -4,6 +4,7 @@ import { GoogleLogo } from "@/components/ui/GoogleLogo";
 import { InstagramLogo } from "@/components/ui/InstagramLogo";
 import { ResalibLogo } from "@/components/ui/ResalibLogo";
 import { Marquee } from "@/components/ui/marquee";
+import { Reveal } from "@/components/motion/Reveal";
 import { temoignages } from "@/data/temoignages";
 import { site } from "@/data/site";
 import type { Temoignage } from "@/types";
@@ -202,8 +203,8 @@ export function Temoignages() {
               vertical
               className="w-full max-w-72 [--duration:30s] lg:hidden"
             >
-              {temoignages.map((t) => (
-                <ReviewCard key={t.name} {...t} />
+              {temoignages.map((t, i) => (
+                <ReviewCard key={`m-${t.name}-${i}`} {...t} />
               ))}
             </Marquee>
             {/* Desktop (≥ lg) : 2 marquees split, sens opposés */}
@@ -212,8 +213,8 @@ export function Temoignages() {
               vertical
               className="hidden lg:flex flex-1 [--duration:30s]"
             >
-              {firstColumn.map((t) => (
-                <ReviewCard key={t.name} {...t} />
+              {firstColumn.map((t, i) => (
+                <ReviewCard key={`a-${t.name}-${i}`} {...t} />
               ))}
             </Marquee>
             <Marquee
@@ -222,8 +223,8 @@ export function Temoignages() {
               vertical
               className="hidden lg:flex flex-1 [--duration:30s]"
             >
-              {secondColumn.map((t) => (
-                <ReviewCard key={t.name} {...t} />
+              {secondColumn.map((t, i) => (
+                <ReviewCard key={`b-${t.name}-${i}`} {...t} />
               ))}
             </Marquee>
 
@@ -284,7 +285,7 @@ export function Temoignages() {
             Les 2 CTA "Écrire un avis" sont en hidden lg:flex ; sur mobile
             ils vivent dans le bloc order-3 sous les marquees.
           */}
-          <div className="order-1 text-center max-w-3xl mx-auto lg:max-w-none lg:mx-0">
+          <Reveal as="div" className="order-1 text-center max-w-3xl mx-auto lg:max-w-none lg:mx-0">
             <h2
               id="temoignages-titre"
               className="font-display text-4xl lg:text-5xl font-medium tracking-[-0.02em] leading-[1.1] text-warm-900"
@@ -353,7 +354,7 @@ export function Temoignages() {
                 <InstagramLogo className="h-4 w-auto translate-y-[1.5px]" />
               </ButtonLink>
             </div>
-          </div>
+          </Reveal>
 
           {/*
             CTA mobile only — centrés sous les marquees, masqués sur desktop

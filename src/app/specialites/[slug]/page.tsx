@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { specialites } from "@/data/specialites";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Hero } from "@/components/sections/specialites/Hero";
 import { Article } from "@/components/sections/specialites/Article";
 import { FAQ } from "@/components/sections/specialites/FAQ";
@@ -68,6 +69,15 @@ export default async function SpecialiteDetailPage({
 
   return (
     <main id="contenu-principal" className="flex-1">
+      <Breadcrumbs
+        items={[
+          { label: "Spécialités", href: "/specialites" },
+          {
+            label: specialite.title,
+            href: `/specialites/${specialite.slug}`,
+          },
+        ]}
+      />
       <Hero title={specialite.title} intro={specialite.intro} />
       <Article
         definition={specialite.definition}

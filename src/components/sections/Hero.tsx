@@ -2,6 +2,8 @@ import Link from "next/link";
 import { CalendarRange, Phone, Star } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { LogoMark } from "@/components/ui/LogoMark";
+import { FadeInUp } from "@/components/motion/FadeInUp";
+import { Stagger, StaggerItem } from "@/components/motion/Stagger";
 import { site } from "@/data/site";
 
 /**
@@ -62,26 +64,34 @@ export function Hero() {
       <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
         {/* ─── Bloc titre + sous-titre, centré ──────────────────── */}
         <div className="text-center">
-          <h1
-            id="hero-titre"
-            className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.02em] leading-[1.05] text-warm-900 max-w-4xl mx-auto"
-          >
-            La naturopathie au service de votre santé de femme.
-          </h1>
-          <p className="mt-6 max-w-2xl mx-auto font-body text-lg md:text-xl leading-relaxed text-warm-700">
-            Asmaa Mansouri — Naturopathe et médecine traditionnelle chinoise à
-            Décines-Charpieu.
-          </p>
+          <FadeInUp duration={0.6} className="max-w-4xl mx-auto">
+            <h1
+              id="hero-titre"
+              className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.02em] leading-[1.05] text-warm-900"
+            >
+              La naturopathie au service de votre santé de femme.
+            </h1>
+          </FadeInUp>
+          <FadeInUp delay={0.1} duration={0.6} className="mt-6 max-w-2xl mx-auto">
+            <p className="font-body text-lg md:text-xl leading-relaxed text-warm-700">
+              Asmaa Mansouri — Naturopathe et médecine traditionnelle chinoise à
+              Décines-Charpieu.
+            </p>
+          </FadeInUp>
         </div>
 
         {/* ─── Row 3 colonnes : Tags | LogoMark | Avis+CTAs ───── */}
-        <div className="mt-8 lg:mt-20 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+        <Stagger
+          delay={0.25}
+          staggerChildren={0.1}
+          className="mt-8 lg:mt-20 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center"
+        >
           {/* ── Colonne 1 (lg) : Tags mots-clés ── */}
           {/*
             Mobile : order-2 (sous le LogoMark)
             Desktop : order-1 = colonne gauche
           */}
-          <div className="lg:col-span-4 order-2 lg:order-1">
+          <StaggerItem className="lg:col-span-4 order-2 lg:order-1">
             <ul className="flex flex-wrap justify-center gap-2">
               {heroTags.map(({ label, href }) => (
                 <li key={label}>
@@ -104,23 +114,23 @@ export function Hero() {
                 </li>
               ))}
             </ul>
-          </div>
+          </StaggerItem>
 
           {/* ── Colonne 2 (lg) : LogoMark, centerpiece ── */}
           {/*
             Mobile : order-1 (en haut, premier élément après le bloc titre)
             Desktop : order-2 = colonne centrale
           */}
-          <div className="lg:col-span-4 order-1 lg:order-2 flex justify-center">
+          <StaggerItem className="lg:col-span-4 order-1 lg:order-2 flex justify-center">
             <LogoMark className="w-32 h-32 sm:w-40 sm:h-40 md:w-72 md:h-72 lg:w-[294px] lg:h-[294px] text-warm-700" />
-          </div>
+          </StaggerItem>
 
           {/* ── Colonne 3 (lg) : Avis Resalib + CTAs ── */}
           {/*
             Mobile : order-3 (en bas)
             Desktop : order-3 = colonne droite (ordre naturel)
           */}
-          <div className="lg:col-span-4 order-3 flex flex-col items-center gap-6">
+          <StaggerItem className="lg:col-span-4 order-3 flex flex-col items-center gap-6">
             {/*
               Lien étoiles + "Lire les X témoignages" (compteur dérivé
               de `site.verifiedReviewsCount`, lui-même calé sur
@@ -191,8 +201,8 @@ export function Hero() {
                 />
               </ButtonLink>
             </div>
-          </div>
-        </div>
+          </StaggerItem>
+        </Stagger>
       </div>
     </section>
   );

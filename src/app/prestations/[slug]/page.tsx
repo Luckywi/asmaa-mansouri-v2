@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { prestations } from "@/data/prestations";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Hero } from "@/components/sections/prestations/Hero";
 import { WhatIs } from "@/components/sections/prestations/WhatIs";
 import { Steps } from "@/components/sections/prestations/Steps";
@@ -66,6 +67,15 @@ export default async function PrestationDetailPage({
 
   return (
     <main id="contenu-principal" className="flex-1">
+      <Breadcrumbs
+        items={[
+          { label: "Prestations", href: "/prestations" },
+          {
+            label: prestation.category,
+            href: `/prestations/${prestation.slug}`,
+          },
+        ]}
+      />
       <Hero
         h1={prestation.seoH1}
         subtitle={prestation.seoSubtitle}

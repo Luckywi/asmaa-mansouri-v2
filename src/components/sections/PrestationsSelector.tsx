@@ -166,8 +166,15 @@ export function PrestationsSelector() {
             Specialites — recette identique, seul le positionnement change
             (right-aligned au lieu de inset-0 centered).
           */}
+          {/*
+            Taille fixe en px (pas en `%`) : sans ça, le LogoMark se
+            redimensionne à chaque switch d'activeIndex parce que son
+            parent change de hauteur selon la longueur de la
+            description active. Une taille absolue garantit un
+            watermark visuellement identique sur les 4 prestations.
+          */}
           <LogoMark
-            className="absolute right-0 top-1/2 -translate-y-1/2 h-[80%] aspect-square text-warm-700/50 pointer-events-none"
+            className="absolute right-0 top-1/2 -translate-y-1/2 h-72 aspect-square text-warm-700/50 pointer-events-none"
           />
 
           <AnimatePresence mode="wait">

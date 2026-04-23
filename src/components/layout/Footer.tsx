@@ -195,6 +195,18 @@ export function Footer() {
           >
             {site.email}
           </a>
+          <span aria-hidden="true" className="hidden text-warm-700/30 lg:inline">
+            ·
+          </span>
+          <a
+            href={site.instagramUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Suivre ${site.instagram} sur Instagram`}
+            className="font-body text-sm text-warm-700/80 transition-colors duration-150 ease-out hover:text-warm-900"
+          >
+            {site.instagram}
+          </a>
         </div>
 
         {/* ─── 3a. Mobile : sections empilées ──────────────── */}

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight, Bell } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { Reveal } from "@/components/motion/Reveal";
 import { site } from "@/data/site";
 import type { ThematiqueAtelier } from "@/types";
 import { SaisonsGrid } from "./SaisonsGrid";
@@ -24,7 +25,7 @@ export function ThematiqueSection({ thematique }: ThematiqueSectionProps) {
     >
       <div className="mx-auto max-w-5xl">
         {/* ─── Haut : centré ─── */}
-        <div className="text-center max-w-3xl mx-auto">
+        <Reveal as="div" className="text-center max-w-3xl mx-auto">
           <p className="font-body text-xs font-medium tracking-[0.18em] text-warm-700/80">
             {thematique.eyebrow}
           </p>
@@ -95,7 +96,7 @@ export function ThematiqueSection({ thematique }: ThematiqueSectionProps) {
               <Bell aria-hidden="true" className="w-4 h-4" strokeWidth={1.5} />
             </ButtonLink>
           </div>
-        </div>
+        </Reveal>
 
       </div>
     </section>

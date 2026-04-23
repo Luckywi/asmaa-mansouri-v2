@@ -2,6 +2,7 @@ import { Star } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { ResalibLogo } from "@/components/ui/ResalibLogo";
 import { GoogleLogo } from "@/components/ui/GoogleLogo";
+import { FadeInUp } from "@/components/motion/FadeInUp";
 import { site } from "@/data/site";
 import { temoignages } from "@/data/temoignages";
 
@@ -29,51 +30,59 @@ export function TemoignagesHero() {
       className="relative pt-32 pb-12 md:pt-36 lg:pt-40 lg:pb-16"
     >
       <div className="mx-auto max-w-3xl px-6 text-center">
-        <h1
-          id="temoignages-titre"
-          className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.02em] leading-[1.05] text-warm-900"
-        >
-          Vos témoignages
-        </h1>
-
-        <p className="mt-8 font-body text-lg md:text-xl leading-relaxed text-warm-700">
-          Depuis l&apos;ouverture de mon cabinet à Décines-Charpieu,
-          j&apos;accompagne des femmes à chaque étape de leur parcours de
-          santé.{" "}
-          {temoignages.length}{" "}
-          d&apos;entre elles ont accepté de partager leur expérience après
-          être venues consulter.
-        </p>
-
-        <div className="mt-8 flex items-center justify-center gap-3 lg:gap-4">
-          <span
-            className="flex items-center gap-0.5 lg:gap-1"
-            aria-hidden="true"
+        <FadeInUp duration={0.6}>
+          <h1
+            id="temoignages-titre"
+            className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.02em] leading-[1.05] text-warm-900"
           >
-            {Array.from({ length: 5 }).map((_, i) => (
-              <Star
-                key={i}
-                className="w-[18px] h-[18px] lg:w-5 lg:h-5 text-warm-700"
-                fill="currentColor"
-                stroke="none"
-              />
-            ))}
-          </span>
-          <p className="font-body text-base text-warm-700 underline underline-offset-4 decoration-warm-500/60">
-            {temoignages.length} avis vérifiés
-          </p>
-        </div>
+            Vos témoignages
+          </h1>
+        </FadeInUp>
 
-        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
-          <ButtonLink href={site.resalibReviewsUrl} variant="primary">
-            Écrire un avis sur
-            <ResalibLogo className="h-5 w-auto" />
-          </ButtonLink>
-          <ButtonLink href={site.googleReviewsUrl} variant="secondary">
-            Écrire un avis sur
-            <GoogleLogo className="h-4 w-auto translate-y-[1.5px]" />
-          </ButtonLink>
-        </div>
+        <FadeInUp delay={0.1} duration={0.6} className="mt-8">
+          <p className="font-body text-lg md:text-xl leading-relaxed text-warm-700">
+            Depuis l&apos;ouverture de mon cabinet à Décines-Charpieu,
+            j&apos;accompagne des femmes à chaque étape de leur parcours de
+            santé.{" "}
+            {temoignages.length}{" "}
+            d&apos;entre elles ont accepté de partager leur expérience après
+            être venues consulter.
+          </p>
+        </FadeInUp>
+
+        <FadeInUp delay={0.2} duration={0.6} className="mt-8">
+          <div className="flex items-center justify-center gap-3 lg:gap-4">
+            <span
+              className="flex items-center gap-0.5 lg:gap-1"
+              aria-hidden="true"
+            >
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Star
+                  key={i}
+                  className="w-[18px] h-[18px] lg:w-5 lg:h-5 text-warm-700"
+                  fill="currentColor"
+                  stroke="none"
+                />
+              ))}
+            </span>
+            <p className="font-body text-base text-warm-700 underline underline-offset-4 decoration-warm-500/60">
+              {temoignages.length} avis vérifiés
+            </p>
+          </div>
+        </FadeInUp>
+
+        <FadeInUp delay={0.3} duration={0.6} className="mt-10">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+            <ButtonLink href={site.resalibReviewsUrl} variant="primary">
+              Écrire un avis sur
+              <ResalibLogo className="h-5 w-auto" />
+            </ButtonLink>
+            <ButtonLink href={site.googleReviewsUrl} variant="secondary">
+              Écrire un avis sur
+              <GoogleLogo className="h-4 w-auto translate-y-[1.5px]" />
+            </ButtonLink>
+          </div>
+        </FadeInUp>
       </div>
     </section>
   );

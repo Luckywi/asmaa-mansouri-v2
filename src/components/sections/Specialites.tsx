@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { ArrowUpRight, Flame, Flower2, Leaf, ScanSearch, Wind } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { Reveal } from "@/components/motion/Reveal";
+import { Stagger, StaggerItem } from "@/components/motion/Stagger";
 
 const specialitesBuckets = [
   {
@@ -83,7 +85,7 @@ export function Specialites() {
     >
       <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
         {/* ─── Titre + intro centrés ───────────────────────── */}
-        <div className="text-center max-w-3xl mx-auto">
+        <Reveal as="div" className="text-center max-w-3xl mx-auto">
           <h2
             id="specialites-titre"
             className="font-display text-4xl lg:text-5xl font-medium tracking-[-0.02em] leading-[1.1] text-warm-900"
@@ -95,17 +97,23 @@ export function Specialites() {
             comprendre le terrain, identifier les causes profondes et
             accompagner chaque femme vers un équilibre durable.
           </p>
-        </div>
+        </Reveal>
 
         {/* ─── Mobile (< md) : liste éditoriale ─────────────
             Pattern repris de cabinet/AllerPlusLoin et des bridges
             /prestations : hairlines warm-700/15, gros titre display,
             description, ArrowUpRight qui glisse au hover. Pas de
             glass, pas d'icône watermark, pas de bouton chrome. */}
-        <ul className="mt-12 md:hidden border-y border-warm-700/15">
+        <Stagger
+          as="ul"
+          trigger="inView"
+          staggerChildren={0.06}
+          className="mt-12 md:hidden border-y border-warm-700/15"
+        >
           {specialitesBuckets.map(({ title, description, href }, i) => (
-            <li
+            <StaggerItem
               key={title}
+              as="li"
               className={i > 0 ? "border-t border-warm-700/15" : ""}
             >
               <Link
@@ -137,13 +145,30 @@ export function Specialites() {
                   ].join(" ")}
                 />
               </Link>
-            </li>
+            </StaggerItem>
           ))}
-        </ul>
+        </Stagger>
 
         {/* ─── md+ : grid de 3 cards glass watermark ──────── */}
+        {/*
+          Règle forte sur cette grille : **la card reste complètement
+          statique**. On n'anime ni le `<li>`, ni le watermark, ni le
+          glass div. Seul le contenu *à l'intérieur* du glass est
+          animé via un `<Reveal>`.
+          Raison : toute animation (translation *ou* opacité) sur le
+          `<li>` ou son glass provoque un flash visuel. Soit le
+          navigateur promeut la card en compositor layer et le
+          backdrop-filter perd temporairement le watermark sibling,
+          soit le backdrop-filter met une frame à s'initialiser au
+          passage opacité 0 → 1 et l'icône apparaît "nue" une fraction
+          de seconde.
+          En gardant la card statique, glass et watermark sont peints
+          ensemble dès le premier rendu, parfaitement stables. Le
+          contenu interne (titre, description, CTA) cascade via Reveal
+          avec un délai croissant par card pour l'effet stagger.
+        */}
         <ul className="hidden md:grid mt-16 lg:mt-20 md:grid-cols-2 gap-6 lg:gap-8">
-          {specialitesBuckets.map(({ icon: Icon, title, description, href }) => (
+          {specialitesBuckets.map(({ icon: Icon, title, description, href }, i) => (
             <li
               key={title}
               className="group relative flex flex-col rounded-md overflow-hidden"
@@ -190,37 +215,47 @@ export function Specialites() {
                   "transition-colors duration-200 ease-out",
                 ].join(" ")}
               >
-                {/* Title row — icône + titre sur la MÊME ligne */}
-                <div className="flex items-center gap-3">
-                  <Icon
-                    aria-hidden="true"
-                    className="w-7 h-7 text-warm-700 shrink-0"
-                    strokeWidth={1.5}
-                  />
-                  <h3 className="font-display text-xl lg:text-2xl font-medium tracking-tight text-warm-900">
-                    {title}
-                  </h3>
-                </div>
-
-                <p className="mt-4 font-body text-base leading-relaxed text-warm-700">
-                  {description}
-                </p>
-
                 {/*
-                  Bouton "En savoir plus" — `mt-auto` le pousse en bas du
-                  flex column, ce qui aligne les 3 boutons verticalement
-                  même si les descriptions ont des longueurs différentes.
+                  Contenu interne animé — la card, l'icône watermark et
+                  le glass restent statiques. Le Reveal est placé *à
+                  l'intérieur* du glass donc son transform ne promeut
+                  jamais la card en compositor layer : backdrop-filter
+                  stable pendant toute l'animation. Délai croissant par
+                  card (i * 0.08s) pour reproduire l'effet stagger.
                 */}
-                <div className="mt-auto pt-6">
-                  <ButtonLink href={href} variant="primary">
-                    En savoir plus
-                    <ScanSearch
+                <Reveal delay={i * 0.08} className="flex flex-col flex-1">
+                  {/* Title row — icône + titre sur la MÊME ligne */}
+                  <div className="flex items-center gap-3">
+                    <Icon
                       aria-hidden="true"
-                      className="w-4 h-4"
+                      className="w-7 h-7 text-warm-700 shrink-0"
                       strokeWidth={1.5}
                     />
-                  </ButtonLink>
-                </div>
+                    <h3 className="font-display text-xl lg:text-2xl font-medium tracking-tight text-warm-900">
+                      {title}
+                    </h3>
+                  </div>
+
+                  <p className="mt-4 font-body text-base leading-relaxed text-warm-700">
+                    {description}
+                  </p>
+
+                  {/*
+                    Bouton "En savoir plus" — `mt-auto` le pousse en bas du
+                    flex column, ce qui aligne les 3 boutons verticalement
+                    même si les descriptions ont des longueurs différentes.
+                  */}
+                  <div className="mt-auto pt-6">
+                    <ButtonLink href={href} variant="primary">
+                      En savoir plus
+                      <ScanSearch
+                        aria-hidden="true"
+                        className="w-4 h-4"
+                        strokeWidth={1.5}
+                      />
+                    </ButtonLink>
+                  </div>
+                </Reveal>
               </div>
             </li>
           ))}

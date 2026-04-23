@@ -6,9 +6,13 @@ import { Play, Pause } from "lucide-react";
 const AUDIO_SRC = "/temoignages/temoignage-audio.m4a";
 const BAR_COUNT = 40;
 
+// Hauteurs arrondies à 4 décimales pour éviter le mismatch d'hydration :
+// la sérialisation float diffère parfois entre SSR et CSR (ex: 0.7973 vs
+// 0.79725522902134). Un arrondi fixe garantit une string identique.
 const BARS = Array.from({ length: BAR_COUNT }, (_, i) => {
   const x = (i / BAR_COUNT) * Math.PI * 4;
-  return 0.25 + 0.75 * Math.abs(Math.sin(x + 1.2) * Math.cos(x * 0.7 + 0.5));
+  const v = 0.25 + 0.75 * Math.abs(Math.sin(x + 1.2) * Math.cos(x * 0.7 + 0.5));
+  return Math.round(v * 10000) / 10000;
 });
 
 function formatTime(s: number): string {

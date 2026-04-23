@@ -1,3 +1,4 @@
+import { Reveal } from "@/components/motion/Reveal";
 import type { PrestationStep } from "@/types";
 
 type StepsProps = {
@@ -26,12 +27,14 @@ export function Steps({ title, items }: StepsProps) {
       className="relative py-12 lg:py-22"
     >
       <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
-        <h2
-          id="prestation-steps-titre"
-          className="font-display text-3xl lg:text-4xl font-medium tracking-[-0.02em] leading-[1.15] text-warm-900 text-center text-balance"
-        >
-          {title}
-        </h2>
+        <Reveal>
+          <h2
+            id="prestation-steps-titre"
+            className="font-display text-3xl lg:text-4xl font-medium tracking-[-0.02em] leading-[1.15] text-warm-900 text-center text-balance"
+          >
+            {title}
+          </h2>
+        </Reveal>
 
         {/* Mobile — timeline verticale compacte */}
         <ol className="sm:hidden mt-10">
@@ -76,11 +79,12 @@ export function Steps({ title, items }: StepsProps) {
           })}
         </ol>
 
-        {/* Tablette & desktop — grid cards glass */}
+        {/* Tablette & desktop — grid cards glass (statiques, Reveal
+            interne cascadé pour éviter le flash au premier paint) */}
         <ol
           className={`hidden sm:grid mt-14 lg:mt-16 grid-cols-2 ${colsLg} gap-6 lg:gap-8`}
         >
-          {items.map(({ number, title: stepTitle, description }) => (
+          {items.map(({ number, title: stepTitle, description }, i) => (
             <li
               key={number}
               className={[
@@ -91,18 +95,20 @@ export function Steps({ title, items }: StepsProps) {
                 "shadow-[inset_0_1px_0_rgba(255,255,255,0.7),inset_0_-1px_0_rgba(60,30,25,0.04),0_4px_16px_-6px_rgba(60,30,25,0.15)]",
               ].join(" ")}
             >
-              <span
-                aria-hidden="true"
-                className="font-display text-4xl lg:text-5xl font-medium text-accent leading-none"
-              >
-                {number}
-              </span>
-              <h3 className="mt-5 font-display text-xl font-medium tracking-tight text-warm-900">
-                {stepTitle}
-              </h3>
-              <p className="mt-3 font-body text-base leading-relaxed text-warm-700">
-                {description}
-              </p>
+              <Reveal delay={i * 0.08} className="flex flex-col items-center text-center">
+                <span
+                  aria-hidden="true"
+                  className="font-display text-4xl lg:text-5xl font-medium text-accent leading-none"
+                >
+                  {number}
+                </span>
+                <h3 className="mt-5 font-display text-xl font-medium tracking-tight text-warm-900">
+                  {stepTitle}
+                </h3>
+                <p className="mt-3 font-body text-base leading-relaxed text-warm-700">
+                  {description}
+                </p>
+              </Reveal>
             </li>
           ))}
         </ol>

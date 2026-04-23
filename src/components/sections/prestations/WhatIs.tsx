@@ -1,3 +1,5 @@
+import { Reveal } from "@/components/motion/Reveal";
+
 type WhatIsProps = {
   title: string;
   content: string;
@@ -18,7 +20,7 @@ export function WhatIs({ title, content }: WhatIsProps) {
       aria-labelledby="prestation-what-is-titre"
       className="relative py-12 lg:py-22"
     >
-      <div className="mx-auto max-w-3xl px-6 md:px-8 lg:px-12">
+      <Reveal as="div" className="mx-auto max-w-3xl px-6 md:px-8 lg:px-12">
         <h2
           id="prestation-what-is-titre"
           className="font-display text-3xl lg:text-4xl font-medium tracking-[-0.02em] leading-[1.15] text-warm-900 text-center text-balance"
@@ -29,7 +31,7 @@ export function WhatIs({ title, content }: WhatIsProps) {
         <p className="mt-8 font-body text-base md:text-lg leading-relaxed text-warm-700 text-center">
           {content}
         </p>
-      </div>
+      </Reveal>
     </section>
   );
 }

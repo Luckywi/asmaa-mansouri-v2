@@ -296,14 +296,25 @@ export type Specialite = {
     readonly content: string;
   };
   /**
-   * Section 2 — "Les symptômes" : titre + intro rédigés, items à compléter.
-   * `items` est rendu en liste à puces ; minimum 1 item pour ne pas
-   * laisser un bloc vide à la publication.
+   * Section 2 — "Les symptômes" : titre + intro rédigés, symptômes
+   * à compléter. Deux formats mutuellement exclusifs :
+   *   - `items` : liste à puces plate (format par défaut, utilisé par la
+   *     majorité des spécialités).
+   *   - `groups` : liste catégorisée (H3 + sous-liste) pour les
+   *     spécialités parapluie qui couvrent plusieurs tableaux cliniques
+   *     distincts (ex : déséquilibres hormonaux → SPM vs préménopause).
+   *
+   * Au moins l'un des deux doit être renseigné. Le composant de rendu
+   * (`Article.tsx`) privilégie `groups` quand il est présent.
    */
   readonly symptomes: {
     readonly title: string;
     readonly intro: string;
-    readonly items: readonly string[];
+    readonly items?: readonly string[];
+    readonly groups?: readonly {
+      readonly label: string;
+      readonly items: readonly string[];
+    }[];
   };
   /** Section 3 — "Mon approche" : titre rédigé, content à compléter */
   readonly approche: {
@@ -421,4 +432,11 @@ export type Atelier = {
    * cohérence de la grille ; rotater côté source si besoin.
    */
   readonly images?: readonly string[];
+  /**
+   * Affiche officielle de l'atelier (visuel de communication au format
+   * paysage ou quasi-carré). Quand renseignée, elle s'affiche en
+   * header edge-to-edge en haut de la modale, avant le titre, pour
+   * servir de visuel d'accroche. Chemin relatif à `/public`.
+   */
+  readonly poster?: string;
 };

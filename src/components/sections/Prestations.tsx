@@ -1,6 +1,7 @@
 import { GalleryVerticalEnd, Sparkles } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { PrestationsSelector } from "@/components/sections/PrestationsSelector";
+import { Reveal } from "@/components/motion/Reveal";
 
 /**
  * Prestations — section "Mes prestations" sur la landing.
@@ -35,7 +36,7 @@ export function Prestations() {
     >
       <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
         {/* ─── Titre + sous-titre centrés + 2 CTAs ─────────── */}
-        <div className="text-center max-w-3xl mx-auto">
+        <Reveal as="div" className="text-center max-w-3xl mx-auto">
           <h2
             id="prestations-titre"
             className="font-display text-4xl lg:text-5xl font-medium tracking-[-0.02em] leading-[1.1] text-warm-900"
@@ -67,9 +68,19 @@ export function Prestations() {
               />
             </ButtonLink>
           </div>
-        </div>
+        </Reveal>
 
-        {/* ─── Selector interactif (client component) ─────── */}
+        {/*
+          ─── Selector interactif (client component) ───────
+          Pas de Reveal scroll ici : le PrestationsSelector contient un
+          glass card par-dessus un LogoMark watermark dans le detail
+          panel desktop. Wrapper le selector dans un Reveal qui
+          translate créerait un compositor layer englobant, avec un
+          flash visible du LogoMark pendant l'animation. On laisse donc
+          le selector apparaître statiquement — son animation interne
+          d'interaction (switch au click entre prestations) reste
+          intacte et gérée en autonomie dans le composant.
+        */}
         <div className="mt-16 lg:mt-20">
           <PrestationsSelector />
         </div>
