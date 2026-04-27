@@ -2,25 +2,54 @@ import type { NextConfig } from "next";
 
 /**
  * Headers de sécurité statiques appliqués à toutes les routes (y compris
- * `_next/static/*`, `_next/image/*`, sitemap, robots, favicons). La CSP
- * dynamique avec nonce vit dans `middleware.ts` car elle change par
- * requête ; ces headers-ci ne dépendent pas de la requête.
+ * `_next/static/*`, `_next/image/*`, sitemap, robots, favicons).
  *
- * Permissions-Policy : on désactive explicitement toutes les APIs
+ * CSP statique avec `'unsafe-inline'` sur scripts et styles. Choix
+ * pragmatique pour un site vitrine sans auth, sans formulaire, sans
+ * contenu user-generated : la menace XSS principale (DOM injection via
+ * input utilisateur) est inexistante. Le nonce dynamique opt-out les
+ * pages du SSG (perte TTFB de 10-30 ms par requête), trade-off non
+ * justifié pour ce profil de site dont l'objectif principal est le SEO.
+ *
+ * Sources tierces whitelistées :
+ *   - `*.basemaps.cartocdn.com` : tuiles + style positron de la map
+ *     maplibre du cabinet (`src/components/ui/Map.tsx`).
+ *   - `data:` / `blob:` sur img-src : next/image placeholders + SVG
+ *     inline des markers map.
+ *   - `worker-src 'self' blob:` : maplibre crée des Web Workers via
+ *     Blob URLs pour parser les tuiles vectorielles.
+ *
+ * Permissions-Policy : désactive explicitement toutes les APIs
  * sensibles que le site n'utilise pas. `interest-cohort=()` neutralise
  * Google FLoC (héritage, non-standard mais encore lu par certains
  * crawlers de scoring sécurité).
  *
  * COOP same-origin + CORP same-origin : isolation cross-origin maximale.
  * Le site ne consomme aucun asset cross-origin (Resalib, Google Maps,
- * Instagram sont des liens `<a>`, pas des fetches), donc same-origin est
- * sûr. Si un embed externe est ajouté plus tard, descendre CORP à
- * same-site.
+ * Instagram sont des liens `<a>`, pas des fetches). Si un embed externe
+ * est ajouté plus tard, descendre CORP à same-site.
  *
- * X-Frame-Options DENY redondant avec CSP `frame-ancestors 'none'`
- * (middleware) — gardé pour compatibilité avec les crawlers qui scorent
- * encore l'ancien header.
+ * X-Frame-Options DENY redondant avec CSP `frame-ancestors 'none'` —
+ * gardé pour compatibilité avec les crawlers qui scorent encore
+ * l'ancien header.
  */
+const csp = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: blob: https://*.basemaps.cartocdn.com",
+  "font-src 'self'",
+  "connect-src 'self' https://*.basemaps.cartocdn.com",
+  "media-src 'self'",
+  "worker-src 'self' blob:",
+  "frame-src 'none'",
+  "frame-ancestors 'none'",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "upgrade-insecure-requests",
+].join("; ");
+
 const securityHeaders = [
   {
     key: "Strict-Transport-Security",
@@ -36,6 +65,7 @@ const securityHeaders = [
   },
   { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
   { key: "Cross-Origin-Resource-Policy", value: "same-origin" },
+  { key: "Content-Security-Policy", value: csp },
 ];
 
 const nextConfig: NextConfig = {
