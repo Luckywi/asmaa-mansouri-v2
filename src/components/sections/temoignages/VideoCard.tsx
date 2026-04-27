@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef, useState, useCallback, useEffect } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
+import { AnimatePresence, m } from "framer-motion";
 import { Play, Pause, X } from "lucide-react";
 import { useFocusTrap } from "@/lib/useFocusTrap";
 
@@ -137,7 +138,7 @@ function VideoModal({ onClose }: { onClose: () => void }) {
 
   return (
     <>
-      <motion.div
+      <m.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -147,7 +148,7 @@ function VideoModal({ onClose }: { onClose: () => void }) {
         aria-hidden="true"
       />
 
-      <motion.div
+      <m.div
         ref={dialogRef}
         initial={{ opacity: 0, scale: 0.96, y: 12 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -181,7 +182,7 @@ function VideoModal({ onClose }: { onClose: () => void }) {
             ref={videoRef}
             src={VIDEO_SRC}
             poster={POSTER_SRC}
-            preload="metadata"
+            preload="none"
             playsInline
             aria-label="Témoignage vidéo"
             onClick={togglePlay}
@@ -251,7 +252,7 @@ function VideoModal({ onClose }: { onClose: () => void }) {
             {formatTime(current)}/{formatTime(duration)}
           </span>
         </div>
-      </motion.div>
+      </m.div>
     </>
   );
 }
@@ -290,7 +291,7 @@ function DesktopPlayer() {
         ref={videoRef}
         src={VIDEO_SRC}
         poster={POSTER_SRC}
-        preload="metadata"
+        preload="none"
         playsInline
         aria-label="Témoignage vidéo"
         onEnded={() => setPlaying(false)}
@@ -345,13 +346,12 @@ function MobileThumbnail({ onOpen }: { onOpen: () => void }) {
         "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700",
       ].join(" ")}
     >
-      <video
-        src={VIDEO_SRC}
-        poster={POSTER_SRC}
-        preload="metadata"
-        muted
-        playsInline
+      <Image
+        src={POSTER_SRC}
+        alt=""
         aria-hidden="true"
+        fill
+        sizes="(min-width: 1024px) 220px, 180px"
         className="absolute inset-0 h-full w-full object-cover rounded-md pointer-events-none"
       />
 

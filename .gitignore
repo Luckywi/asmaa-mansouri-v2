@@ -24,6 +24,9 @@
 .DS_Store
 *.pem
 
+# assets sources (originaux non compressés, hors build)
+/.assets-source
+
 # debug
 npm-debug.log*
 yarn-debug.log*

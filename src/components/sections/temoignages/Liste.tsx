@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { temoignages } from "@/data/temoignages";
 import type { Temoignage } from "@/types";
 import { TemoignageCard } from "./Card";
@@ -112,14 +112,13 @@ export function TemoignagesListe() {
             <div key={`d-${colIndex}`} className="flex flex-1 flex-col gap-6">
               {colIndex === 1 && <VideoCard />}
               {column.map((t, i) => (
-                <>
+                <Fragment key={`d-${colIndex}-${t.name}-${i}`}>
                   <TemoignageCard
-                    key={`d-${colIndex}-${t.name}-${i}`}
                     temoignage={t}
                     onOpenDetails={() => setSelected(t)}
                   />
                   {colIndex === 2 && i === 0 && <AudioCard />}
-                </>
+                </Fragment>
               ))}
             </div>
           ))}

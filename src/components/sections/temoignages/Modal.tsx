@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { ExternalLink, Star, X } from "lucide-react";
 import { site } from "@/data/site";
 import type { Temoignage } from "@/types";
@@ -80,7 +80,7 @@ export function TemoignageModal({ temoignage, onClose }: ModalProps) {
     <AnimatePresence>
       {temoignage && (
         <>
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -90,7 +90,7 @@ export function TemoignageModal({ temoignage, onClose }: ModalProps) {
             aria-hidden="true"
           />
 
-          <motion.div
+          <m.div
             ref={dialogRef}
             initial={{ opacity: 0, scale: 0.96, y: 12 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -199,7 +199,7 @@ export function TemoignageModal({ temoignage, onClose }: ModalProps) {
                 />
               </Link>
             </footer>
-          </motion.div>
+          </m.div>
         </>
       )}
     </AnimatePresence>

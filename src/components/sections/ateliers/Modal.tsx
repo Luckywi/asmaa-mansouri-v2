@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Image from "next/image";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { CalendarDays, Clock, MapPin, Phone, X } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { site } from "@/data/site";
@@ -66,7 +66,7 @@ export function AtelierModal({ atelier, onClose }: ModalProps) {
     <AnimatePresence>
       {atelier && (
         <>
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -76,7 +76,7 @@ export function AtelierModal({ atelier, onClose }: ModalProps) {
             aria-hidden="true"
           />
 
-          <motion.div
+          <m.div
             ref={dialogRef}
             initial={{ opacity: 0, scale: 0.96, y: 12 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -207,7 +207,7 @@ export function AtelierModal({ atelier, onClose }: ModalProps) {
                 <Phone aria-hidden="true" className="w-4 h-4" strokeWidth={1.5} />
               </ButtonLink>
             </footer>
-          </motion.div>
+          </m.div>
         </>
       )}
     </AnimatePresence>

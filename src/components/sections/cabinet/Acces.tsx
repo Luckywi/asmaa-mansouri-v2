@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { Reveal } from "@/components/motion/Reveal";
 import { accessModes, zonesDesservies } from "@/data/cabinet-acces";
@@ -121,7 +121,7 @@ export function Acces() {
                       {mode.title}
                     </div>
                   </div>
-                  <motion.div
+                  <m.div
                     animate={{ rotate: isOpen ? 180 : 0 }}
                     transition={{ duration: 0.2, ease: "easeOut" }}
                     className="shrink-0"
@@ -131,11 +131,11 @@ export function Acces() {
                       className="w-5 h-5 text-warm-700"
                       strokeWidth={1.5}
                     />
-                  </motion.div>
+                  </m.div>
                 </button>
                 <AnimatePresence initial={false}>
                   {isOpen && (
-                    <motion.div
+                    <m.div
                       id={contentId}
                       key="content"
                       initial={{ height: 0, opacity: 0 }}
@@ -159,7 +159,7 @@ export function Acces() {
                           ))}
                         </ul>
                       </div>
-                    </motion.div>
+                    </m.div>
                   )}
                 </AnimatePresence>
               </li>

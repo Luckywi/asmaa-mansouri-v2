@@ -19,17 +19,18 @@ import type { ReactNode } from "react";
  *      système d'exploitation de l'utilisateur. Aucun composant n'a
  *      besoin de reproduire cette logique localement.
  *
- * Non-strict par défaut : le code existant qui utilise `<motion.div>`
- * (modales, galeries, FAQ) continue de fonctionner. Les nouvelles
- * animations doivent préférer `<m.div>` importé de `framer-motion`
- * pour profiter pleinement du tree-shaking de LazyMotion.
+ * Mode `strict` activé : tous les composants animés doivent utiliser
+ * `<m.*>` importé de `framer-motion`. Tout import de `motion.*` lèverait
+ * une erreur runtime — c'est volontaire pour garantir que le tree-shaking
+ * de LazyMotion reste effectif et que `domAnimation` (~15 KB) ne se
+ * fasse pas écraser par le bundle complet (~50-60 KB).
  *
  * Package `framer-motion` v12+ conservé (cohérent avec le reste du
  * projet). API identique à `motion/react`.
  */
 export function MotionProvider({ children }: { children: ReactNode }) {
   return (
-    <LazyMotion features={domAnimation}>
+    <LazyMotion features={domAnimation} strict>
       <MotionConfig reducedMotion="user">{children}</MotionConfig>
     </LazyMotion>
   );

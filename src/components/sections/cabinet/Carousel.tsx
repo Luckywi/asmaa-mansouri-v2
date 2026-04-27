@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Marquee } from "@/components/ui/Marquee";
 import { Reveal } from "@/components/motion/Reveal";
@@ -53,26 +56,52 @@ const cabinetPhotos = [
  * Carousel — bandeau plein écran de photos du cabinet en défilement
  * infini. Cards en portrait (ratio 3/4) pour matcher les photos source.
  *
- * Tailles responsive (réduites pour ne pas dominer le LCP — la première
- * image carousel était auparavant le candidat LCP de la page) :
+ * Tailles responsive (réduites pour ne pas dominer le LCP) :
  *   - mobile : 140×186 (ratio 3/4)
  *   - desktop : 240×320 (ratio 3/4)
  *
- * Toutes les images sont lazy : le LCP de la page /cabinet est le H1 du
- * Hero text. `sizes` suit les breakpoints pour que next/image serve la
- * bonne variante (sources 900×1200), `quality={70}` pour réduire le
- * poids transféré sans perte visuelle perceptible aux dimensions cards.
+ * Mesure réelle Next 16 : la **première image carousel** est détectée
+ * comme LCP de la page /cabinet (le H1 du Hero arrive plus tard à
+ * cause de l'AnimatePresence qui swap le keyword). On passe donc
+ * `priority` sur l'index 0 et on garde `loading="lazy"` sur les autres.
+ * `sizes` suit les breakpoints pour que next/image serve la bonne
+ * variante (sources 900×1200), `quality={50}` pour réduire le poids
+ * transféré sans perte visuelle perceptible aux dimensions cards.
  *
  * `pauseOnHover` désactivé : sur un bandeau ambiant passif, couper
  * l'animation au survol casserait l'effet recherché.
  *
- * Server Component — animation 100 % CSS via `@utility animate-marquee`.
+ * Pause hors viewport : un IntersectionObserver pose
+ * `data-marquee-paused="true"` sur la section quand elle sort du viewport,
+ * ce qui pause l'animation CSS via une règle dans globals.css. Le but
+ * n'est pas l'effet visuel mais de libérer le compositor (le marquee
+ * recompose 60fps en permanence sinon, et plombe la fluidité du reste
+ * de la page — scroll, clics, navigation).
  */
 export function Carousel() {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    const node = sectionRef.current;
+    if (!node || typeof IntersectionObserver === "undefined") return;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        const inView = entries.some((e) => e.isIntersecting);
+        setPaused(!inView);
+      },
+      { rootMargin: "200px" },
+    );
+    obs.observe(node);
+    return () => obs.disconnect();
+  }, []);
+
   return (
     <section
+      ref={sectionRef}
       aria-label="Photos du cabinet"
-      className="relative py-8 lg:py-14 overflow-hidden"
+      data-marquee-paused={paused ? "true" : "false"}
+      className="relative py-8 lg:py-14 overflow-hidden [content-visibility:auto] [contain-intrinsic-size:auto_400px]"
     >
       {/*
         Reveal en opacité pure (y={0}) sur le marquee : le scroll
@@ -87,26 +116,31 @@ export function Carousel() {
         className="[--gap:0.75rem] md:[--gap:1rem] [--duration:70s]"
         repeat={2}
       >
-        {cabinetPhotos.map((photo, i) => (
-          <div
-            key={photo.src}
-            className={[
-              "relative shrink-0 overflow-hidden rounded-md",
-              "w-[140px] h-[186px] md:w-[240px] md:h-[320px]",
-              "border border-warm-700/15",
-            ].join(" ")}
-          >
-            <Image
-              src={photo.src}
-              alt={photo.alt}
-              fill
-              className="object-cover"
-              sizes="(min-width: 768px) 240px, 140px"
-              quality={50}
-              priority={i === 1}
-            />
-          </div>
-        ))}
+        {cabinetPhotos.map((photo, i) => {
+          const isLCP = i === 0;
+          return (
+            <div
+              key={photo.src}
+              className={[
+                "relative shrink-0 overflow-hidden rounded-md",
+                "w-[140px] h-[186px] md:w-[240px] md:h-[320px]",
+                "border border-warm-700/15",
+              ].join(" ")}
+            >
+              <Image
+                src={photo.src}
+                alt={photo.alt}
+                fill
+                className="object-cover"
+                sizes="(min-width: 768px) 240px, 140px"
+                quality={50}
+                {...(isLCP
+                  ? { priority: true }
+                  : { loading: "lazy" as const })}
+              />
+            </div>
+          );
+        })}
       </Marquee>
       </Reveal>
     </section>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { Reveal } from "@/components/motion/Reveal";
 import type { FAQItem } from "@/types";
@@ -92,7 +92,7 @@ export function AccordionFAQ({
                   >
                     {question}
                   </h3>
-                  <motion.span
+                  <m.span
                     animate={{ rotate: isOpen ? 180 : 0 }}
                     transition={{ duration: 0.2, ease: "easeOut" }}
                     className="shrink-0"
@@ -102,12 +102,12 @@ export function AccordionFAQ({
                       className="w-5 h-5 text-warm-700"
                       strokeWidth={1.5}
                     />
-                  </motion.span>
+                  </m.span>
                 </button>
 
                 <AnimatePresence initial={false}>
                   {isOpen && (
-                    <motion.div
+                    <m.div
                       id={contentId}
                       role="region"
                       aria-labelledby={headingId}
@@ -124,7 +124,7 @@ export function AccordionFAQ({
                           {answer}
                         </p>
                       </div>
-                    </motion.div>
+                    </m.div>
                   )}
                 </AnimatePresence>
               </li>

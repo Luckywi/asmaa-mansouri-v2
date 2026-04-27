@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
+import { m, useReducedMotion } from "framer-motion";
 import { Reveal } from "@/components/motion/Reveal";
 
 /**
@@ -286,7 +286,7 @@ export function Portrait() {
                 const variant = stackVariants[stackPos as 0 | 1 | 2];
                 const isActive = stackPos === 0;
                 return (
-                  <motion.button
+                  <m.button
                     key={photo.src}
                     type="button"
                     onClick={() => setActiveIndex(i)}
@@ -315,7 +315,7 @@ export function Portrait() {
                       sizes="260px"
                       quality={70}
                     />
-                  </motion.button>
+                  </m.button>
                 );
               })}
             </div>

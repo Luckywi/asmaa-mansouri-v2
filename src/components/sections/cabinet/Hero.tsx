@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import { CalendarRange, MapPin, Phone } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { site } from "@/data/site";
@@ -112,7 +112,7 @@ export function Hero() {
               <span className="sm:hidden">
                 <span className="block">Mon cabinet de</span>
                 <AnimatePresence mode="wait" initial={false}>
-                  <motion.span
+                  <m.span
                     key={currentKeyword}
                     initial={
                       prefersReducedMotion
@@ -129,7 +129,7 @@ export function Hero() {
                     className="block text-accent origin-center"
                   >
                     {currentKeyword}
-                  </motion.span>
+                  </m.span>
                 </AnimatePresence>
                 <span className="block">à Décines-Charpieu</span>
               </span>
@@ -137,7 +137,7 @@ export function Hero() {
               {/* ─── Desktop : 2 lignes, phrase 1 animée en bloc ── */}
               <span className="hidden sm:block">
                 <AnimatePresence mode="wait" initial={false}>
-                  <motion.span
+                  <m.span
                     key={currentKeyword}
                     initial={
                       prefersReducedMotion
@@ -151,10 +151,10 @@ export function Hero() {
                         : { opacity: 0, y: "-0.4em" }
                     }
                     transition={{ duration: 0.5, ease: SWAP_EASE }}
-                    className="block"
+                    className="block whitespace-nowrap"
                   >
                     Mon cabinet de{" "}
-                    <motion.span
+                    <m.span
                       initial={
                         prefersReducedMotion
                           ? { opacity: 1, scale: 1 }
@@ -169,8 +169,8 @@ export function Hero() {
                       className="inline-block text-accent origin-[50%_80%]"
                     >
                       {currentKeyword}
-                    </motion.span>
-                  </motion.span>
+                    </m.span>
+                  </m.span>
                 </AnimatePresence>
                 <span className="block">à Décines-Charpieu</span>
               </span>

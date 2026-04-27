@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { ChevronDown, ScanSearch } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { LogoMark } from "@/components/ui/LogoMark";
@@ -132,19 +132,17 @@ export function PrestationsSelector() {
                   change. Spring transition pour un mouvement fluide.
                 */}
                 {isActive && (
-                  <motion.div
-                    layoutId="prestation-active-indicator"
-                    transition={{
-                      type: "spring",
-                      stiffness: 220,
-                      damping: 26,
-                    }}
+                  <m.div
+                    initial={{ opacity: 0, scaleX: 0.6 }}
+                    animate={{ opacity: 1, scaleX: 1 }}
+                    transition={{ duration: 0.25, ease: "easeOut" }}
                     style={{
                       // Pointe (effet "feuille") uniquement côté droit, vers
                       // la card de detail. Le côté gauche reste plat (de
                       // toute façon caché sous le bouton via -z-10).
                       clipPath:
                         "polygon(0% 0%, calc(100% - 8px) 0%, 100% 50%, calc(100% - 8px) 100%, 0% 100%)",
+                      transformOrigin: "left center",
                     }}
                     className="absolute left-[calc(100%-10px)] top-1/2 -translate-y-1/2 h-1.5 w-14 bg-warm-700 pointer-events-none -z-10"
                     aria-hidden="true"
@@ -178,7 +176,7 @@ export function PrestationsSelector() {
           />
 
           <AnimatePresence mode="wait">
-            <motion.div
+            <m.div
               key={active.id}
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
@@ -216,7 +214,7 @@ export function PrestationsSelector() {
                   />
                 </ButtonLink>
               </div>
-            </motion.div>
+            </m.div>
           </AnimatePresence>
         </div>
       </div>
@@ -267,7 +265,7 @@ export function PrestationsSelector() {
                     {p.tagline}
                   </div>
                 </div>
-                <motion.div
+                <m.div
                   animate={{ rotate: isOpen ? 180 : 0 }}
                   transition={{ duration: 0.2, ease: "easeOut" }}
                   className="shrink-0"
@@ -277,11 +275,11 @@ export function PrestationsSelector() {
                     className="w-5 h-5 text-warm-700"
                     strokeWidth={1.5}
                   />
-                </motion.div>
+                </m.div>
               </button>
               <AnimatePresence initial={false}>
                 {isOpen && (
-                  <motion.div
+                  <m.div
                     id={contentId}
                     key="content"
                     initial={{ height: 0, opacity: 0 }}
@@ -305,7 +303,7 @@ export function PrestationsSelector() {
                         </ButtonLink>
                       </div>
                     </div>
-                  </motion.div>
+                  </m.div>
                 )}
               </AnimatePresence>
             </li>

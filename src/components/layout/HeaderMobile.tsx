@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { CalendarRange, Phone } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { Logo } from "@/components/ui/Logo";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { navLinks } from "@/data/navigation";
@@ -67,7 +67,7 @@ export function HeaderMobile() {
       {/* Backdrop blur fullscreen — apparaît quand le menu est ouvert */}
       <AnimatePresence>
         {menuOpen && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -134,7 +134,7 @@ export function HeaderMobile() {
         {/* ─── Panel collapsible (animé) ──────────────── */}
         <AnimatePresence>
           {menuOpen && (
-            <motion.div
+            <m.div
               id="mobile-menu-panel"
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
@@ -198,7 +198,7 @@ export function HeaderMobile() {
                   </ButtonLink>
                 </div>
               </div>
-            </motion.div>
+            </m.div>
           )}
         </AnimatePresence>
       </nav>

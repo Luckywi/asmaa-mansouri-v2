@@ -55,6 +55,16 @@
   animation: marquee-vertical var(--duration, 40s) linear infinite;
 }
 
+/* Pause des marquees enfants quand le wrapper est hors viewport.
+   Activé via [data-marquee-paused="true"] posé par un IntersectionObserver
+   côté client. Évite que le compositor recompose 60fps une animation que
+   personne ne regarde — gros gain sur le ressenti de fluidité du reste
+   de la page (clics, scroll, navigation). */
+[data-marquee-paused="true"] .animate-marquee,
+[data-marquee-paused="true"] .animate-marquee-vertical {
+  animation-play-state: paused;
+}
+
 /* ─── Keyframes Marquee ─────────────────────────────── */
 /* calc(-100% - var(--gap)) garantit que chaque répétition du contenu
    enchaîne sans saut visible (boucle continue). Le -100% est relatif
