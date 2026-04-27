@@ -1,6 +1,3 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Marquee } from "@/components/ui/Marquee";
 import { Reveal } from "@/components/motion/Reveal";
@@ -48,7 +45,7 @@ const cabinetPhotos = [
   },
   {
     src: "/caroussel/cabinet-alhamdulillah.jpg",
-    alt: "Sculpture décorative « Alhamdulillah » posée dans le cabinet",
+    alt: "Sculpture décorative « Alhamdulillah » posée dans le cabinet",
   },
 ] as const;
 
@@ -56,82 +53,61 @@ const cabinetPhotos = [
  * Carousel — bandeau plein écran de photos du cabinet en défilement
  * infini. Cards en portrait (ratio 3/4) pour matcher les photos source.
  *
- * Gated derrière un IntersectionObserver : tant que la section n'est pas
- * proche du viewport, on ne rend qu'un placeholder à hauteur fixe (même
- * dimensions que les cards) — le H1 du Hero reste l'élément LCP de la
- * page au lieu d'une image carousel partiellement visible. Une fois la
- * section approchée (rootMargin 200 px), le marquee et les 8 photos
- * s'hydrate normalement.
+ * Tailles responsive (réduites pour ne pas dominer le LCP — la première
+ * image carousel était auparavant le candidat LCP de la page) :
+ *   - mobile : 140×186 (ratio 3/4)
+ *   - desktop : 240×320 (ratio 3/4)
  *
- * Tailles responsive :
- *   - mobile : 180×240 (ratio 3/4)
- *   - desktop : 270×360 (ratio 3/4)
+ * Toutes les images sont lazy : le LCP de la page /cabinet est le H1 du
+ * Hero text. `sizes` suit les breakpoints pour que next/image serve la
+ * bonne variante (sources 900×1200), `quality={70}` pour réduire le
+ * poids transféré sans perte visuelle perceptible aux dimensions cards.
  *
  * `pauseOnHover` désactivé : sur un bandeau ambiant passif, couper
  * l'animation au survol casserait l'effet recherché.
+ *
+ * Server Component — animation 100 % CSS via `@utility animate-marquee`.
  */
 export function Carousel() {
-  const ref = useRef<HTMLElement | null>(null);
-  const [shouldMount, setShouldMount] = useState(false);
-
-  useEffect(() => {
-    const node = ref.current;
-    if (!node || shouldMount) return;
-    if (typeof IntersectionObserver === "undefined") {
-      setShouldMount(true);
-      return;
-    }
-    const obs = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((e) => e.isIntersecting)) {
-          setShouldMount(true);
-          obs.disconnect();
-        }
-      },
-      { rootMargin: "200px" },
-    );
-    obs.observe(node);
-    return () => obs.disconnect();
-  }, [shouldMount]);
-
   return (
     <section
-      ref={ref}
       aria-label="Photos du cabinet"
       className="relative py-8 lg:py-14 overflow-hidden"
     >
-      {shouldMount ? (
-        <Reveal y={0} duration={0.7}>
-          <Marquee
-            className="[--gap:0.75rem] md:[--gap:1rem] [--duration:70s]"
-            repeat={2}
+      {/*
+        Reveal en opacité pure (y={0}) sur le marquee : le scroll
+        horizontal infini est piloté par une CSS `@keyframes translateX`
+        sur la track interne. Ajouter un translateY parent créerait deux
+        transforms concurrents sur le même axe compositor et pourrait
+        saccader le défilement. Un simple fade à l'apparition reste
+        discret et compatible.
+      */}
+      <Reveal y={0} duration={0.7}>
+      <Marquee
+        className="[--gap:0.75rem] md:[--gap:1rem] [--duration:70s]"
+        repeat={2}
+      >
+        {cabinetPhotos.map((photo) => (
+          <div
+            key={photo.src}
+            className={[
+              "relative shrink-0 overflow-hidden rounded-md",
+              "w-[140px] h-[186px] md:w-[240px] md:h-[320px]",
+              "border border-warm-700/15",
+            ].join(" ")}
           >
-            {cabinetPhotos.map((photo) => (
-              <div
-                key={photo.src}
-                className={[
-                  "relative shrink-0 overflow-hidden rounded-md",
-                  "w-[180px] h-[240px] md:w-[270px] md:h-[360px]",
-                  "border border-warm-700/15",
-                ].join(" ")}
-              >
-                <Image
-                  src={photo.src}
-                  alt={photo.alt}
-                  fill
-                  className="object-cover"
-                  sizes="(min-width: 768px) 270px, 180px"
-                />
-              </div>
-            ))}
-          </Marquee>
-        </Reveal>
-      ) : (
-        <div
-          aria-hidden="true"
-          className="h-[240px] md:h-[360px]"
-        />
-      )}
+            <Image
+              src={photo.src}
+              alt={photo.alt}
+              fill
+              className="object-cover"
+              sizes="(min-width: 768px) 240px, 140px"
+              quality={70}
+            />
+          </div>
+        ))}
+      </Marquee>
+      </Reveal>
     </section>
   );
 }
