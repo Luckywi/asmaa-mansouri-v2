@@ -1,6 +1,5 @@
 import { CalendarRange, Phone } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
-import { FadeInUp } from "@/components/motion/FadeInUp";
 import { Reveal } from "@/components/motion/Reveal";
 import { site } from "@/data/site";
 import type { PrestationTariff } from "@/types";
@@ -25,6 +24,9 @@ type HeroProps = {
  * qu'il est directement lié à la décision d'achat : on le veut visible
  * au-dessus du pli, sans scroll après les CTAs.
  *
+ * Animations FadeInUp retirées sur les blocs texte/CTA pour que le H1 et
+ * le sous-titre paignent immédiatement (élément LCP de la page).
+ *
  * Server Component pur, conforme au pattern des autres Hero du projet.
  */
 export function Hero({ h1, subtitle, tariffs }: HeroProps) {
@@ -35,37 +37,31 @@ export function Hero({ h1, subtitle, tariffs }: HeroProps) {
     >
       <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
         <div className="text-center max-w-4xl mx-auto">
-          <FadeInUp duration={0.6}>
-            <h1
-              id="prestation-titre"
-              className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.02em] leading-[1.05] text-warm-900 text-balance"
-            >
-              {h1}
-            </h1>
-          </FadeInUp>
+          <h1
+            id="prestation-titre"
+            className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.02em] leading-[1.05] text-warm-900 text-balance"
+          >
+            {h1}
+          </h1>
 
-          <FadeInUp delay={0.1} duration={0.6} className="mt-8 max-w-2xl mx-auto">
-            <p className="font-body text-lg md:text-xl leading-relaxed text-warm-700">
-              {subtitle}
-            </p>
-          </FadeInUp>
+          <p className="mt-8 max-w-2xl mx-auto font-body text-lg md:text-xl leading-relaxed text-warm-700">
+            {subtitle}
+          </p>
 
-          <FadeInUp delay={0.25} duration={0.6} className="mt-10">
-            <div className="flex flex-col-reverse sm:flex-row sm:justify-center items-center gap-4">
-              <ButtonLink href={site.phoneHref} variant="secondary">
-                Appeler Asmaa
-                <Phone aria-hidden="true" className="w-4 h-4" strokeWidth={1.5} />
-              </ButtonLink>
-              <ButtonLink href={site.resalibUrl} variant="primary">
-                Prendre rendez-vous
-                <CalendarRange
-                  aria-hidden="true"
-                  className="w-4 h-4"
-                  strokeWidth={1.5}
-                />
-              </ButtonLink>
-            </div>
-          </FadeInUp>
+          <div className="mt-10 flex flex-col-reverse sm:flex-row sm:justify-center items-center gap-4">
+            <ButtonLink href={site.phoneHref} variant="secondary">
+              Appeler Asmaa
+              <Phone aria-hidden="true" className="w-4 h-4" strokeWidth={1.5} />
+            </ButtonLink>
+            <ButtonLink href={site.resalibUrl} variant="primary">
+              Prendre rendez-vous
+              <CalendarRange
+                aria-hidden="true"
+                className="w-4 h-4"
+                strokeWidth={1.5}
+              />
+            </ButtonLink>
+          </div>
         </div>
 
         {/* ─── Tableau de tarifs ──────────────────────────────────

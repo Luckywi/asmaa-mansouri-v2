@@ -1,8 +1,5 @@
-"use client";
-
 import { Mail } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
-import { FadeInUp } from "@/components/motion/FadeInUp";
 import { site } from "@/data/site";
 
 const anchors = [
@@ -24,28 +21,21 @@ export function ThematiquesHero() {
       className="relative pt-8 pb-12 md:pt-10 lg:pt-12 lg:pb-16"
     >
       <div className="mx-auto max-w-3xl px-6 text-center">
-        <FadeInUp duration={0.6}>
-          <h1
-            id="thematiques-titre"
-            className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.02em] leading-[1.05] text-warm-900"
-          >
-            Les thématiques
-          </h1>
-        </FadeInUp>
+        <h1
+          id="thematiques-titre"
+          className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.02em] leading-[1.05] text-warm-900"
+        >
+          Les thématiques
+        </h1>
 
-        <FadeInUp delay={0.1} duration={0.6} className="mt-6">
-          <p className="font-body text-base md:text-lg leading-relaxed text-warm-700">
-            Parce que prendre soin de soi ne s&apos;arrête pas à la salle de consultation, je vous propose des ateliers pratiques conçus pour vous redonner le pouvoir sur votre santé au quotidien. Fabriquer ses cosmétiques, nourrir son microbiote, se réconcilier avec les saveurs saines, comprendre ses cycles hormonaux&nbsp;: autant de gestes simples qui transforment profondément notre relation au corps et à la nature.
-          </p>
-        </FadeInUp>
+        <p className="mt-6 font-body text-base md:text-lg leading-relaxed text-warm-700">
+          Parce que prendre soin de soi ne s&apos;arrête pas à la salle de consultation, je vous propose des ateliers pratiques conçus pour vous redonner le pouvoir sur votre santé au quotidien. Fabriquer ses cosmétiques, nourrir son microbiote, se réconcilier avec les saveurs saines, comprendre ses cycles hormonaux&nbsp;: autant de gestes simples qui transforment profondément notre relation au corps et à la nature.
+        </p>
 
-        <FadeInUp delay={0.2} duration={0.6} className="mt-5">
-          <p className="font-body text-base md:text-lg leading-relaxed text-warm-700">
-            Chaque atelier est pensé dans une approche globale, à la croisée de la naturopathie et de la médecine chinoise, pour que vous repartiez non seulement avec des recettes ou des outils, mais avec une véritable compréhension de votre terrain.
-          </p>
-        </FadeInUp>
+        <p className="mt-5 font-body text-base md:text-lg leading-relaxed text-warm-700">
+          Chaque atelier est pensé dans une approche globale, à la croisée de la naturopathie et de la médecine chinoise, pour que vous repartiez non seulement avec des recettes ou des outils, mais avec une véritable compréhension de votre terrain.
+        </p>
 
-        <FadeInUp delay={0.3} duration={0.6}>
         <nav aria-label="Accès direct aux thématiques" className="mt-8 flex flex-wrap justify-center gap-2.5">
           {anchors.map(({ label, href }) => (
             <a
@@ -66,16 +56,13 @@ export function ThematiquesHero() {
             </a>
           ))}
         </nav>
-        </FadeInUp>
 
-        <FadeInUp delay={0.4} duration={0.6} className="mt-6">
-          <div className="flex justify-center">
-            <ButtonLink href={mailtoHref} variant="primary">
-              Organiser un atelier
-              <Mail aria-hidden="true" className="w-4 h-4" strokeWidth={1.5} />
-            </ButtonLink>
-          </div>
-        </FadeInUp>
+        <div className="mt-6 flex justify-center">
+          <ButtonLink href={mailtoHref} variant="primary">
+            Organiser un atelier
+            <Mail aria-hidden="true" className="w-4 h-4" strokeWidth={1.5} />
+          </ButtonLink>
+        </div>
       </div>
     </section>
   );

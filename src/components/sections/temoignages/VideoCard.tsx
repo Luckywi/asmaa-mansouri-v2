@@ -6,6 +6,7 @@ import { Play, Pause, X } from "lucide-react";
 import { useFocusTrap } from "@/lib/useFocusTrap";
 
 const VIDEO_SRC = "/temoignages/temoignage-video.mp4";
+const POSTER_SRC = "/temoignages/temoignage-poster.jpg";
 
 // TODO a11y : fournir sous-titres (<track kind="captions" src="…/temoignage-video.fr.vtt"
 // srclang="fr" label="Français">) et/ou transcription textuelle (WCAG 1.2.2 A).
@@ -179,6 +180,7 @@ function VideoModal({ onClose }: { onClose: () => void }) {
           <video
             ref={videoRef}
             src={VIDEO_SRC}
+            poster={POSTER_SRC}
             preload="metadata"
             playsInline
             aria-label="Témoignage vidéo"
@@ -287,6 +289,7 @@ function DesktopPlayer() {
       <video
         ref={videoRef}
         src={VIDEO_SRC}
+        poster={POSTER_SRC}
         preload="metadata"
         playsInline
         aria-label="Témoignage vidéo"
@@ -344,6 +347,7 @@ function MobileThumbnail({ onOpen }: { onOpen: () => void }) {
     >
       <video
         src={VIDEO_SRC}
+        poster={POSTER_SRC}
         preload="metadata"
         muted
         playsInline

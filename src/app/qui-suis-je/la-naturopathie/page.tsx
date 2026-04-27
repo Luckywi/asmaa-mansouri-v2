@@ -3,7 +3,6 @@ import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Bridges } from "@/components/sections/qui-suis-je/Bridges";
 import type { BridgeItem } from "@/components/ui/BridgesGrid";
-import { FadeInUp } from "@/components/motion/FadeInUp";
 import { Reveal } from "@/components/motion/Reveal";
 import { JsonLd } from "@/components/seo/JsonLd";
 import {
@@ -130,36 +129,30 @@ export default function LaNaturopathiePage() {
       >
         <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
           <div className="text-center max-w-4xl mx-auto">
-            <FadeInUp duration={0.6}>
-              <h1
-                id="la-naturopathie-titre"
-                className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.02em] leading-[1.05] text-warm-900 text-balance"
-              >
-                Qu&apos;est-ce que la naturopathie&nbsp;?
-              </h1>
-            </FadeInUp>
+            <h1
+              id="la-naturopathie-titre"
+              className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.02em] leading-[1.05] text-warm-900 text-balance"
+            >
+              Qu&apos;est-ce que la naturopathie&nbsp;?
+            </h1>
 
-            <FadeInUp delay={0.1} duration={0.6} className="mt-8 max-w-2xl mx-auto">
-              <p className="font-body text-lg md:text-xl leading-relaxed text-warm-700">
-                Une approche globale et personnalisée de la santé, qui considère
-                chaque femme comme un tout plutôt que comme une liste de
-                symptômes à faire taire. Voici ce qu&apos;est, et ce que
-                n&apos;est pas, la naturopathie.
-              </p>
-            </FadeInUp>
+            <p className="mt-8 max-w-2xl mx-auto font-body text-lg md:text-xl leading-relaxed text-warm-700">
+              Une approche globale et personnalisée de la santé, qui considère
+              chaque femme comme un tout plutôt que comme une liste de
+              symptômes à faire taire. Voici ce qu&apos;est, et ce que
+              n&apos;est pas, la naturopathie.
+            </p>
 
-            <FadeInUp delay={0.25} duration={0.6} className="mt-10">
-              <div className="flex justify-center">
-                <ButtonLink href={site.resalibUrl} variant="primary">
-                  Réserver un appel découverte gratuit
-                  <CalendarRange
-                    aria-hidden="true"
-                    className="w-4 h-4"
-                    strokeWidth={1.5}
-                  />
-                </ButtonLink>
-              </div>
-            </FadeInUp>
+            <div className="mt-10 flex justify-center">
+              <ButtonLink href={site.resalibUrl} variant="primary">
+                Réserver un appel découverte gratuit
+                <CalendarRange
+                  aria-hidden="true"
+                  className="w-4 h-4"
+                  strokeWidth={1.5}
+                />
+              </ButtonLink>
+            </div>
           </div>
         </div>
       </section>

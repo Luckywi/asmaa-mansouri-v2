@@ -1,6 +1,5 @@
 import { TicketPlus, User } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
-import { FadeInUp } from "@/components/motion/FadeInUp";
 
 export function PassesHero() {
   return (
@@ -9,41 +8,35 @@ export function PassesHero() {
       className="relative pt-8 pb-12 md:pt-10 lg:pt-12 lg:pb-16"
     >
       <div className="mx-auto max-w-3xl px-6 text-center">
-        <FadeInUp duration={0.6}>
-          <h1
-            id="ateliers-passes-hero-titre"
-            className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.02em] leading-[1.05] text-warm-900"
-          >
-            Mes ateliers passés
-          </h1>
-        </FadeInUp>
+        <h1
+          id="ateliers-passes-hero-titre"
+          className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.02em] leading-[1.05] text-warm-900"
+        >
+          Mes ateliers passés
+        </h1>
 
-        <FadeInUp delay={0.1} duration={0.6} className="mt-6">
-          <p className="font-body text-base md:text-lg leading-relaxed text-warm-700">
-            Retrouvez les ateliers que j&apos;ai animés au fil des saisons. Des moments de partage et de pratique, en petit groupe, pour reprendre le pouvoir sur sa santé au quotidien.
-          </p>
-        </FadeInUp>
+        <p className="mt-6 font-body text-base md:text-lg leading-relaxed text-warm-700">
+          Retrouvez les ateliers que j&apos;ai animés au fil des saisons. Des moments de partage et de pratique, en petit groupe, pour reprendre le pouvoir sur sa santé au quotidien.
+        </p>
 
-        <FadeInUp delay={0.25} duration={0.6} className="mt-8">
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-3">
-            <ButtonLink href="/ateliers/thematiques" variant="secondary">
-              Voir les thématiques
-              <TicketPlus
-                aria-hidden="true"
-                className="w-4 h-4"
-                strokeWidth={1.5}
-              />
-            </ButtonLink>
-            <ButtonLink href="/qui-suis-je" variant="primary">
-              Découvrir mon parcours
-              <User
-                aria-hidden="true"
-                className="w-4 h-4"
-                strokeWidth={1.5}
-              />
-            </ButtonLink>
-          </div>
-        </FadeInUp>
+        <div className="mt-8 flex flex-col sm:flex-row justify-center items-center gap-3">
+          <ButtonLink href="/ateliers/thematiques" variant="secondary">
+            Voir les thématiques
+            <TicketPlus
+              aria-hidden="true"
+              className="w-4 h-4"
+              strokeWidth={1.5}
+            />
+          </ButtonLink>
+          <ButtonLink href="/qui-suis-je" variant="primary">
+            Découvrir mon parcours
+            <User
+              aria-hidden="true"
+              className="w-4 h-4"
+              strokeWidth={1.5}
+            />
+          </ButtonLink>
+        </div>
       </div>
     </section>
   );
