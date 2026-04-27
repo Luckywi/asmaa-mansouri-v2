@@ -1,7 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Outfit, Manrope } from "next/font/google";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
 import { MotionProvider } from "@/components/motion/MotionProvider";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { buildGlobalGraph } from "@/lib/schema";
@@ -192,49 +190,24 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         {/*
-          Skip link — premier élément focusable de la page. Permet aux
-          utilisateurs au clavier ou aux lecteurs d'écran de sauter
-          directement au contenu principal sans avoir à tabber dans le
-          Header. Visuellement caché jusqu'à ce qu'il reçoive le focus.
-        */}
-        <a
-          href="#contenu-principal"
-          className={[
-            "sr-only focus:not-sr-only",
-            "focus:fixed focus:top-4 focus:left-4 focus:z-50",
-            "focus:px-5 focus:py-3 focus:rounded-md",
-            "focus:bg-warm-700 focus:text-warm-100",
-            "focus:font-body focus:text-[14px] focus:font-medium",
-            "focus:outline-2 focus:outline-offset-2 focus:outline-warm-700",
-            "focus:shadow-[0_4px_12px_-2px_rgba(60,30,25,0.25)]",
-          ].join(" ")}
-        >
-          Aller au contenu principal
-        </a>
-
-        {/*
           JSON-LD global (LocalBusiness + WebSite) injecté une seule fois
-          dans le layout racine. Les pages enfants ajoutent leurs propres
-          graphes locaux (WebPage, Service, FAQPage, BreadcrumbList...)
-          qui référencent ces entités par `@id`.
+          dans le layout racine pour toutes les routes. Les pages enfants
+          du groupe `(site)` ajoutent leurs propres graphes locaux
+          (WebPage, Service, FAQPage, BreadcrumbList...) qui référencent
+          ces entités par `@id`. La page `/link` (hors `(site)`) hérite
+          aussi de ce graphe global, ce qui est sans effet puisqu'elle
+          est `noindex`.
         */}
         <JsonLd data={buildGlobalGraph()} />
 
-        <MotionProvider>
-          <Header />
-
-          {children}
-
-          {/*
-            Footer chrome OS-level (glass effect identique au HeaderDesktop).
-            Sticky footer pattern : il colle au bas du viewport sur les pages
-            courtes parce que body est `flex flex-col min-h-full` et que chaque
-            page wrappe son contenu dans `<main className="flex-1">`. Si une
-            nouvelle page oublie ce wrapper, le footer remontera contre le
-            contenu — pas un crash, juste un layout dégradé.
-          */}
-          <Footer />
-        </MotionProvider>
+        {/*
+          Skip link, Header et Footer sont rendus par `src/app/(site)/layout.tsx`
+          et ne s'appliquent qu'aux routes du groupe `(site)`. Les routes
+          hors groupe (ex: `/link`, page Linktree pour la bio Instagram)
+          court-circuitent ainsi le chrome global tout en gardant accès
+          au `<html>`, fonts, JSON-LD et MotionProvider.
+        */}
+        <MotionProvider>{children}</MotionProvider>
       </body>
     </html>
   );
