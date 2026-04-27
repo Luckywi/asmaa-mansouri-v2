@@ -11,7 +11,6 @@ import {
   UserRound,
 } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
-import { FadeInUp } from "@/components/motion/FadeInUp";
 import { Reveal } from "@/components/motion/Reveal";
 import { Stagger, StaggerItem } from "@/components/motion/Stagger";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -77,44 +76,38 @@ export default function PrestationsPage() {
       >
         <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
           <div className="text-center max-w-4xl mx-auto">
-            <FadeInUp duration={0.6}>
-              <h1
-                id="prestations-titre"
-                className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.02em] leading-[1.05] text-warm-900"
-              >
-                Mes prestations
-              </h1>
-            </FadeInUp>
+            <h1
+              id="prestations-titre"
+              className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.02em] leading-[1.05] text-warm-900"
+            >
+              Mes prestations
+            </h1>
 
-            <FadeInUp delay={0.1} duration={0.6} className="mt-8 max-w-2xl mx-auto">
-              <p className="font-body text-lg md:text-xl leading-relaxed text-warm-700">
-                Quatre manières d&apos;entrer dans la naturopathie selon
-                votre situation : une consultation ponctuelle, un travail
-                manuel sur le corps, ou un suivi rapproché sur plusieurs
-                mois. Chaque prestation a son intention propre.
-              </p>
-            </FadeInUp>
+            <p className="mt-8 max-w-2xl mx-auto font-body text-lg md:text-xl leading-relaxed text-warm-700">
+              Quatre manières d&apos;entrer dans la naturopathie selon
+              votre situation : une consultation ponctuelle, un travail
+              manuel sur le corps, ou un suivi rapproché sur plusieurs
+              mois. Chaque prestation a son intention propre.
+            </p>
 
-            <FadeInUp delay={0.25} duration={0.6} className="mt-10">
-              <div className="flex flex-col-reverse sm:flex-row sm:justify-center items-center gap-4">
-                <ButtonLink href={site.phoneHref} variant="secondary">
-                  Appeler Asmaa
-                  <Phone
-                    aria-hidden="true"
-                    className="w-4 h-4"
-                    strokeWidth={1.5}
-                  />
-                </ButtonLink>
-                <ButtonLink href={site.resalibUrl} variant="primary">
-                  Prendre rendez-vous
-                  <CalendarRange
-                    aria-hidden="true"
-                    className="w-4 h-4"
-                    strokeWidth={1.5}
-                  />
-                </ButtonLink>
-              </div>
-            </FadeInUp>
+            <div className="mt-10 flex flex-col-reverse sm:flex-row sm:justify-center items-center gap-4">
+              <ButtonLink href={site.phoneHref} variant="secondary">
+                Appeler Asmaa
+                <Phone
+                  aria-hidden="true"
+                  className="w-4 h-4"
+                  strokeWidth={1.5}
+                />
+              </ButtonLink>
+              <ButtonLink href={site.resalibUrl} variant="primary">
+                Prendre rendez-vous
+                <CalendarRange
+                  aria-hidden="true"
+                  className="w-4 h-4"
+                  strokeWidth={1.5}
+                />
+              </ButtonLink>
+            </div>
           </div>
         </div>
       </section>
