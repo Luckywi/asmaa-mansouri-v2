@@ -87,7 +87,7 @@ export function Carousel() {
         className="[--gap:0.75rem] md:[--gap:1rem] [--duration:70s]"
         repeat={2}
       >
-        {cabinetPhotos.map((photo) => (
+        {cabinetPhotos.map((photo, i) => (
           <div
             key={photo.src}
             className={[
@@ -103,6 +103,7 @@ export function Carousel() {
               className="object-cover"
               sizes="(min-width: 768px) 240px, 140px"
               quality={70}
+              priority={i < 2}
             />
           </div>
         ))}
