@@ -313,7 +313,7 @@ export function Portrait() {
                       fill
                       className="object-cover object-center pointer-events-none"
                       sizes="260px"
-                      priority={i === 0}
+                      quality={70}
                     />
                   </motion.button>
                 );
@@ -348,6 +348,7 @@ export function Portrait() {
                     fill
                     className="object-cover object-center"
                     sizes="300px"
+                    quality={70}
                   />
                 </li>
               ))}
