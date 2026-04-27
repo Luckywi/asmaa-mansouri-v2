@@ -33,13 +33,27 @@ import type { NextConfig } from "next";
  * gardé pour compatibilité avec les crawlers qui scorent encore
  * l'ancien header.
  */
+// Dev-only : React en mode développement utilise `eval()` pour
+// reconstruire les call stacks lisibles, le HMR pour exécuter du code
+// hot-reloadé, et React DevTools pour certaines fonctionnalités. En
+// production, ni React ni Next n'utilisent eval (vérifié dans les
+// release notes de React 19 et Next 16) — on garde donc la CSP stricte
+// sans `'unsafe-eval'` côté prod, et on l'autorise uniquement en dev
+// pour ne pas bloquer le serveur Turbopack et les overlays d'erreur.
+const isDev = process.env.NODE_ENV === "development";
+
 const csp = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'",
+  `script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'${isDev ? " 'unsafe-eval'" : ""}`,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https://basemaps.cartocdn.com https://*.basemaps.cartocdn.com",
   "font-src 'self'",
-  "connect-src 'self' https://basemaps.cartocdn.com https://*.basemaps.cartocdn.com",
+  // En dev, Turbopack ouvre une connexion WebSocket vers le serveur dev
+  // pour le HMR. Sans cette autorisation, la console crache des
+  // erreurs CSP "Refused to connect to ws://localhost:..." à chaque
+  // sauvegarde. `ws:` et `wss:` couvrent localhost et tout host de
+  // preview ; restriction inutile en prod (pas de WebSocket Turbopack).
+  `connect-src 'self' https://basemaps.cartocdn.com https://*.basemaps.cartocdn.com${isDev ? " ws: wss:" : ""}`,
   "media-src 'self'",
   "worker-src 'self' blob:",
   "frame-src 'none'",
