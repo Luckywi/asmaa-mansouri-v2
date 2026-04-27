@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { CalendarRange, MapPin, Phone } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
-import { FadeInUp } from "@/components/motion/FadeInUp";
 import { site } from "@/data/site";
 
 /**
@@ -74,7 +73,6 @@ export function Hero() {
     >
       <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
         <div className="text-center max-w-3xl mx-auto">
-          <FadeInUp duration={0.6}>
           <h1
             id="cabinet-hero-titre"
             className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.02em] leading-[1.1] text-warm-900"
@@ -178,7 +176,6 @@ export function Hero() {
               </span>
             </span>
           </h1>
-          </FadeInUp>
 
           {/* Adresse cliquable — ouvre Google Maps itinéraire.
 
@@ -188,37 +185,36 @@ export function Hero() {
               du texte. Quand l'adresse wrap, seule la ligne 1 a l'icône,
               et l'icône reste alignée sur cette ligne (pas recentrée
               entre les deux lignes comme le faisait items-center). */}
-          <FadeInUp delay={0.15} duration={0.6} className="mt-8">
-          <a
-            href={site.googleMapsDirectionsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={[
-              "inline-block rounded-md px-2 py-1 -mx-2 -my-1",
-              "font-body text-base md:text-lg text-warm-700",
-              "underline underline-offset-4 decoration-1 decoration-warm-700/40",
-              "hover:text-warm-900 hover:decoration-warm-900",
-              "transition-colors duration-200 ease-out",
-              "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700",
-            ].join(" ")}
-          >
-            <MapPin
-              aria-hidden="true"
-              strokeWidth={1.5}
-              // `align-[-0.2em]` → icône centrée visuellement sur la
-              // x-height du texte, pas sur la baseline (trop basse) ni
-              // sur la cap-height (trop haute).
-              className="inline-block mr-1.5 w-4 h-4 align-[-0.2em]"
-            />
-            <address className="inline not-italic">{site.address.full}</address>
-          </a>
-          </FadeInUp>
+          <div className="mt-8">
+            <a
+              href={site.googleMapsDirectionsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={[
+                "inline-block rounded-md px-2 py-1 -mx-2 -my-1",
+                "font-body text-base md:text-lg text-warm-700",
+                "underline underline-offset-4 decoration-1 decoration-warm-700/40",
+                "hover:text-warm-900 hover:decoration-warm-900",
+                "transition-colors duration-200 ease-out",
+                "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700",
+              ].join(" ")}
+            >
+              <MapPin
+                aria-hidden="true"
+                strokeWidth={1.5}
+                // `align-[-0.2em]` → icône centrée visuellement sur la
+                // x-height du texte, pas sur la baseline (trop basse) ni
+                // sur la cap-height (trop haute).
+                className="inline-block mr-1.5 w-4 h-4 align-[-0.2em]"
+              />
+              <address className="inline not-italic">{site.address.full}</address>
+            </a>
+          </div>
 
           {/* CTAs — mêmes que Hero landing, même ordre (secondary à gauche,
               primary à droite en desktop ; flex-col-reverse en mobile pour
               garder le primary au-dessus) */}
-          <FadeInUp delay={0.3} duration={0.6} className="mt-10">
-          <div className="flex flex-col-reverse sm:flex-row sm:justify-center items-center gap-4">
+          <div className="mt-10 flex flex-col-reverse sm:flex-row sm:justify-center items-center gap-4">
             <ButtonLink href={site.phoneHref} variant="secondary">
               Appeler Asmaa
               <Phone aria-hidden="true" className="w-4 h-4" strokeWidth={1.5} />
@@ -232,7 +228,6 @@ export function Hero() {
               />
             </ButtonLink>
           </div>
-          </FadeInUp>
         </div>
       </div>
     </section>
