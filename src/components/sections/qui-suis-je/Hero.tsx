@@ -1,6 +1,5 @@
 import { CalendarRange, Phone } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
-import { FadeInUp } from "@/components/motion/FadeInUp";
 import { site } from "@/data/site";
 
 /**
@@ -19,6 +18,11 @@ import { site } from "@/data/site";
  * du bloc. Le <cite> porte le `not-italic` parce que le parent est italic :
  * on veut que le nom de l'auteure reste droit pour distinguer citation / source.
  *
+ * Animations FadeInUp retirées : le sous-titre était l'élément LCP de la page
+ * et son `initial: opacity 0` retardait le LCP de ~2 s sur mobile. Les blocs
+ * apparaissent maintenant immédiatement, sans cascade. Cohérent avec les
+ * autres pages internes qui ne dépendent plus de framer-motion sur le Hero.
+ *
  * Server Component pur.
  */
 export function Hero() {
@@ -29,35 +33,32 @@ export function Hero() {
     >
       <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
         <div className="text-center max-w-4xl mx-auto">
-          <FadeInUp duration={0.6}>
-            <blockquote>
+          <blockquote>
             <h1
               id="qui-suis-je-titre"
               className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.02em] leading-[1.1] text-warm-900 italic"
             >
-              {"\u00AB\u00A0"}Maintenir en bonne santé vaut mieux que guérir.
-              {"\u00A0\u00BB"}
+              {"« "}Maintenir en bonne santé vaut mieux que guérir.
+              {" »"}
             </h1>
             <footer className="mt-6 font-body text-base text-warm-700">
-              {"\u2014 "}
+              {"— "}
               <cite className="not-italic font-display font-medium text-warm-900">
                 Asmaa Mansouri
               </cite>
             </footer>
           </blockquote>
-          </FadeInUp>
 
-          <FadeInUp delay={0.1} duration={0.6} className="mt-12 max-w-2xl mx-auto">
-          <p className="font-body text-lg md:text-xl leading-relaxed text-warm-700">
-            Naturopathe à Décines-Charpieu, j&apos;accompagne exclusivement les
-            femmes. Cycles, SOPK, endométriose, post-partum, préménopause,
-            troubles digestifs : mon approche associe naturopathie, médecine
-            traditionnelle chinoise et massage Tuina.
-          </p>
-          </FadeInUp>
+          <div className="mt-12 max-w-2xl mx-auto">
+            <p className="font-body text-lg md:text-xl leading-relaxed text-warm-700">
+              Naturopathe à Décines-Charpieu, j&apos;accompagne exclusivement les
+              femmes. Cycles, SOPK, endométriose, post-partum, préménopause,
+              troubles digestifs : mon approche associe naturopathie, médecine
+              traditionnelle chinoise et massage Tuina.
+            </p>
+          </div>
 
-          <FadeInUp delay={0.25} duration={0.6} className="mt-10">
-          <div className="flex flex-col-reverse sm:flex-row sm:justify-center items-center gap-4">
+          <div className="mt-10 flex flex-col-reverse sm:flex-row sm:justify-center items-center gap-4">
             <ButtonLink href={site.phoneHref} variant="secondary">
               Appeler Asmaa
               <Phone aria-hidden="true" className="w-4 h-4" strokeWidth={1.5} />
@@ -71,7 +72,6 @@ export function Hero() {
               />
             </ButtonLink>
           </div>
-          </FadeInUp>
         </div>
       </div>
     </section>
