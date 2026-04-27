@@ -1,5 +1,5 @@
 import { CalendarRange, Clock, MapPin, Navigation } from "lucide-react";
-import Map from "@/components/ui/Map";
+import MapLazy from "@/components/ui/MapLazy";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Reveal } from "@/components/motion/Reveal";
 import { site } from "@/data/site";
@@ -101,7 +101,7 @@ export function ContactLocalisation() {
           </div>
 
           <div className="w-full lg:w-1/2 h-[260px] lg:h-auto rounded-md overflow-hidden lg:order-2 order-1">
-            <Map className="w-full h-full" />
+            <MapLazy className="w-full h-full" />
           </div>
         </Reveal>
 

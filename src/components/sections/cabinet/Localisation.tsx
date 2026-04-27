@@ -1,5 +1,5 @@
 import { CalendarRange, Clock, MapPin, Navigation, Phone } from "lucide-react";
-import Map from "@/components/ui/Map";
+import MapLazy from "@/components/ui/MapLazy";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Reveal } from "@/components/motion/Reveal";
 import { site } from "@/data/site";
@@ -47,7 +47,7 @@ export function Localisation() {
         <Reveal as="div" delay={0.1} className="mt-12 lg:mt-16 flex flex-col lg:flex-row lg:items-stretch gap-8 lg:gap-12">
           {/* Map — hauteur réduite en mobile (stack), h-full en desktop (row) */}
           <div className="w-full lg:w-1/2 h-[260px] lg:h-auto lg:min-h-[440px] rounded-md overflow-hidden">
-            <Map className="w-full h-full" />
+            <MapLazy className="w-full h-full" />
           </div>
 
           {/* Infos */}
