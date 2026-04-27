@@ -1,5 +1,5 @@
 import { Navigation, Phone } from "lucide-react";
-import Map from "@/components/ui/Map";
+import MapLazy from "@/components/ui/MapLazy";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Reveal } from "@/components/motion/Reveal";
 import { site } from "@/data/site";
@@ -77,7 +77,7 @@ export function Cabinet() {
 
           {/* Map */}
           <div className="w-[480px] h-[320px] shrink-0 rounded-md overflow-hidden">
-            <Map className="w-full h-full" />
+            <MapLazy className="w-full h-full" />
           </div>
         </Reveal>
 
@@ -96,7 +96,7 @@ export function Cabinet() {
           </div>
 
           <div className="w-full h-[220px] rounded-md overflow-hidden">
-            <Map className="w-full h-full" />
+            <MapLazy className="w-full h-full" />
           </div>
 
           <p className="font-body text-base leading-relaxed text-warm-700">
