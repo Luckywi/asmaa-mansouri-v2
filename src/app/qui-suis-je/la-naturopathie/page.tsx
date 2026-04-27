@@ -157,8 +157,13 @@ export default function LaNaturopathiePage() {
         </div>
       </section>
 
-      {/* ─── Article long-form ───────────────────────────────────── */}
-      <section className="relative pb-12 lg:pb-22">
+      {/* ─── Article long-form ─────────────────────────────────────
+          Wrapper en <div> et non <section> : ce bloc est un simple
+          conteneur de mise en forme qui regroupe plusieurs <article>,
+          chacun avec son propre <h2>. Une <section> sans nom accessible
+          (pas de heading direct, pas d'aria-label) crée un landmark
+          orphelin pour les lecteurs d'écran. */}
+      <div className="relative pb-12 lg:pb-22">
         <div className="mx-auto max-w-3xl px-6 md:px-8">
           {/* ── Définition ── */}
           <Reveal as="article">
@@ -309,7 +314,7 @@ export default function LaNaturopathiePage() {
             </ul>
           </Reveal>
         </div>
-      </section>
+      </div>
 
       {/* ─── Pour aller plus loin (3 cards maillage interne) ─────── */}
       <Bridges bridges={bridges} />

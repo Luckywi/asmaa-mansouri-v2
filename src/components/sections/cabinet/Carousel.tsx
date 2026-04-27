@@ -60,10 +60,13 @@ const cabinetPhotos = [
  *   - mobile : 140×186 (ratio 3/4)
  *   - desktop : 240×320 (ratio 3/4)
  *
- * Mesure réelle Next 16 : la **première image carousel** est détectée
- * comme LCP de la page /cabinet (le H1 du Hero arrive plus tard à
- * cause de l'AnimatePresence qui swap le keyword). On passe donc
- * `priority` sur l'index 0 et on garde `loading="lazy"` sur les autres.
+ * Mesure réelle Next 16 : une **image du carousel** est détectée comme
+ * LCP de la page /cabinet (le H1 du Hero arrive plus tard à cause de
+ * l'AnimatePresence qui swap le keyword). Le marquee translate avant
+ * que le LCP soit mesuré, donc la card LCP n'est pas forcément l'index
+ * 0 mais une des 3 premières (cards visibles au-dessus du fold mobile :
+ * ~390px viewport / 140px card + gap = 3 cards). On passe donc
+ * `priority` sur les indices 0-2 et `loading="lazy"` sur les autres.
  * `sizes` suit les breakpoints pour que next/image serve la bonne
  * variante (sources 900×1200), `quality={50}` pour réduire le poids
  * transféré sans perte visuelle perceptible aux dimensions cards.
@@ -117,7 +120,7 @@ export function Carousel() {
         repeat={2}
       >
         {cabinetPhotos.map((photo, i) => {
-          const isLCP = i === 0;
+          const isLCP = i < 3;
           return (
             <div
               key={photo.src}

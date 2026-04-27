@@ -9,8 +9,19 @@ const specialitesBuckets = [
     icon: Flower2,
     href: "/specialites/desequilibres-hormonaux",
     title: "Déséquilibres hormonaux",
-    description:
-      "SOPK, endométriose, SPM, cycles irréguliers, fertilité, post-partum, préménopause. Un accompagnement pour rééquilibrer le terrain hormonal à chaque étape.",
+    // Première mention de SOPK dans le texte de la landing : balisée
+    // <abbr> avec l'expansion complète pour l'accessibilité (lecteurs
+    // d'écran) et le SEO (signal sémantique). Les occurrences suivantes
+    // sur le site sont laissées en clair pour éviter les soulignés
+    // pointillés répétés.
+    description: (
+      <>
+        <abbr title="Syndrome des ovaires polykystiques">SOPK</abbr>,
+        endométriose, SPM, cycles irréguliers, fertilité, post-partum,
+        préménopause. Un accompagnement pour rééquilibrer le terrain
+        hormonal à chaque étape.
+      </>
+    ),
   },
   {
     icon: Flame,

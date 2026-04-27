@@ -111,7 +111,7 @@ export function Formulaire() {
     "font-body text-sm text-warm-900 placeholder:text-warm-700/50",
     "transition-colors duration-150 ease-out",
     "focus:outline-none focus:border-warm-700/40 focus:bg-warm-300",
-    "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700",
+    "focus-visible:ring-2 focus-visible:ring-warm-700/40",
     "aria-[invalid=true]:border-accent aria-[invalid=true]:focus:border-accent",
   ].join(" ");
 
