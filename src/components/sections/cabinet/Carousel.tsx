@@ -103,7 +103,7 @@ export function Carousel() {
               className="object-cover"
               sizes="(min-width: 768px) 240px, 140px"
               quality={55}
-              priority={i < 3}
+              priority={i === 0}
             />
           </div>
         ))}
