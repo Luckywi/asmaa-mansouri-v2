@@ -1,21 +1,29 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { CalendarRange, GalleryVerticalEnd, MousePointerClick, Phone } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { FadeInUp } from "@/components/motion/FadeInUp";
 import { Reveal } from "@/components/motion/Reveal";
+import { JsonLd } from "@/components/seo/JsonLd";
+import {
+  absUrl,
+  buildBreadcrumb,
+  buildGraph,
+  buildItemList,
+  buildWebPage,
+} from "@/lib/schema";
 import { specialites } from "@/data/specialites";
 import { site } from "@/data/site";
+import { buildMetadata } from "@/lib/metadata";
 
-// Metadata minimale Phase 1. Le SEO technique (Open Graph, schema.org
-// MedicalCondition / Service / BreadcrumbList, balises canonical) est
-// reporté à la Phase 2 — quand le contenu Asmaa sera intégré.
-export const metadata: Metadata = {
-  title: "Spécialités — Asmaa Mansouri, naturopathe à Décines-Charpieu",
+export const metadata = buildMetadata({
+  title: "Spécialités naturopathie féminine, Décines-Charpieu",
   description:
-    "Troubles digestifs, allergies saisonnières, stress et burn-out, déséquilibres hormonaux (SOPK, endométriose, fertilité, post-partum) : 4 grands univers pour accompagner la santé féminine à Décines, Lyon et l'Est lyonnais.",
-  robots: { index: false, follow: false },
-};
+    "Quatre domaines accompagnés à Décines-Charpieu : troubles digestifs, allergies saisonnières, stress et burn-out, déséquilibres hormonaux (SOPK, ménopause).",
+  path: "/specialites",
+  ogTitle: "Mes spécialités en santé féminine",
+  ogDescription:
+    "Troubles digestifs, allergies saisonnières, stress et burn-out, déséquilibres hormonaux : les quatre domaines que j'accompagne en cabinet.",
+});
 
 /**
  * /specialites — page hub des 4 spécialités d'Asmaa.
@@ -38,8 +46,31 @@ export const metadata: Metadata = {
  * Recette glass standard (DESIGN.md). Server Component pur.
  */
 export default function SpecialitesPage() {
+  const pageUrl = absUrl("/specialites");
+  const jsonLd = buildGraph([
+    buildWebPage({
+      type: "CollectionPage",
+      url: pageUrl,
+      name: "Spécialités naturopathie féminine, Décines-Charpieu",
+      description:
+        "Quatre domaines accompagnés à Décines-Charpieu : troubles digestifs, allergies saisonnières, stress et burn-out, déséquilibres hormonaux (SOPK, ménopause).",
+      mainEntity: `${pageUrl}#itemlist`,
+      breadcrumb: `${pageUrl}#breadcrumb`,
+    }),
+    buildItemList(
+      specialites.map((s) => ({
+        url: absUrl(`/specialites/${s.slug}`),
+        name: s.title,
+        description: s.shortDescription,
+      })),
+      pageUrl,
+    ),
+    buildBreadcrumb([{ name: "Spécialités", url: pageUrl }], pageUrl),
+  ]);
+
   return (
     <main id="contenu-principal" className="flex-1">
+      <JsonLd data={jsonLd} />
       {/* ─── Hero ────────────────────────────────────────────────── */}
       <section
         aria-labelledby="specialites-titre"

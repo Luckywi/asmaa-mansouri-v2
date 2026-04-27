@@ -1,20 +1,28 @@
-import type { Metadata } from "next";
 import { Hero } from "@/components/sections/cabinet/Hero";
 import { Carousel } from "@/components/sections/cabinet/Carousel";
 import { Localisation } from "@/components/sections/cabinet/Localisation";
 import { Acces } from "@/components/sections/cabinet/Acces";
 import { Experiences } from "@/components/sections/cabinet/Experiences";
 import { AllerPlusLoin } from "@/components/sections/cabinet/AllerPlusLoin";
+import { JsonLd } from "@/components/seo/JsonLd";
+import {
+  absUrl,
+  BUSINESS_ID,
+  buildBreadcrumb,
+  buildGraph,
+  buildWebPage,
+} from "@/lib/schema";
+import { buildMetadata } from "@/lib/metadata";
 
-// Metadata minimale Phase 1 — schema.org LocalBusiness + Open Graph
-// viendront Phase 2 (cf. CLAUDE.md > SEO Phase 2).
-export const metadata: Metadata = {
-  title:
-    "Mon cabinet — Asmaa Mansouri, naturopathe à Décines-Charpieu (69150)",
+export const metadata = buildMetadata({
+  title: "Cabinet de naturopathie à Décines-Charpieu, Lyon Est",
   description:
-    "Cabinet de naturopathie, médecine traditionnelle chinoise et massage Tuina à Décines-Charpieu, à quelques minutes de Lyon. Consultations en cabinet ou en visio.",
-  robots: { index: false, follow: false },
-};
+    "48 rue Francisco Ferrer, 69150 Décines-Charpieu : tramway T3, parking, dix minutes de Lyon. Consultations en cabinet ou visio, du lundi au samedi.",
+  path: "/cabinet",
+  ogTitle: "Cabinet de naturopathie à Décines-Charpieu",
+  ogDescription:
+    "Cabinet de naturopathie à Décines-Charpieu, 48 rue Francisco Ferrer, directement accessible en tramway T3. Consultations en cabinet ou en visio.",
+});
 
 /**
  * /cabinet — page de présentation du lieu de consultation.
@@ -33,8 +41,23 @@ export const metadata: Metadata = {
  * sticky footer pattern du layout.
  */
 export default function CabinetPage() {
+  const pageUrl = absUrl("/cabinet");
+  const jsonLd = buildGraph([
+    buildWebPage({
+      url: pageUrl,
+      name: "Cabinet de naturopathie à Décines-Charpieu, Lyon Est",
+      description:
+        "48 rue Francisco Ferrer, 69150 Décines-Charpieu : tramway T3, parking, dix minutes de Lyon. Consultations en cabinet ou visio, du lundi au samedi.",
+      about: BUSINESS_ID,
+      mainEntity: BUSINESS_ID,
+      breadcrumb: `${pageUrl}#breadcrumb`,
+    }),
+    buildBreadcrumb([{ name: "Le cabinet", url: pageUrl }], pageUrl),
+  ]);
+
   return (
     <main id="contenu-principal" className="flex-1">
+      <JsonLd data={jsonLd} />
       <Hero />
       <Carousel />
       <Localisation />

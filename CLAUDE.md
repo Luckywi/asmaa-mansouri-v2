@@ -123,7 +123,7 @@ surfaces glass (cards, Header, tags, bouton secondary). Voir
 - HTML sémantique : `header`, `nav`, `main`, `section`, `article`, `footer` — pas de div soup
 - Arborescence à 2 niveaux max (sitelinks-ready)
 - Maillage interne logique : spoke → hub `/prestations` → accueil
-- Fil d'Ariane visuel sur toutes les pages sauf landing
+- Fil d'Ariane visuel sur toutes les pages **niveau 2+** uniquement (sauf landing et hubs niveau 1, déjà accessibles directement via le Header pill)
 
 **PHASE 2 (une fois contenu et UI stables) — le SEO technique :**
 - Metadata (title, description, Open Graph, Twitter Card)

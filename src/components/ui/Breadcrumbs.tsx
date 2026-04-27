@@ -2,13 +2,13 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 
 /**
- * Breadcrumbs — fil d'Ariane visuel + schema.org BreadcrumbList.
+ * Breadcrumbs — fil d'Ariane visuel. Le schema.org BreadcrumbList
+ * correspondant est injecté par le système JSON-LD centralisé
+ * (`src/lib/schema/breadcrumb.ts`) dans le graphe de chaque page,
+ * pour éviter la duplication d'entités.
  *
- * Placé en haut de chaque page de niveau 2 (voir CLAUDE.md). Le rendu
- * JSON-LD est émis dans le même composant pour rester synchronisé avec
- * le visuel : une seule source de vérité par page.
- *
- * L'item courant (dernier de la liste) n'est pas un lien — marqué
+ * Placé en haut de chaque page de niveau 2 (voir CLAUDE.md). L'item
+ * courant (dernier de la liste) n'est pas un lien — marqué
  * `aria-current="page"` et rendu en warm-900. Les items intermédiaires
  * pointent vers le hub parent.
  *
@@ -16,8 +16,6 @@ import { ChevronRight } from "lucide-react";
  * le pt-32 du Hero (le Hero perd son clearance de header fixe quand il
  * est précédé d'un Breadcrumbs).
  */
-
-const SITE_URL = "https://naturopathe-decines.fr";
 
 export type BreadcrumbItem = {
   readonly label: string;
@@ -33,17 +31,6 @@ export function Breadcrumbs({ items }: Props) {
     { label: "Accueil", href: "/" },
     ...items,
   ];
-
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: trail.map((item, index) => ({
-      "@type": "ListItem",
-      position: index + 1,
-      name: item.label,
-      item: `${SITE_URL}${item.href === "/" ? "" : item.href}`,
-    })),
-  };
 
   return (
     <nav
@@ -74,7 +61,7 @@ export function Breadcrumbs({ items }: Props) {
                 {!isLast && (
                   <ChevronRight
                     aria-hidden="true"
-                    className="w-3.5 h-3.5 text-warm-700/60"
+                    className="w-3.5 h-3.5 text-warm-700/80"
                     strokeWidth={1.5}
                   />
                 )}
@@ -83,10 +70,6 @@ export function Breadcrumbs({ items }: Props) {
           })}
         </ol>
       </div>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
     </nav>
   );
 }

@@ -67,9 +67,9 @@ export function Exploration() {
                 "flex flex-col",
               ].join(" ")}
             >
-              <h3 className="font-display text-2xl lg:text-3xl font-medium tracking-[-0.01em] leading-[1.2] text-warm-900 text-center">
+              <h2 className="font-display text-2xl lg:text-3xl font-medium tracking-[-0.01em] leading-[1.2] text-warm-900 text-center">
                 {title}
-              </h3>
+              </h2>
               <p className="mt-4 font-body text-base lg:text-lg leading-relaxed text-warm-700 text-center">
                 {description}
               </p>

@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { CalendarDays, Clock, MapPin, Phone, X } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { site } from "@/data/site";
 import type { Atelier } from "@/types";
+import { useFocusTrap } from "@/lib/useFocusTrap";
 import { AtelierGallery } from "./Gallery";
 
 type ModalProps = {
@@ -41,6 +42,9 @@ function formatDateLong(iso: string): string {
  * Client Component — useEffect pour Escape + scroll lock, framer-motion.
  */
 export function AtelierModal({ atelier, onClose }: ModalProps) {
+  const dialogRef = useRef<HTMLDivElement>(null);
+  useFocusTrap(Boolean(atelier), dialogRef);
+
   useEffect(() => {
     if (!atelier) return;
 
@@ -73,6 +77,7 @@ export function AtelierModal({ atelier, onClose }: ModalProps) {
           />
 
           <motion.div
+            ref={dialogRef}
             initial={{ opacity: 0, scale: 0.96, y: 12 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 12 }}
@@ -122,7 +127,7 @@ export function AtelierModal({ atelier, onClose }: ModalProps) {
 
             <div className="mt-6 max-h-[55vh] overflow-y-auto pr-1 scroll-elegant">
               {atelier.poster && (
-                <div className="mb-5 overflow-hidden rounded-lg border-[0.5px] border-warm-500/25 bg-warm-500/10">
+                <div className="mb-5 overflow-hidden rounded-md border-[0.5px] border-warm-500/25 bg-warm-500/10">
                   <Image
                     src={atelier.poster}
                     alt={`Affiche de l'atelier ${atelier.title}`}
@@ -163,7 +168,7 @@ export function AtelierModal({ atelier, onClose }: ModalProps) {
                     <li className="flex items-center gap-2.5">
                       <CalendarDays
                         aria-hidden="true"
-                        className="w-4 h-4 shrink-0 text-warm-700/70"
+                        className="w-4 h-4 shrink-0 text-warm-700/80"
                         strokeWidth={1.5}
                       />
                       {formatDateLong(atelier.date)}
@@ -173,7 +178,7 @@ export function AtelierModal({ atelier, onClose }: ModalProps) {
                     <li className="flex items-center gap-2.5">
                       <Clock
                         aria-hidden="true"
-                        className="w-4 h-4 shrink-0 text-warm-700/70"
+                        className="w-4 h-4 shrink-0 text-warm-700/80"
                         strokeWidth={1.5}
                       />
                       {atelier.duration}
@@ -183,7 +188,7 @@ export function AtelierModal({ atelier, onClose }: ModalProps) {
                     <li className="flex items-center gap-2.5">
                       <MapPin
                         aria-hidden="true"
-                        className="w-4 h-4 shrink-0 text-warm-700/70"
+                        className="w-4 h-4 shrink-0 text-warm-700/80"
                         strokeWidth={1.5}
                       />
                       {atelier.location}

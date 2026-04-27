@@ -2,30 +2,26 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Reveal } from "@/components/motion/Reveal";
 
 /**
  * 3 photos d'Asmaa affichées en "deck de cartes" empilé. Hébergées dans
- * `public/qui-suis-je/` sous `portrait-1|2|3.png`.
- *
- * ⚠️ PNG sources 34-46 MB (3501×4654 → 4000×6000). `next/image` compresse
- * à la volée en AVIF/WebP à la livraison, donc le front reste léger. En
- * revanche le repo git porte les originaux — envisager une conversion
- * WebP offline avant mise en production.
+ * `public/qui-suis-je/` sous `portrait-1|2|3.jpg` (JPG q72, 1200×1600,
+ * ~365-470 KB chacune). Vercel ré-optimise à la volée en AVIF/WebP.
  */
 const photos = [
   {
-    src: "/qui-suis-je/portrait-1.png",
-    alt: "Portrait d'Asmaa Mansouri, naturopathe — premier plan",
+    src: "/qui-suis-je/portrait-1.jpg",
+    alt: "Asmaa Mansouri, naturopathe, souriante en lumière naturelle",
   },
   {
-    src: "/qui-suis-je/portrait-2.png",
-    alt: "Portrait d'Asmaa Mansouri, naturopathe — second plan",
+    src: "/qui-suis-je/portrait-2.jpg",
+    alt: "Asmaa Mansouri de profil, dans un décor végétal apaisant",
   },
   {
-    src: "/qui-suis-je/portrait-3.png",
-    alt: "Portrait d'Asmaa Mansouri, naturopathe — troisième plan",
+    src: "/qui-suis-je/portrait-3.jpg",
+    alt: "Asmaa Mansouri au travail, livres et plantes médicinales en arrière-plan",
   },
 ] as const;
 
@@ -101,13 +97,15 @@ const stackVariants = {
  */
 export function Portrait() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
+    if (prefersReducedMotion) return;
     const interval = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % photos.length);
     }, AUTO_ADVANCE_MS);
     return () => clearInterval(interval);
-  }, [activeIndex]);
+  }, [activeIndex, prefersReducedMotion]);
 
   return (
     <section

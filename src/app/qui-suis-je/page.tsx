@@ -1,19 +1,29 @@
-import type { Metadata } from "next";
 import { Hero } from "@/components/sections/qui-suis-je/Hero";
 import { Exploration } from "@/components/sections/qui-suis-je/Exploration";
 import { Engagement } from "@/components/sections/qui-suis-je/Engagement";
 import { Portrait } from "@/components/sections/qui-suis-je/Portrait";
 import { Demarche } from "@/components/sections/qui-suis-je/Demarche";
 import { FaisonsConnaissance } from "@/components/sections/qui-suis-je/FaisonsConnaissance";
+import { JsonLd } from "@/components/seo/JsonLd";
+import {
+  absUrl,
+  buildBreadcrumb,
+  buildFaqPage,
+  buildGraph,
+  buildWebPage,
+  PERSON_ID,
+} from "@/lib/schema";
+import { buildMetadata } from "@/lib/metadata";
+import { demarcheFaq } from "@/data/qui-suis-je-faq";
 
-// Metadata minimale Phase 1 — la phase 2 SEO (Open Graph, schema.org
-// Person/ProfessionalService, breadcrumb schema) viendra plus tard.
-export const metadata: Metadata = {
-  title: "Qui suis-je — Asmaa Mansouri, naturopathe à Décines-Charpieu",
+export const metadata = buildMetadata({
+  title: "Mon parcours de naturopathe à Décines-Charpieu",
   description:
-    "Découvrez l'approche exclusivement féminine et naturelle d'Asmaa Mansouri, naturopathe spécialisée en santé féminine, Tuina et cupping therapy.",
-  robots: { index: false, follow: false },
-};
+    "Asmaa Mansouri, naturopathe à Décines-Charpieu : parcours, diplômes, formations (naturopathie, MTC, cupping) et approche de la santé féminine.",
+  path: "/qui-suis-je",
+  ogDescription:
+    "Parcours, formations et approche d'Asmaa Mansouri, naturopathe à Décines-Charpieu spécialisée en santé féminine.",
+});
 
 /**
  * /qui-suis-je — page de présentation d'Asmaa.
@@ -36,8 +46,27 @@ export const metadata: Metadata = {
  *   - Le sticky footer pattern (body flex-col min-h-full + main flex-1)
  */
 export default function QuiSuisJePage() {
+  const pageUrl = absUrl("/qui-suis-je");
+  const jsonLd = buildGraph([
+    buildWebPage({
+      type: "ProfilePage",
+      url: pageUrl,
+      name: "Mon parcours de naturopathe à Décines-Charpieu",
+      description:
+        "Asmaa Mansouri, naturopathe à Décines-Charpieu : parcours, diplômes, formations (naturopathie, MTC, cupping) et approche de la santé féminine.",
+      mainEntity: PERSON_ID,
+      breadcrumb: `${pageUrl}#breadcrumb`,
+    }),
+    buildBreadcrumb(
+      [{ name: "Qui suis-je ?", url: pageUrl }],
+      pageUrl,
+    ),
+    buildFaqPage(demarcheFaq, pageUrl),
+  ]);
+
   return (
     <main id="contenu-principal" className="flex-1">
+      <JsonLd data={jsonLd} />
       <Hero />
       <Portrait />
       <Exploration />

@@ -45,7 +45,7 @@ export function Coordonnees() {
 
       <ul className="mt-6 flex flex-col divide-y divide-warm-700/15">
         <li className="py-4 first:pt-0">
-          <p className="flex items-center gap-2 font-body text-xs font-medium uppercase tracking-widest text-warm-700/70">
+          <p className="flex items-center gap-2 font-body text-xs font-medium uppercase tracking-widest text-warm-700/80">
             <Phone
               aria-hidden="true"
               className="w-3.5 h-3.5"
@@ -55,14 +55,14 @@ export function Coordonnees() {
           </p>
           <a
             href={site.phoneHref}
-            className="mt-2 inline-block font-body text-base lg:text-lg text-warm-900 underline underline-offset-4 decoration-1 decoration-warm-700/30 hover:decoration-warm-900 transition-colors duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700"
+            className="mt-2 inline-block py-1 font-body text-base lg:text-lg text-warm-900 underline underline-offset-4 decoration-1 decoration-warm-700/30 hover:decoration-warm-900 transition-colors duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700"
           >
             {site.phone}
           </a>
         </li>
 
         <li className="py-4">
-          <p className="flex items-center gap-2 font-body text-xs font-medium uppercase tracking-widest text-warm-700/70">
+          <p className="flex items-center gap-2 font-body text-xs font-medium uppercase tracking-widest text-warm-700/80">
             <Mail
               aria-hidden="true"
               className="w-3.5 h-3.5"
@@ -72,14 +72,14 @@ export function Coordonnees() {
           </p>
           <a
             href={`mailto:${site.email}`}
-            className="mt-2 inline-block font-body text-base lg:text-lg text-warm-900 underline underline-offset-4 decoration-1 decoration-warm-700/30 hover:decoration-warm-900 transition-colors duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700 break-all"
+            className="mt-2 inline-block py-1 font-body text-base lg:text-lg text-warm-900 underline underline-offset-4 decoration-1 decoration-warm-700/30 hover:decoration-warm-900 transition-colors duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700 break-all"
           >
             {site.email}
           </a>
         </li>
 
         <li className="py-4">
-          <p className="flex items-center gap-2 font-body text-xs font-medium uppercase tracking-widest text-warm-700/70">
+          <p className="flex items-center gap-2 font-body text-xs font-medium uppercase tracking-widest text-warm-700/80">
             <CircleFadingPlus
               aria-hidden="true"
               className="w-3.5 h-3.5"
@@ -91,7 +91,7 @@ export function Coordonnees() {
             href={site.instagramUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-2 inline-block font-body text-base lg:text-lg text-warm-900 underline underline-offset-4 decoration-1 decoration-warm-700/30 hover:decoration-warm-900 transition-colors duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700"
+            className="mt-2 inline-block py-1 font-body text-base lg:text-lg text-warm-900 underline underline-offset-4 decoration-1 decoration-warm-700/30 hover:decoration-warm-900 transition-colors duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700"
           >
             {site.instagram}
           </a>

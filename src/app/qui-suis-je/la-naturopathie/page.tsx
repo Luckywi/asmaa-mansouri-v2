@@ -1,14 +1,20 @@
-import type { Metadata } from "next";
 import { CalendarRange, Flame, Flower2, UserRound } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
-import {
-  Bridges,
-  type QuiSuisJeBridge,
-} from "@/components/sections/qui-suis-je/Bridges";
+import { Bridges } from "@/components/sections/qui-suis-je/Bridges";
+import type { BridgeItem } from "@/components/ui/BridgesGrid";
 import { FadeInUp } from "@/components/motion/FadeInUp";
 import { Reveal } from "@/components/motion/Reveal";
+import { JsonLd } from "@/components/seo/JsonLd";
+import {
+  absUrl,
+  buildArticle,
+  buildBreadcrumb,
+  buildGraph,
+  buildWebPage,
+} from "@/lib/schema";
 import { site } from "@/data/site";
+import { buildMetadata } from "@/lib/metadata";
 
 /**
  * /qui-suis-je/la-naturopathie — sous-page du hub identité.
@@ -27,14 +33,19 @@ import { site } from "@/data/site";
  * Server Component pur.
  */
 
-export const metadata: Metadata = {
-  title: "La naturopathie — Asmaa Mansouri, naturopathe à Décines-Charpieu",
+export const metadata = buildMetadata({
+  title: "Qu'est-ce que la naturopathie, définition et principes",
   description:
-    "Définition FENA, principes fondateurs (Primum non nocere, Sequara Natura), ce que la naturopathie n'est pas et pourquoi consulter.",
-  robots: { index: false, follow: false },
-};
+    "Définition, grands principes et champ d'action de la naturopathie : alimentation, phytothérapie, techniques manuelles, vision holistique de la santé.",
+  path: "/qui-suis-je/la-naturopathie",
+  ogType: "article",
+  authors: ["Asmaa Mansouri"],
+  ogTitle: "Qu'est-ce que la naturopathie ?",
+  ogDescription:
+    "Définition de la naturopathie, ses quatre piliers et son champ d'action, vus par Asmaa Mansouri, naturopathe à Décines-Charpieu.",
+});
 
-const bridges: readonly QuiSuisJeBridge[] = [
+const bridges: readonly BridgeItem[] = [
   {
     href: "/qui-suis-je/medecines-ancestrales",
     icon: Flame,
@@ -62,8 +73,49 @@ const bridges: readonly QuiSuisJeBridge[] = [
 ] as const;
 
 export default function LaNaturopathiePage() {
+  const pageUrl = absUrl("/qui-suis-je/la-naturopathie");
+  const jsonLd = buildGraph([
+    buildWebPage({
+      url: pageUrl,
+      name: "Qu'est-ce que la naturopathie, définition et principes",
+      description:
+        "Définition, grands principes et champ d'action de la naturopathie : alimentation, phytothérapie, techniques manuelles, vision holistique de la santé.",
+      mainEntity: `${pageUrl}#article`,
+      breadcrumb: `${pageUrl}#breadcrumb`,
+    }),
+    buildArticle({
+      pageUrl,
+      headline: "Qu'est-ce que la naturopathie ?",
+      description:
+        "Définition, grands principes et champ d'action de la naturopathie : alimentation, phytothérapie, techniques manuelles, vision holistique de la santé.",
+      image: {
+        url: absUrl("/qui-suis-je/portrait-1.jpg"),
+        width: 1203,
+        height: 1600,
+      },
+      datePublished: "2026-04-14",
+      dateModified: "2026-04-24",
+      articleSection: "Naturopathie",
+      keywords: [
+        "naturopathie",
+        "FENA",
+        "terrain",
+        "médecin intérieur",
+        "auto-guérison",
+      ],
+    }),
+    buildBreadcrumb(
+      [
+        { name: "Qui suis-je ?", url: absUrl("/qui-suis-je") },
+        { name: "La naturopathie", url: pageUrl },
+      ],
+      pageUrl,
+    ),
+  ]);
+
   return (
     <main id="contenu-principal" className="flex-1">
+      <JsonLd data={jsonLd} />
       <Breadcrumbs
         items={[
           { label: "Qui suis-je ?", href: "/qui-suis-je" },
@@ -121,7 +173,7 @@ export default function LaNaturopathiePage() {
               Une définition à partager
             </h2>
             <p className="mt-6 font-body text-base lg:text-lg leading-relaxed text-warm-700">
-              Selon la Fédération Française de Naturopathie (FENA), la
+              Selon la Fédération Française de Naturopathie (<abbr title="Fédération française de naturopathie">FENA</abbr>), la
               naturopathie est l&apos;art d&apos;aider une personne à
               maintenir et parfois à retrouver sa santé grâce à un ensemble
               de méthodes naturelles, qui respectent la personne dans son
@@ -151,7 +203,7 @@ export default function LaNaturopathiePage() {
             <div className="mt-10 space-y-10 lg:space-y-12">
               <div>
                 <h3 className="font-display text-2xl lg:text-3xl font-medium tracking-[-0.01em] leading-[1.2] text-warm-900">
-                  Primum non nocere&nbsp;: d&apos;abord, ne pas nuire
+                  <span lang="la">Primum non nocere</span>&nbsp;: d&apos;abord, ne pas nuire
                 </h3>
                 <p className="mt-4 font-body text-base lg:text-lg leading-relaxed text-warm-700">
                   Avant toute chose, ne pas aggraver. Les méthodes utilisées
@@ -164,7 +216,7 @@ export default function LaNaturopathiePage() {
 
               <div>
                 <h3 className="font-display text-2xl lg:text-3xl font-medium tracking-[-0.01em] leading-[1.2] text-warm-900">
-                  Sequara Natura&nbsp;: suivre la nature
+                  <span lang="la">Sequara Natura</span>&nbsp;: suivre la nature
                 </h3>
                 <p className="mt-4 font-body text-base lg:text-lg leading-relaxed text-warm-700">
                   La nature a mis en place dans chaque organisme des

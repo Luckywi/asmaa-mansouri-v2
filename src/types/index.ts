@@ -8,6 +8,16 @@
 import type { LucideIcon } from "lucide-react";
 
 /**
+ * Item Q/R de la FAQ — rendu par `components/ui/AccordionFAQ.tsx`.
+ * Partagé par `Prestation.faq`, `Specialite.faq` et les FAQ des pages
+ * ateliers (`/ateliers`, `/ateliers/passes`) — source unique du shape.
+ */
+export type FAQItem = {
+  readonly question: string;
+  readonly answer: string;
+};
+
+/**
  * Lien de navigation utilisé dans le Header (et plus tard le Footer).
  *
  * En phase landing, `href` pointe vers une ancre `#section` de la page d'accueil.
@@ -231,10 +241,7 @@ export type Prestation = {
    * FAQ spécifique à la prestation, orientée SERP et GEO (Décines,
    * Lyon, tarifs, contre-indications). 4 à 5 questions par prestation.
    */
-  readonly faq: readonly {
-    readonly question: string;
-    readonly answer: string;
-  }[];
+  readonly faq: readonly FAQItem[];
   /** 3 bridges de maillage interne bas de page */
   readonly bridges: readonly PrestationBridge[];
   /**
@@ -334,10 +341,7 @@ export type Specialite = {
    * locaux), réponses à compléter par Asmaa avec ses vraies réponses
    * cabinet (durées, cas concrets, méthodes).
    */
-  readonly faq: readonly {
-    readonly question: string;
-    readonly answer: string;
-  }[];
+  readonly faq: readonly FAQItem[];
 };
 
 /**
@@ -422,6 +426,12 @@ export type Atelier = {
   readonly duration?: string;
   /** Lieu libre, affiché uniquement si renseigné. */
   readonly location?: string;
+  /**
+   * Commune (addressLocality) du lieu — exploitée par le builder JSON-LD
+   * `Event.location.address`. À renseigner uniquement si `location` est
+   * différent du cabinet ; sinon le cabinet (#business) sert de location.
+   */
+  readonly addressLocality?: string;
   /** Points clés listés en bullets dans la modale */
   readonly highlights?: readonly string[];
   /**
@@ -439,4 +449,16 @@ export type Atelier = {
    * servir de visuel d'accroche. Chemin relatif à `/public`.
    */
   readonly poster?: string;
+};
+
+/**
+ * Mode d'accès au cabinet (transport en commun, voiture, parking relais).
+ * Rendu en card sur la page `/cabinet`. Données source dans
+ * `src/data/cabinet-acces.ts`.
+ */
+export type AccessMode = {
+  readonly icon: LucideIcon;
+  readonly title: string;
+  readonly description: string;
+  readonly details: readonly string[];
 };

@@ -23,15 +23,60 @@ import { site } from "@/data/site";
  * Les contacts directs (tel, Instagram) de la card latérale servent
  * alors de filet de sécurité.
  *
- * Client Component — nécessite `window` au submit.
+ * A11y : labels explicites, aria-required + required pour les champs
+ * obligatoires, aria-invalid + aria-describedby pilotés par les erreurs
+ * locales (détectées au blur + au submit via l'API `validity`), messages
+ * d'erreur en role="alert" pour annonce lecteur d'écran.
+ *
+ * Client Component — nécessite `window` au submit et state d'erreurs.
  */
+type FieldName = "name" | "email" | "message";
+type Errors = Partial<Record<FieldName, string>>;
+
+const ERROR_LABELS: Record<FieldName, string> = {
+  name: "Merci de renseigner votre nom.",
+  email: "Merci de renseigner une adresse email valide.",
+  message: "Merci de saisir votre message.",
+};
+
 export function Formulaire() {
   const [opened, setOpened] = useState(false);
+  const [errors, setErrors] = useState<Errors>({});
+
+  function validateField(
+    field: FieldName,
+    el: HTMLInputElement | HTMLTextAreaElement,
+  ) {
+    if (!el.validity.valid) {
+      setErrors((prev) => ({ ...prev, [field]: ERROR_LABELS[field] }));
+    } else {
+      setErrors((prev) => {
+        if (!prev[field]) return prev;
+        const next = { ...prev };
+        delete next[field];
+        return next;
+      });
+    }
+  }
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const data = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const nextErrors: Errors = {};
+    (["name", "email", "message"] as const).forEach((field) => {
+      const el = form.elements.namedItem(field) as
+        | HTMLInputElement
+        | HTMLTextAreaElement
+        | null;
+      if (el && !el.validity.valid) nextErrors[field] = ERROR_LABELS[field];
+    });
+    if (Object.keys(nextErrors).length > 0) {
+      setErrors(nextErrors);
+      return;
+    }
+
+    const data = new FormData(form);
     const name = String(data.get("name") ?? "").trim();
     const email = String(data.get("email") ?? "").trim();
     const phone = String(data.get("phone") ?? "").trim();
@@ -57,6 +102,7 @@ export function Formulaire() {
 
     window.location.href = href;
     setOpened(true);
+    setErrors({});
   }
 
   const inputClass = [
@@ -65,14 +111,27 @@ export function Formulaire() {
     "font-body text-sm text-warm-900 placeholder:text-warm-700/50",
     "transition-colors duration-150 ease-out",
     "focus:outline-none focus:border-warm-700/40 focus:bg-warm-300",
+    "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700",
+    "aria-[invalid=true]:border-accent aria-[invalid=true]:focus:border-accent",
   ].join(" ");
 
   const labelClass =
-    "block font-body text-xs font-medium uppercase tracking-widest text-warm-700/70 mb-2";
+    "block font-body text-xs font-medium uppercase tracking-widest text-warm-700/80 mb-2";
+
+  const errorClass = "mt-1.5 font-body text-xs text-warm-900";
+  const requiredMark = (
+    <>
+      <span aria-hidden="true" className="text-warm-900">
+        {" *"}
+      </span>
+      <span className="sr-only"> (requis)</span>
+    </>
+  );
 
   return (
     <form
       onSubmit={handleSubmit}
+      noValidate
       className={[
         "relative h-full flex flex-col rounded-md p-6 md:p-8",
         "bg-[var(--glass-bg)]",
@@ -91,32 +150,50 @@ export function Formulaire() {
       <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label htmlFor="contact-name" className={labelClass}>
-            Nom <span className="text-warm-900">*</span>
+            Nom{requiredMark}
           </label>
           <input
             id="contact-name"
             name="name"
             type="text"
             required
+            aria-required="true"
+            aria-invalid={Boolean(errors.name)}
+            aria-describedby={errors.name ? "contact-name-error" : undefined}
+            onBlur={(e) => validateField("name", e.currentTarget)}
             maxLength={120}
             autoComplete="name"
             className={inputClass}
           />
+          {errors.name && (
+            <p id="contact-name-error" role="alert" className={errorClass}>
+              {errors.name}
+            </p>
+          )}
         </div>
 
         <div>
           <label htmlFor="contact-email" className={labelClass}>
-            Email <span className="text-warm-900">*</span>
+            Email{requiredMark}
           </label>
           <input
             id="contact-email"
             name="email"
             type="email"
             required
+            aria-required="true"
+            aria-invalid={Boolean(errors.email)}
+            aria-describedby={errors.email ? "contact-email-error" : undefined}
+            onBlur={(e) => validateField("email", e.currentTarget)}
             maxLength={200}
             autoComplete="email"
             className={inputClass}
           />
+          {errors.email && (
+            <p id="contact-email-error" role="alert" className={errorClass}>
+              {errors.email}
+            </p>
+          )}
         </div>
 
         <div>
@@ -149,12 +226,16 @@ export function Formulaire() {
 
       <div className="mt-4">
         <label htmlFor="contact-message" className={labelClass}>
-          Message <span className="text-warm-900">*</span>
+          Message{requiredMark}
         </label>
         <textarea
           id="contact-message"
           name="message"
           required
+          aria-required="true"
+          aria-invalid={Boolean(errors.message)}
+          aria-describedby={errors.message ? "contact-message-error" : undefined}
+          onBlur={(e) => validateField("message", e.currentTarget)}
           rows={4}
           maxLength={5000}
           className={[
@@ -162,6 +243,11 @@ export function Formulaire() {
             "py-3 resize-y min-h-[140px] max-h-[340px] leading-relaxed",
           ].join(" ")}
         />
+        {errors.message && (
+          <p id="contact-message-error" role="alert" className={errorClass}>
+            {errors.message}
+          </p>
+        )}
       </div>
 
       {opened ? (

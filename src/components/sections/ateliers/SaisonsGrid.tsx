@@ -34,7 +34,7 @@ export function SaisonsGrid({ saisons }: SaisonsGridProps) {
             <h3 className="font-display text-base lg:text-lg font-medium tracking-tight text-warm-900">
               {saison.name}
             </h3>
-            <p className="font-body text-xs font-medium text-warm-700/70">
+            <p className="font-body text-xs font-medium text-warm-700/80">
               {saison.organe}
             </p>
             <p className="font-body text-[13px] leading-relaxed text-warm-700">

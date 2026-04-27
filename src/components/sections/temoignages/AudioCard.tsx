@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useCallback, useEffect } from "react";
+import { useRef, useState, useCallback } from "react";
 import { Play, Pause } from "lucide-react";
 
 const AUDIO_SRC = "/temoignages/temoignage-audio.m4a";
@@ -78,6 +78,41 @@ export function AudioCard() {
     dragging.current = false;
   }, []);
 
+  const onKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      const a = audioRef.current;
+      if (!a || !duration) return;
+      const step = 5;
+      let nextTime: number | null = null;
+      switch (e.key) {
+        case "ArrowRight":
+        case "ArrowUp":
+          nextTime = Math.min(duration, a.currentTime + step);
+          break;
+        case "ArrowLeft":
+        case "ArrowDown":
+          nextTime = Math.max(0, a.currentTime - step);
+          break;
+        case "Home":
+          nextTime = 0;
+          break;
+        case "End":
+          nextTime = duration;
+          break;
+        case " ":
+        case "Enter":
+          e.preventDefault();
+          toggle();
+          return;
+      }
+      if (nextTime !== null) {
+        e.preventDefault();
+        a.currentTime = nextTime;
+      }
+    },
+    [duration, toggle],
+  );
+
   return (
     <div
       className={[
@@ -89,10 +124,14 @@ export function AudioCard() {
         "shadow-[inset_0_1px_0_rgba(255,255,255,0.7),inset_0_-1px_0_rgba(60,30,25,0.04),0_4px_16px_-6px_rgba(60,30,25,0.15)]",
       ].join(" ")}
     >
+      {/* TODO a11y : fournir une transcription textuelle du témoignage audio
+          (WCAG 1.2.1 A) — à produire avec Asmaa puis exposer sous la carte
+          dans un <details><summary>Lire la transcription</summary>…</details>. */}
       <audio
         ref={audioRef}
         src={AUDIO_SRC}
         preload="metadata"
+        aria-label="Témoignage audio"
         onTimeUpdate={() => setCurrent(audioRef.current?.currentTime ?? 0)}
         onLoadedMetadata={() => setDuration(audioRef.current?.duration ?? 0)}
         onEnded={() => {
@@ -105,7 +144,7 @@ export function AudioCard() {
         type="button"
         onClick={toggle}
         aria-label={playing ? "Mettre en pause" : "Écouter le témoignage"}
-        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-sm bg-warm-700 text-white transition-colors hover:bg-warm-900"
+        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-warm-700 text-white transition-colors hover:bg-warm-900"
       >
         {playing ? (
           <Pause className="w-4 h-4" fill="currentColor" stroke="none" />
@@ -116,11 +155,19 @@ export function AudioCard() {
 
       <div
         ref={waveRef}
+        role="slider"
+        tabIndex={0}
+        aria-label="Progression du témoignage audio"
+        aria-valuemin={0}
+        aria-valuemax={Math.max(0, Math.floor(duration))}
+        aria-valuenow={Math.floor(current)}
+        aria-valuetext={`${formatTime(current)} sur ${formatTime(duration)}`}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
         onPointerCancel={onPointerUp}
-        className="flex flex-1 items-center gap-[2px] h-10 cursor-pointer touch-none"
+        onKeyDown={onKeyDown}
+        className="flex flex-1 items-center gap-[2px] h-10 cursor-pointer touch-none rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700"
       >
         {BARS.map((h, i) => (
           <div
@@ -137,7 +184,7 @@ export function AudioCard() {
         ))}
       </div>
 
-      <span className="shrink-0 font-body text-xs tabular-nums text-warm-700/70">
+      <span className="shrink-0 font-body text-xs tabular-nums text-warm-700/80">
         {playing || current > 0 ? formatTime(current) : formatTime(duration)}
       </span>
     </div>

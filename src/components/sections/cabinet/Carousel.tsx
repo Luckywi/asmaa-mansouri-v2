@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Marquee } from "@/components/ui/marquee";
+import { Marquee } from "@/components/ui/Marquee";
 import { Reveal } from "@/components/motion/Reveal";
 
 /**
@@ -61,9 +61,10 @@ const cabinetPhotos = [
  *   - mobile : 180×240 (ratio 3/4)
  *   - desktop : 270×360 (ratio 3/4)
  *
- * Les 4 premières images ont `priority` pour améliorer le LCP ; les
- * autres restent lazy. `sizes` suit les breakpoints pour que next/image
- * serve la bonne variante (les photos source font 900×1200).
+ * Toutes les images sont lazy : le LCP de la page /cabinet est le H1 du
+ * Hero text, pas une image du carousel (below-the-fold). `sizes` suit
+ * les breakpoints pour que next/image serve la bonne variante (sources
+ * 900×1200).
  *
  * `pauseOnHover` désactivé : sur un bandeau ambiant passif, couper
  * l'animation au survol casserait l'effet recherché.
@@ -89,7 +90,7 @@ export function Carousel() {
         className="[--gap:0.75rem] md:[--gap:1rem] [--duration:70s]"
         repeat={2}
       >
-        {cabinetPhotos.map((photo, i) => (
+        {cabinetPhotos.map((photo) => (
           <div
             key={photo.src}
             className={[
@@ -104,7 +105,6 @@ export function Carousel() {
               fill
               className="object-cover"
               sizes="(min-width: 768px) 270px, 180px"
-              priority={i < 4}
             />
           </div>
         ))}

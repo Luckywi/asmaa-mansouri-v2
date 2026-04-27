@@ -5,9 +5,20 @@ import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Hero } from "@/components/sections/prestations/Hero";
 import { WhatIs } from "@/components/sections/prestations/WhatIs";
 import { Steps } from "@/components/sections/prestations/Steps";
-import { FAQ } from "@/components/sections/prestations/FAQ";
+import { AccordionFAQ } from "@/components/ui/AccordionFAQ";
 import { Reviews } from "@/components/sections/prestations/Reviews";
 import { Bridges } from "@/components/sections/prestations/Bridges";
+import { JsonLd } from "@/components/seo/JsonLd";
+import {
+  absUrl,
+  BUSINESS_ID,
+  buildBreadcrumb,
+  buildFaqPage,
+  buildGraph,
+  buildService,
+  buildWebPage,
+} from "@/lib/schema";
+import { buildMetadata } from "@/lib/metadata";
 
 type Params = { slug: string };
 
@@ -19,6 +30,51 @@ export function generateStaticParams(): Params[] {
   return prestations.map((p) => ({ slug: p.slug }));
 }
 
+/**
+ * Metadata SEO par slug. Co-localisée ici plutôt qu'injectée dans
+ * `src/data/prestations.ts` : on garde le fichier data centré sur le
+ * contenu éditorial (title, seoH1, tariffs, whatIs, steps, bridges) et
+ * la couche SEO (title/description/OG optimisés pour ranking et CTR)
+ * vit avec la route qui la consomme.
+ */
+const PRESTATION_SEO: Record<
+  string,
+  { title: string; description: string; ogTitle: string; ogDescription: string }
+> = {
+  consultation: {
+    title: "Consultation naturopathique à Décines-Charpieu",
+    description:
+      "Bilan initial 1h30 à 80 €, suivi 30 min à 50 €, appel découverte gratuit. Cabinet à Décines-Charpieu (10 min de Lyon) ou en visio. Rendez-vous en ligne.",
+    ogTitle: "Consultation naturopathique à Décines",
+    ogDescription:
+      "Bilan 1h30 à 80 €, suivi à 50 €, appel découverte gratuit. Cabinet à Décines-Charpieu ou en visio, RDV en ligne.",
+  },
+  "massage-tuina": {
+    title: "Massage Tuina chinois à Décines-Charpieu, Lyon Est",
+    description:
+      "Massage thérapeutique chinois sur méridiens : 30 min à 50 €, corps complet 1h à 80 €. Cabinet à Décines-Charpieu, à dix minutes de Lyon. RDV en ligne.",
+    ogTitle: "Massage Tuina thérapeutique à Décines",
+    ogDescription:
+      "Massage chinois thérapeutique sur les méridiens : 30 min à 50 €, 1h à 80 €. Cabinet à Décines-Charpieu, dix minutes de Lyon.",
+  },
+  "cupping-therapy": {
+    title: "Cupping therapy, hijama et ventouses à Décines-Charpieu",
+    description:
+      "Ventouses thérapeutiques (cupping, hijama) sur les tensions installées et douleurs chroniques. Séance 1h à 80 €, cabinet à Décines-Charpieu, proche Lyon.",
+    ogTitle: "Cupping therapy et hijama à Décines",
+    ogDescription:
+      "Cupping therapy et hijama : ventouses thérapeutiques sur tensions installées et douleurs chroniques, au cabinet de Décines-Charpieu.",
+  },
+  "accompagnement-3-mois": {
+    title: "Accompagnement naturopathique 3 mois, Décines",
+    description:
+      "Suivi rapproché sur trois mois pour SOPK, endométriose, fertilité et troubles digestifs installés : 3 RDV d'1h et appel hebdo. Cabinet Décines ou visio, 350 €.",
+    ogTitle: "Programme 3 mois pour femmes",
+    ogDescription:
+      "Suivi naturopathique intensif sur 3 mois pour SOPK, endométriose, fertilité, troubles digestifs. 350 € tout compris, cabinet ou visio.",
+  },
+};
+
 export async function generateMetadata({
   params,
 }: {
@@ -26,13 +82,16 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const prestation = prestations.find((p) => p.slug === slug);
-  if (!prestation) return {};
+  const seo = PRESTATION_SEO[slug];
+  if (!prestation || !seo) return {};
 
-  return {
-    title: `${prestation.seoH1} — Asmaa Mansouri`,
-    description: prestation.shortDescription,
-    robots: { index: false, follow: false },
-  };
+  return buildMetadata({
+    title: seo.title,
+    description: seo.description,
+    path: `/prestations/${slug}`,
+    ogTitle: seo.ogTitle,
+    ogDescription: seo.ogDescription,
+  });
 }
 
 /**
@@ -65,8 +124,30 @@ export default async function PrestationDetailPage({
     notFound();
   }
 
+  const pageUrl = absUrl(`/prestations/${prestation.slug}`);
+  const jsonLd = buildGraph([
+    buildWebPage({
+      url: pageUrl,
+      name: prestation.seoH1,
+      description: prestation.seoSubtitle,
+      about: BUSINESS_ID,
+      mainEntity: `${pageUrl}#service`,
+      breadcrumb: `${pageUrl}#breadcrumb`,
+    }),
+    buildService(prestation),
+    buildFaqPage(prestation.faq, pageUrl),
+    buildBreadcrumb(
+      [
+        { name: "Prestations", url: absUrl("/prestations") },
+        { name: prestation.category, url: pageUrl },
+      ],
+      pageUrl,
+    ),
+  ]);
+
   return (
     <main id="contenu-principal" className="flex-1">
+      <JsonLd data={jsonLd} />
       <Breadcrumbs
         items={[
           { label: "Prestations", href: "/prestations" },
@@ -83,7 +164,7 @@ export default async function PrestationDetailPage({
       />
       <WhatIs title={prestation.whatIs.title} content={prestation.whatIs.content} />
       <Steps title={prestation.steps.title} items={prestation.steps.items} />
-      <FAQ faq={prestation.faq} />
+      <AccordionFAQ faq={prestation.faq} idPrefix="prestation-faq" />
       {/*
         `key={slug}` force le remount complet de Reviews à chaque
         changement de prestation. Sans ce key, React réutilise le même

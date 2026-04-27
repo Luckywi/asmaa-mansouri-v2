@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { ExternalLink, Star, X } from "lucide-react";
 import { site } from "@/data/site";
 import type { Temoignage } from "@/types";
+import { useFocusTrap } from "@/lib/useFocusTrap";
 
 type ModalProps = {
   temoignage: Temoignage | null;
@@ -55,6 +56,9 @@ function formatDateLong(iso: string): string {
  * Client Component — nécessite useEffect et framer-motion.
  */
 export function TemoignageModal({ temoignage, onClose }: ModalProps) {
+  const dialogRef = useRef<HTMLDivElement>(null);
+  useFocusTrap(Boolean(temoignage), dialogRef);
+
   useEffect(() => {
     if (!temoignage) return;
 
@@ -87,6 +91,7 @@ export function TemoignageModal({ temoignage, onClose }: ModalProps) {
           />
 
           <motion.div
+            ref={dialogRef}
             initial={{ opacity: 0, scale: 0.96, y: 12 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 12 }}
@@ -129,7 +134,7 @@ export function TemoignageModal({ temoignage, onClose }: ModalProps) {
                   {temoignage.name}
                 </p>
                 {temoignage.role && (
-                  <p className="font-body text-xs text-warm-700/60 mt-0.5">
+                  <p className="font-body text-xs text-warm-700/80 mt-0.5">
                     {temoignage.role}
                   </p>
                 )}
@@ -155,7 +160,7 @@ export function TemoignageModal({ temoignage, onClose }: ModalProps) {
             </p>
 
             <footer className="mt-6 flex flex-col gap-4 border-t border-warm-500/20 pt-4 sm:flex-row sm:items-center sm:justify-between">
-              <p className="shrink-0 whitespace-nowrap font-body text-xs text-warm-700/70">
+              <p className="shrink-0 whitespace-nowrap font-body text-xs text-warm-700/80">
                 {temoignage.date
                   ? `Publié le ${formatDateLong(temoignage.date)} via ${
                       SOURCE_LABELS[temoignage.source ?? "resalib"]

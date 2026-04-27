@@ -1,5 +1,3 @@
-"use client";
-
 const anchors = [
   { label: "Cosmétiques maison", href: "#atelier-diy" },
   { label: "Fermentation", href: "#atelier-fermentation" },
@@ -9,11 +7,6 @@ const anchors = [
 ] as const;
 
 export function ThematiquesNav() {
-  function handleClick(href: string) {
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
-
   return (
     <section aria-label="Navigation des thématiques" className="relative py-12 lg:py-22">
       <div className="mx-auto max-w-3xl px-6 md:px-8 lg:px-12 text-center">
@@ -24,25 +17,24 @@ export function ThematiquesNav() {
           Chaque atelier est pensé dans une approche globale, à la croisée de la naturopathie et de la médecine chinoise, pour que vous repartiez non seulement avec des recettes ou des outils, mais avec une véritable compréhension de votre terrain.
         </p>
 
-        <nav className="mt-8 flex flex-wrap justify-center gap-2.5">
+        <nav aria-label="Accès direct aux thématiques" className="mt-8 flex flex-wrap justify-center gap-2.5">
           {anchors.map(({ label, href }) => (
-            <button
+            <a
               key={href}
-              type="button"
-              onClick={() => handleClick(href)}
+              href={href}
               className={[
-                "px-4 py-2 rounded-md",
+                "inline-flex items-center px-4 py-2 rounded-md",
                 "bg-[var(--glass-bg)] backdrop-blur-xl backdrop-saturate-[1.8]",
                 "border-[0.5px] border-white/50",
                 "shadow-[inset_0_1px_0_rgba(255,255,255,0.7),inset_0_-1px_0_rgba(60,30,25,0.04),0_4px_16px_-6px_rgba(60,30,25,0.15)]",
                 "font-body text-sm lg:text-base font-medium text-warm-700",
                 "hover:text-warm-900 hover:border-white/70",
-                "transition-colors duration-200 ease-out cursor-pointer",
+                "transition-colors duration-200 ease-out",
                 "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700",
               ].join(" ")}
             >
               {label}
-            </button>
+            </a>
           ))}
         </nav>
       </div>

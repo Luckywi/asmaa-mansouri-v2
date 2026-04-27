@@ -24,7 +24,7 @@ export function AteliersOrganiser({
   return (
     <section
       aria-labelledby="ateliers-organiser-titre"
-      className={isHero ? "relative pt-32 pb-12 md:pt-36 lg:pt-40 lg:pb-16" : "relative py-12 lg:py-22"}
+      className={isHero ? "relative pt-32 pb-12 md:pt-36 lg:pt-40 lg:pb-22" : "relative py-12 lg:py-22"}
     >
       <div className="mx-auto max-w-3xl px-6 md:px-8 lg:px-12 flex flex-col items-center text-center gap-5">
         {/*

@@ -101,6 +101,7 @@ export const ateliers: readonly Atelier[] = [
       "Atelier public animé par Asmaa lors de l'inauguration de la pépinière du Mas du Taureau, en présence des habitants de Vaulx-en-Velin, de la maire de la ville et du préfet de Lyon. L'occasion de partager des solutions naturelles pour se protéger du moustique tigre, particulièrement présent dans la région lyonnaise, avec une recette de baume que chaque participante peut refaire chez elle.\n\nApporter des réponses naturelles aux tracas du quotidien, sans inciter à la consommation de produits industriels chargés en perturbateurs endocriniens et conservateurs chimiques : c'est au cœur de ma démarche de naturopathe.",
     date: "2023-06-23",
     location: "Pépinière du Mas du Taureau, Vaulx-en-Velin",
+    addressLocality: "Vaulx-en-Velin",
     highlights: [
       "Protection naturelle contre le moustique tigre",
       "Recette de baume facile à refaire à la maison",

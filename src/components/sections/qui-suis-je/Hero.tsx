@@ -49,7 +49,7 @@ export function Hero() {
 
           <FadeInUp delay={0.1} duration={0.6} className="mt-12 max-w-2xl mx-auto">
           <p className="font-body text-lg md:text-xl leading-relaxed text-warm-700">
-            Naturopathe à Décines-Charpieu, j'accompagne exclusivement les
+            Naturopathe à Décines-Charpieu, j&apos;accompagne exclusivement les
             femmes. Cycles, SOPK, endométriose, post-partum, préménopause,
             troubles digestifs : mon approche associe naturopathie, médecine
             traditionnelle chinoise et massage Tuina.

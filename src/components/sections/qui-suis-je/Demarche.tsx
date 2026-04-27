@@ -1,51 +1,49 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { Reveal } from "@/components/motion/Reveal";
+import { demarcheFaq } from "@/data/qui-suis-je-faq";
 
-const questions = [
-  {
-    question: "Comment se passe une séance ?",
-    answer:
-      "La première consultation dure 1h30. Nous y faisons le point ensemble sur votre santé et votre mode de vie à partir d'un questionnaire approfondi.",
-  },
-  {
-    question: "Quelle est mon approche ?",
-    answer:
-      "Pendant ce bilan, je propose différentes techniques issues de la naturopathie adaptées à votre situation. L'objectif : vous transmettre des clés concrètes pour devenir actrice de votre santé.",
-  },
-  {
-    question: "Pour quels troubles me consulter ?",
-    answer:
-      "Je suis spécialisée dans l'accompagnement des maux féminins et des troubles digestifs, avec une approche naturopathique complétée par le massage Tuina et la cupping therapy. J'accompagne les femmes aux différentes étapes de leur vie (SOPK, endométriose, post-partum, préménopause, ménopause) ainsi que sur les troubles digestifs (ballonnements, syndrome de l'intestin irritable). Mon approche allie alimentation, phytothérapie et techniques manuelles.",
-  },
-  {
-    question: "Quels bénéfices en attendre ?",
-    answer:
-      "La naturopathie propose une approche globale qui vise à soutenir l'énergie, apaiser le stress et accompagner la digestion, en s'appuyant sur la nutrition, la phytothérapie et des techniques manuelles. Le massage Tuina, que je pratique également, libère les tensions et relance la circulation selon les principes de la médecine traditionnelle chinoise.",
-  },
-] as const;
+const DESKTOP_QUERY = "(min-width: 1024px)";
+
+/**
+ * Subscribe au media query desktop. Défini hors du composant pour que
+ * `useSyncExternalStore` considère la fonction stable d'un render à
+ * l'autre (si elle changeait, la subscription serait recréée en boucle).
+ */
+function subscribeDesktopQuery(callback: () => void) {
+  const mq = window.matchMedia(DESKTOP_QUERY);
+  mq.addEventListener("change", callback);
+  return () => mq.removeEventListener("change", callback);
+}
+
+const getDesktopSnapshot = () => window.matchMedia(DESKTOP_QUERY).matches;
+const getDesktopServerSnapshot = () => false;
 
 export function Demarche() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const [isDesktop, setIsDesktop] = useState(false);
-
+  // API React idiomatique pour lire un store externe (matchMedia) avec
+  // hydratation SSR-safe : `false` au serveur, valeur réelle au client.
+  const isDesktop = useSyncExternalStore(
+    subscribeDesktopQuery,
+    getDesktopSnapshot,
+    getDesktopServerSnapshot,
+  );
+  // Desktop : ouvre la deuxième ligne (Q3 + Q4) par défaut au premier
+  // render client sur desktop. La row-sync de isOpenFor fait que
+  // setOpenIndex(2) déploie aussi Q3. On utilise un ref pour ne déclencher
+  // qu'une fois — on respecte la main de l'utilisateur si la fenêtre passe
+  // desktop → mobile → desktop. useEffect nécessaire : isDesktop n'est pas
+  // connu au SSR, donc openIndex ne peut pas être initialisé lazy.
+  const initDoneRef = useRef(false);
   useEffect(() => {
-    const mq = window.matchMedia("(min-width: 1024px)");
-    setIsDesktop(mq.matches);
-    // Desktop : ouvre la deuxième ligne (Q3 + Q4) par défaut au chargement.
-    // La row-sync de isOpenFor fait que setOpenIndex(2) déploie aussi Q3.
-    // Ne s'applique qu'au mount — les resize ultérieurs ne réouvrent pas
-    // pour respecter la main de l'utilisateur.
-    if (mq.matches) {
+    if (isDesktop && !initDoneRef.current) {
+      initDoneRef.current = true;
       setOpenIndex(2);
     }
-    const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, []);
+  }, [isDesktop]);
 
   const isOpenFor = (i: number) => {
     if (openIndex === null) return false;
@@ -73,7 +71,7 @@ export function Demarche() {
         </Reveal>
 
         <ul className="mt-16 lg:mt-20 grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
-          {questions.map(({ question, answer }, i) => {
+          {demarcheFaq.map(({ question, answer }, i) => {
             const isOpen = isOpenFor(i);
             const contentId = `demarche-q-${i}-content`;
             const headingId = `demarche-q-${i}`;

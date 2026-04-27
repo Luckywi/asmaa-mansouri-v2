@@ -48,7 +48,7 @@ import type { Temoignage } from "@/types";
  *   - Google : recherche "Asmaa Mansouri naturopathe" sur Maps/Search.
  *   - Resalib : https://www.resalib.fr/praticien/104874-asmaa-mansouri-naturopathe-meyzieu
  */
-export const temoignages: Temoignage[] = [
+export const temoignages: readonly Temoignage[] = [
   {
     name: "Gwen S.",
     role: "Cupping thérapie",

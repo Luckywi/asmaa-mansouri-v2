@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import {
   ArrowUpRight,
@@ -15,15 +14,27 @@ import { ButtonLink } from "@/components/ui/ButtonLink";
 import { FadeInUp } from "@/components/motion/FadeInUp";
 import { Reveal } from "@/components/motion/Reveal";
 import { Stagger, StaggerItem } from "@/components/motion/Stagger";
+import { JsonLd } from "@/components/seo/JsonLd";
+import {
+  absUrl,
+  buildBreadcrumb,
+  buildGraph,
+  buildItemList,
+  buildWebPage,
+} from "@/lib/schema";
 import { prestations } from "@/data/prestations";
 import { site } from "@/data/site";
+import { buildMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
-  title: "Prestations — Asmaa Mansouri, naturopathe à Décines-Charpieu",
+export const metadata = buildMetadata({
+  title: "Prestations et tarifs, naturopathe Décines-Charpieu",
   description:
-    "Consultations naturopathiques, massage thérapeutique Tuina, cupping therapy et accompagnement intensif de 3 mois. Quatre prestations à Décines-Charpieu (69150).",
-  robots: { index: false, follow: false },
-};
+    "Consultations, massages Tuina, cupping therapy, accompagnement 3 mois à Décines-Charpieu. Tarifs détaillés et RDV en ligne, cabinet ou visio.",
+  path: "/prestations",
+  ogTitle: "Mes prestations et mes tarifs",
+  ogDescription:
+    "Consultations, massages Tuina, cupping therapy et accompagnement 3 mois au cabinet de Décines-Charpieu ou en visio.",
+});
 
 /**
  * /prestations — hub des 4 prestations d'Asmaa.
@@ -34,8 +45,31 @@ export const metadata: Metadata = {
  * "En savoir plus" conservé en bas-droite.
  */
 export default function PrestationsPage() {
+  const pageUrl = absUrl("/prestations");
+  const jsonLd = buildGraph([
+    buildWebPage({
+      type: "CollectionPage",
+      url: pageUrl,
+      name: "Prestations et tarifs, naturopathe Décines-Charpieu",
+      description:
+        "Consultations, massages Tuina, cupping therapy, accompagnement 3 mois à Décines-Charpieu. Tarifs détaillés et RDV en ligne, cabinet ou visio.",
+      mainEntity: `${pageUrl}#itemlist`,
+      breadcrumb: `${pageUrl}#breadcrumb`,
+    }),
+    buildItemList(
+      prestations.map((p) => ({
+        url: absUrl(`/prestations/${p.slug}`),
+        name: p.title,
+        description: p.shortDescription,
+      })),
+      pageUrl,
+    ),
+    buildBreadcrumb([{ name: "Prestations", url: pageUrl }], pageUrl),
+  ]);
+
   return (
     <main id="contenu-principal" className="flex-1">
+      <JsonLd data={jsonLd} />
       {/* ─── Hero ────────────────────────────────────────────────── */}
       <section
         aria-labelledby="prestations-titre"
@@ -257,7 +291,7 @@ export default function PrestationsPage() {
                           "py-7",
                           "transition-colors duration-200 ease-out",
                           "hover:text-warm-900",
-                          "focus-visible:outline-none",
+                          "rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700",
                         ].join(" ")}
                       >
                         <div className="flex-1 min-w-0">

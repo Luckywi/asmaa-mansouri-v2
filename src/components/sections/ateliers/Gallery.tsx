@@ -1,9 +1,10 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { useFocusTrap } from "@/lib/useFocusTrap";
 
 type GalleryProps = {
   images: readonly string[];
@@ -64,6 +65,8 @@ const LIGHTBOX_BUTTON_CLASS = [
  */
 export function AtelierGallery({ images, alt }: GalleryProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const lightboxRef = useRef<HTMLDivElement>(null);
+  useFocusTrap(activeIndex !== null, lightboxRef);
 
   const close = useCallback(() => setActiveIndex(null), []);
 
@@ -134,6 +137,7 @@ export function AtelierGallery({ images, alt }: GalleryProps) {
             />
 
             <motion.div
+              ref={lightboxRef}
               role="dialog"
               aria-modal="true"
               aria-label={`Photo ${activeIndex + 1} sur ${images.length}`}

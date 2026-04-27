@@ -79,7 +79,7 @@ export function Presentation() {
                 alt="Portrait d'Asmaa Mansouri, naturopathe à Décines-Charpieu"
                 fill
                 className="object-cover object-top"
-                sizes="(min-width: 1024px) 42vw, 100vw"
+                sizes="(min-width: 1280px) 480px, (min-width: 1024px) 38vw, 100vw"
               />
             </div>
           </div>

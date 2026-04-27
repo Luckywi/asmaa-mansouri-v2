@@ -1,49 +1,28 @@
-import Link from "next/link";
 import {
-  ArrowUpRight,
-  Eye,
   Flower2,
   GalleryVerticalEnd,
   PhoneCall,
   Sparkles,
-  type LucideIcon,
 } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Reveal } from "@/components/motion/Reveal";
-import { Stagger, StaggerItem } from "@/components/motion/Stagger";
+import { BridgesGrid, type BridgeItem } from "@/components/ui/BridgesGrid";
 import { site } from "@/data/site";
 
 /**
  * AllerPlusLoin — section finale de /cabinet.
  *
- * Architecture en 2 blocs, alignée sur le pattern "Comprendre mon
- * approche" de /prestations :
- *
+ * Architecture en 2 blocs :
  *   1. Header centré (H2 + sous-titre + CTA primary Resalib) — pose
  *      l'invitation conversationnelle et l'action de conversion à
  *      portée de clic, sans avoir à scroller jusqu'aux cards.
+ *   2. `BridgesGrid` — 3 cibles (Spécialités / Prestations / Ateliers)
+ *      rendues en grille desktop + liste éditoriale mobile.
  *
- *   2. Liste 3 entrées (Spécialités / Prestations / Ateliers) en
- *      rendu adaptatif :
- *        - Mobile (< md) : pattern éditorial — hairlines warm-700/15,
- *          gros titre display, description, ArrowUpRight qui glisse
- *          en diagonale au hover. Pas de glass, pas d'icône
- *          watermark. Le rythme vient uniquement de la typo.
- *        - md+ : 3 cards glass watermark + header icône + description
- *          + ButtonLink primary, identiques aux bridges /prestations.
- *
- * Server Component pur — aucun state, aucun JS.
+ * Server Component pur — aucun state, aucun JS shipé.
  */
 
-type Step = {
-  readonly icon: LucideIcon;
-  readonly title: string;
-  readonly description: string;
-  readonly ctaLabel: string;
-  readonly href: string;
-};
-
-const steps: readonly Step[] = [
+const items: readonly BridgeItem[] = [
   {
     icon: Flower2,
     title: "Mes spécialités",
@@ -68,7 +47,7 @@ const steps: readonly Step[] = [
     ctaLabel: "Découvrir les ateliers",
     href: "/ateliers",
   },
-] as const;
+];
 
 export function AllerPlusLoin() {
   return (
@@ -102,108 +81,11 @@ export function AllerPlusLoin() {
           </div>
         </Reveal>
 
-        {/* ─── Mobile (< md) : liste éditoriale ───────────────── */}
-        <Stagger
-          as="ul"
-          trigger="inView"
-          staggerChildren={0.06}
-          className="mt-14 md:hidden border-y border-warm-700/15"
-        >
-          {steps.map(({ title, description, href }, i) => (
-            <StaggerItem
-              key={title}
-              as="li"
-              className={i > 0 ? "border-t border-warm-700/15" : ""}
-            >
-              <Link
-                href={href}
-                className={[
-                  "group relative flex items-center gap-6",
-                  "py-7",
-                  "transition-colors duration-200 ease-out",
-                  "hover:text-warm-900",
-                  "focus-visible:outline-none",
-                ].join(" ")}
-              >
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-display text-2xl font-medium tracking-[-0.02em] leading-[1.15] text-warm-900">
-                    {title}
-                  </h3>
-                  <p className="mt-2 font-body text-sm leading-relaxed text-warm-700">
-                    {description}
-                  </p>
-                </div>
-                <ArrowUpRight
-                  aria-hidden="true"
-                  strokeWidth={1.5}
-                  className={[
-                    "w-7 h-7 shrink-0 text-warm-700",
-                    "transition-all duration-300 ease-out",
-                    "group-hover:translate-x-1 group-hover:-translate-y-1",
-                    "group-hover:text-warm-900",
-                  ].join(" ")}
-                />
-              </Link>
-            </StaggerItem>
-          ))}
-        </Stagger>
-
-        {/* ─── md+ : 3 cards glass watermark — cards statiques, contenu animé ── */}
-        <ul className="hidden md:grid mt-14 lg:mt-20 md:grid-cols-3 gap-6 lg:gap-8">
-          {steps.map(({ icon: Icon, title, description, ctaLabel, href }, i) => (
-            <li
-              key={title}
-              className="group relative flex flex-col rounded-md overflow-hidden"
-            >
-              <Icon
-                aria-hidden="true"
-                className="absolute inset-0 w-full h-full text-warm-700/50 pointer-events-none"
-                strokeWidth={2}
-              />
-
-              <div
-                className={[
-                  "relative flex-1 flex flex-col",
-                  "p-6 lg:p-8",
-                  "bg-[var(--glass-bg)]",
-                  "backdrop-blur-xl backdrop-saturate-[1.8]",
-                  "border-[0.5px] border-white/50",
-                  "shadow-[inset_0_1px_0_rgba(255,255,255,0.7),inset_0_-1px_0_rgba(60,30,25,0.04),0_4px_16px_-6px_rgba(60,30,25,0.15)]",
-                  "group-hover:border-white/70",
-                  "transition-colors duration-200 ease-out",
-                ].join(" ")}
-              >
-                <Reveal delay={i * 0.08} className="flex flex-col flex-1">
-                  <div className="flex items-center gap-3">
-                    <Icon
-                      aria-hidden="true"
-                      className="w-7 h-7 text-warm-700 shrink-0"
-                      strokeWidth={1.5}
-                    />
-                    <h3 className="font-display text-xl lg:text-2xl font-medium tracking-tight text-warm-900">
-                      {title}
-                    </h3>
-                  </div>
-
-                  <p className="mt-4 font-body text-base leading-relaxed text-warm-700">
-                    {description}
-                  </p>
-
-                  <div className="mt-auto pt-6">
-                    <ButtonLink href={href} variant="primary">
-                      {ctaLabel}
-                      <Eye
-                        aria-hidden="true"
-                        className="w-4 h-4"
-                        strokeWidth={1.5}
-                      />
-                    </ButtonLink>
-                  </div>
-                </Reveal>
-              </div>
-            </li>
-          ))}
-        </ul>
+        <BridgesGrid
+          items={items}
+          mobileClassName="mt-14"
+          desktopClassName="mt-14 lg:mt-20"
+        />
       </div>
     </section>
   );

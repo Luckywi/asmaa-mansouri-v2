@@ -64,7 +64,7 @@ export function Hero() {
       <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
         {/* ─── Bloc titre + sous-titre, centré ──────────────────── */}
         <div className="text-center">
-          <FadeInUp duration={0.6} className="max-w-4xl mx-auto">
+          <FadeInUp duration={0.6} className="max-w-3xl mx-auto">
             <h1
               id="hero-titre"
               className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium tracking-[-0.02em] leading-[1.05] text-warm-900"

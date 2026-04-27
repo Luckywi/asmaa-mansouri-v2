@@ -85,8 +85,10 @@ export function Experiences() {
             <VideoCard />
           </div>
 
-          {/* Audio — largeur pleine mobile, col 2 row 1 desktop */}
-          <div className="w-full max-w-md">
+          {/* Audio — largeur pleine mobile, col 2 row 1 desktop.
+              Centré horizontalement sur desktop par rapport à la card
+              texte en dessous (mx-auto dans la colonne). */}
+          <div className="w-full max-w-md lg:mx-auto">
             <AudioCard />
           </div>
 

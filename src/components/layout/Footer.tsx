@@ -41,6 +41,7 @@ const legalLinks = [
   { label: "Contact", href: "/contact" },
   { label: "Mentions légales", href: "/mentions-legales" },
   { label: "Politique de confidentialité", href: "/politique-confidentialite" },
+  { label: "CGV", href: "/cgv" },
 ] as const;
 
 /**
@@ -58,13 +59,27 @@ function FooterSection({
   title: string;
   children: React.ReactNode;
 }) {
+  const headingId = `footer-${title
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "")}-titre`;
   return (
     <div>
       <div className="h-px bg-warm-700/15 lg:hidden" />
-      <h3 className="mt-4 lg:mt-0 font-display text-xs font-medium uppercase tracking-[0.18em] text-warm-900">
+      <h3
+        id={headingId}
+        className="mt-4 lg:mt-0 font-display text-xs font-medium uppercase tracking-[0.18em] text-warm-900"
+      >
         {title}
       </h3>
-      <nav className="mt-4 flex flex-col gap-2.5 pb-4 lg:pb-0">{children}</nav>
+      <nav
+        aria-labelledby={headingId}
+        className="mt-4 flex flex-col gap-2.5 pb-4 lg:pb-0"
+      >
+        {children}
+      </nav>
     </div>
   );
 }
@@ -87,7 +102,7 @@ function FooterLink({
   return (
     <Link
       href={href}
-      className="font-body text-sm text-warm-700/80 transition-colors duration-150 ease-out hover:text-warm-900"
+      className="inline-block py-1 font-body text-sm text-warm-700/80 transition-colors duration-150 ease-out hover:text-warm-900 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700"
     >
       {children}
     </Link>
@@ -182,7 +197,7 @@ export function Footer() {
         <div className="mt-6 flex flex-col items-center justify-center gap-2 lg:flex-row lg:gap-3">
           <a
             href={site.phoneHref}
-            className="font-body text-sm text-warm-700/80 transition-colors duration-150 ease-out hover:text-warm-900"
+            className="inline-block py-1 font-body text-sm text-warm-700/80 transition-colors duration-150 ease-out hover:text-warm-900 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700"
           >
             {site.phone}
           </a>
@@ -191,7 +206,7 @@ export function Footer() {
           </span>
           <a
             href={`mailto:${site.email}`}
-            className="font-body text-sm text-warm-700/80 transition-colors duration-150 ease-out hover:text-warm-900"
+            className="inline-block py-1 font-body text-sm text-warm-700/80 transition-colors duration-150 ease-out hover:text-warm-900 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700"
           >
             {site.email}
           </a>
@@ -203,7 +218,7 @@ export function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Suivre ${site.instagram} sur Instagram`}
-            className="font-body text-sm text-warm-700/80 transition-colors duration-150 ease-out hover:text-warm-900"
+            className="inline-block py-1 font-body text-sm text-warm-700/80 transition-colors duration-150 ease-out hover:text-warm-900 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700"
           >
             {site.instagram}
           </a>
@@ -291,7 +306,7 @@ export function Footer() {
         <div className="mt-12 h-px bg-warm-700/15" />
 
         {/* ─── 4. Copyright centré ─────────────────────────── */}
-        <p className="mt-6 text-center font-body text-xs text-warm-700/60">
+        <p className="mt-6 text-center font-body text-xs text-warm-700/80">
           &copy; {new Date().getFullYear()} {site.name} — Naturopathe à Décines-Charpieu
         </p>
       </div>

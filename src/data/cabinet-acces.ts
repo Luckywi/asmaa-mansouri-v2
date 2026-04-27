@@ -1,5 +1,5 @@
-import type { LucideIcon } from "lucide-react";
 import { Bus, Car, TramFront } from "lucide-react";
+import type { AccessMode } from "@/types";
 
 /**
  * Données de la section "Accessibilité du cabinet" (/cabinet).
@@ -17,13 +17,6 @@ import { Bus, Car, TramFront } from "lucide-react";
  * le nom "Décines Grand Large" et sont situés sur la rue Francisco
  * Ferrer, la même rue que le cabinet (n° 48).
  */
-
-export type AccessMode = {
-  readonly icon: LucideIcon;
-  readonly title: string;
-  readonly description: string;
-  readonly details: readonly string[];
-};
 
 export const zonesDesservies = [
   "Lyon",

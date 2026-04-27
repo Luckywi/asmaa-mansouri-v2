@@ -39,12 +39,23 @@ export function HeaderMobile() {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
 
-  // Auto-close au changement de route (utile Phase 2 quand les vraies pages
-  // existeront — en Phase 1 anchors le pathname ne change pas, donc on
-  // ferme aussi manuellement via onClick sur chaque lien plus bas).
+  // Auto-close au changement de route. On synchronise une source externe
+  // (le pathname exposé par Next.js) avec l'état local du menu — cas
+  // légitime d'usage de useEffect documenté par la règle React.
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- sync router → menuOpen
     setMenuOpen(false);
   }, [pathname]);
+
+  // Escape pour fermer le panel quand il est ouvert (a11y clavier).
+  useEffect(() => {
+    if (!menuOpen) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+    document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown", handleKey);
+  }, [menuOpen]);
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -87,9 +98,11 @@ export function HeaderMobile() {
         <div className="relative flex items-center justify-between h-16 px-4">
           {/* Burger — bouton gauche, animation CSS pure (pas besoin de framer) */}
           <button
+            type="button"
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label={menuOpen ? "Fermer le menu" : "Ouvrir le menu"}
             aria-expanded={menuOpen}
+            aria-controls="mobile-menu-panel"
             className="flex h-10 w-10 flex-col items-center justify-center gap-[5px] rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700"
           >
             <span
@@ -122,6 +135,7 @@ export function HeaderMobile() {
         <AnimatePresence>
           {menuOpen && (
             <motion.div
+              id="mobile-menu-panel"
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
@@ -131,20 +145,28 @@ export function HeaderMobile() {
               <div className="border-t-[0.5px] border-white/50 px-5 pb-5 pt-2">
                 {/* Liens nav empilés */}
                 <ul className="flex flex-col">
-                  {navLinks.map((link) => (
-                    <li
-                      key={link.href}
-                      className="border-b-[0.5px] last:border-b-0 border-white/40"
-                    >
-                      <Link
-                        href={link.href}
-                        onClick={closeMenu}
-                        className="block py-4 font-display text-[20px] font-medium tracking-tight text-warm-900 transition-colors duration-200 hover:text-warm-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700 rounded-md"
+                  {navLinks.map((link) => {
+                    const active =
+                      link.href === "/"
+                        ? pathname === "/"
+                        : pathname === link.href ||
+                          pathname.startsWith(`${link.href}/`);
+                    return (
+                      <li
+                        key={link.href}
+                        className="border-b-[0.5px] last:border-b-0 border-white/40"
                       >
-                        {link.label}
-                      </Link>
-                    </li>
-                  ))}
+                        <Link
+                          href={link.href}
+                          onClick={closeMenu}
+                          aria-current={active ? "page" : undefined}
+                          className="block py-4 font-display text-[20px] font-medium tracking-tight text-warm-900 transition-colors duration-200 hover:text-warm-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700 rounded-md"
+                        >
+                          {link.label}
+                        </Link>
+                      </li>
+                    );
+                  })}
                 </ul>
 
                 {/* CTAs : Resalib primaire + Téléphone secondaire */}

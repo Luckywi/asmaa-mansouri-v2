@@ -3,7 +3,7 @@ import { ButtonLink } from "@/components/ui/ButtonLink";
 import { GoogleLogo } from "@/components/ui/GoogleLogo";
 import { InstagramLogo } from "@/components/ui/InstagramLogo";
 import { ResalibLogo } from "@/components/ui/ResalibLogo";
-import { Marquee } from "@/components/ui/marquee";
+import { Marquee } from "@/components/ui/Marquee";
 import { Reveal } from "@/components/motion/Reveal";
 import { temoignages } from "@/data/temoignages";
 import { site } from "@/data/site";
@@ -73,7 +73,7 @@ function ReviewCard({ name, role, body }: Temoignage) {
             {name}
           </figcaption>
           {role && (
-            <p className="font-body text-xs text-warm-700/60 mt-0.5">{role}</p>
+            <p className="font-body text-xs text-warm-700/80 mt-0.5">{role}</p>
           )}
         </div>
       </div>

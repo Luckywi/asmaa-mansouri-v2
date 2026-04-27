@@ -118,7 +118,7 @@ export function TemoignageCard({ temoignage, onOpenDetails }: CardProps) {
             {name}
           </p>
           {role && (
-            <p className="font-body text-xs text-warm-700/60 mt-0.5 truncate">
+            <p className="font-body text-xs text-warm-700/80 mt-0.5 truncate">
               {role}
             </p>
           )}

@@ -64,7 +64,7 @@ export function AteliersMonApproche() {
                   "py-7",
                   "transition-colors duration-200 ease-out",
                   "hover:text-warm-900",
-                  "focus-visible:outline-none",
+                  "rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-warm-700",
                 ].join(" ")}
               >
                 <div className="flex-1 min-w-0">

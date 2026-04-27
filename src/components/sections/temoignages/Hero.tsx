@@ -27,7 +27,7 @@ export function TemoignagesHero() {
   return (
     <section
       aria-labelledby="temoignages-titre"
-      className="relative pt-32 pb-12 md:pt-36 lg:pt-40 lg:pb-16"
+      className="relative pt-32 pb-12 md:pt-36 lg:pt-40 lg:pb-22"
     >
       <div className="mx-auto max-w-3xl px-6 text-center">
         <FadeInUp duration={0.6}>

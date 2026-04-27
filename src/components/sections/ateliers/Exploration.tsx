@@ -45,9 +45,9 @@ export function AteliersExploration() {
                 "flex flex-col items-center text-center",
               ].join(" ")}
             >
-              <h3 className="font-display text-2xl lg:text-3xl font-medium tracking-[-0.01em] leading-[1.2] text-warm-900">
+              <h2 className="font-display text-2xl lg:text-3xl font-medium tracking-[-0.01em] leading-[1.2] text-warm-900">
                 {title}
-              </h3>
+              </h2>
               <p className="mt-4 font-body text-base lg:text-lg leading-relaxed text-warm-700">
                 {description}
               </p>

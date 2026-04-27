@@ -16,10 +16,6 @@ type StaggerProps = {
   delay?: number;
   /** Délai entre chaque enfant, en secondes. Défaut : 0.08. */
   staggerChildren?: number;
-  /** Décalage vertical initial de chaque enfant. Défaut : 16. */
-  y?: number;
-  /** Durée de chaque enfant. Défaut : 0.5. */
-  duration?: number;
   /** Balise HTML rendue par le parent. Défaut : `div`. */
   as?: ElementType;
   className?: string;
@@ -44,8 +40,6 @@ export function Stagger({
   trigger = "mount",
   delay = 0,
   staggerChildren = 0.08,
-  y: _y = 16,
-  duration: _duration = 0.5,
   as = "div",
   className,
 }: StaggerProps) {

@@ -180,7 +180,7 @@ Sur toutes les pages sauf la landing — schema.org BreadcrumbList (Phase 2 SEO 
 | Bloc témoignages | Réutilisable — *témoignages à collecter avant mise en ligne* |
 | Bloc FAQ | Schema.org FAQPage — réutilisable par page |
 | CTA final | Identique sur toutes les pages |
-| Breadcrumb | Toutes pages sauf landing |
+| Breadcrumb | Pages **niveau 2+** uniquement (sauf landing et hubs niveau 1) |
 
 ---
 
@@ -192,6 +192,26 @@ Sur toutes les pages sauf la landing — schema.org BreadcrumbList (Phase 2 SEO 
 - "naturopathie féminine Lyon"
 - "massage Tuina Décines"
 - "cupping therapy Lyon Est"
+
+---
+
+## Divergence éditoriale slug pages (figée audit cohérence-ui-ux 2026-04-24)
+
+Les deux familles de slug pages suivent intentionnellement des architectures différentes — divergence justifiée par leur intention :
+
+### `/prestations/[slug]` — approche commerciale
+
+**Structure :** Breadcrumbs → Hero (avec tariffs inline) → WhatIs → Steps → FAQ → **Reviews** → **Bridges (3 cards)**
+
+**Pourquoi :** une prestation se vend. La preuve sociale (Reviews) rassure, le maillage dense (Bridges×3) maximise les chemins de conversion vers les autres prestations / le cabinet / la praticienne.
+
+### `/specialites/[slug]` — approche pédagogique
+
+**Structure :** Breadcrumbs → Hero → Article (définition + symptômes + approche) → FAQ → **CTAFinal (2 CTA)**
+
+**Pourquoi :** une spécialité se documente. La page est plus longue, plus contenue, plus didactique. La clôture sobre (2 CTA : appel découverte + lien prestations) évite de noyer le visiteur en fin de lecture.
+
+> Cette divergence n'est pas une incohérence à corriger — c'est un parti pris. Toute homogénéisation future devra arbitrer entre conversion (prestation) et pédagogie (spécialité).
 
 ---
 

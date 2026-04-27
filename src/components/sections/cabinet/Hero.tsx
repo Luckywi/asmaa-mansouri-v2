@@ -73,7 +73,7 @@ export function Hero() {
       className="relative pt-32 pb-12 md:pt-36 lg:pt-40 lg:pb-22"
     >
       <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12">
-        <div className="text-center max-w-4xl mx-auto">
+        <div className="text-center max-w-3xl mx-auto">
           <FadeInUp duration={0.6}>
           <h1
             id="cabinet-hero-titre"

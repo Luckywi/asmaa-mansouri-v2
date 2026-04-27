@@ -116,6 +116,13 @@ html {
   html {
     scroll-behavior: auto;
   }
+
+  /* Marquees horizontaux et verticaux — figés sous reduced-motion. Le
+     contenu reste lisible, seul le défilement CSS est suspendu. */
+  .animate-marquee,
+  .animate-marquee-vertical {
+    animation-play-state: paused !important;
+  }
 }
 
 body {

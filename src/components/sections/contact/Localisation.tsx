@@ -47,7 +47,7 @@ export function ContactLocalisation() {
         <Reveal as="div" delay={0.1} className="mt-12 lg:mt-16 flex flex-col lg:flex-row lg:items-stretch gap-8 lg:gap-12">
           <div className="w-full lg:w-1/2 flex flex-col lg:order-1 order-2">
             <div>
-              <p className="flex items-center gap-2 font-body text-xs font-medium uppercase tracking-widest text-warm-700/70">
+              <p className="flex items-center gap-2 font-body text-xs font-medium uppercase tracking-widest text-warm-700/80">
                 <MapPin
                   aria-hidden="true"
                   className="w-3.5 h-3.5"
@@ -74,7 +74,7 @@ export function ContactLocalisation() {
             </div>
 
             <div className="mt-8">
-              <p className="flex items-center gap-2 font-body text-xs font-medium uppercase tracking-widest text-warm-700/70">
+              <p className="flex items-center gap-2 font-body text-xs font-medium uppercase tracking-widest text-warm-700/80">
                 <Clock
                   aria-hidden="true"
                   className="w-3.5 h-3.5"

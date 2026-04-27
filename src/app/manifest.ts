@@ -18,14 +18,15 @@ import { site } from "@/data/site";
  */
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: `${site.name} — Naturopathe à Décines-Charpieu`,
-    short_name: site.name,
+    name: `${site.name}, Naturopathe à Décines-Charpieu`,
+    short_name: "Asmaa",
     description:
       "Naturopathie féminine à Décines-Charpieu. Consultations, massages Tuina, cupping therapy.",
     start_url: "/",
     scope: "/",
     display: "standalone",
-    lang: "fr",
+    orientation: "portrait",
+    lang: "fr-FR",
     dir: "ltr",
     theme_color: "#F2E4CF",
     background_color: "#F2E4CF",
@@ -37,19 +38,13 @@ export default function manifest(): MetadataRoute.Manifest {
         purpose: "any",
       },
       {
-        src: "/web-app-manifest-192x192.png",
-        sizes: "192x192",
-        type: "image/png",
-        purpose: "maskable",
-      },
-      {
         src: "/web-app-manifest-512x512.png",
         sizes: "512x512",
         type: "image/png",
         purpose: "any",
       },
       {
-        src: "/web-app-manifest-512x512.png",
+        src: "/icon-maskable-512.png",
         sizes: "512x512",
         type: "image/png",
         purpose: "maskable",

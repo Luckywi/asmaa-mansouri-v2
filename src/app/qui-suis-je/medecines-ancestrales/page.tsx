@@ -1,14 +1,20 @@
-import type { Metadata } from "next";
 import { CalendarRange, Flower2, Leaf, UserRound } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
-import {
-  Bridges,
-  type QuiSuisJeBridge,
-} from "@/components/sections/qui-suis-je/Bridges";
+import { Bridges } from "@/components/sections/qui-suis-je/Bridges";
+import type { BridgeItem } from "@/components/ui/BridgesGrid";
 import { FadeInUp } from "@/components/motion/FadeInUp";
 import { Reveal } from "@/components/motion/Reveal";
+import { JsonLd } from "@/components/seo/JsonLd";
+import {
+  absUrl,
+  buildArticle,
+  buildBreadcrumb,
+  buildGraph,
+  buildWebPage,
+} from "@/lib/schema";
 import { site } from "@/data/site";
+import { buildMetadata } from "@/lib/metadata";
 
 /**
  * /qui-suis-je/medecines-ancestrales — sous-page du hub identité.
@@ -34,15 +40,19 @@ import { site } from "@/data/site";
  * Server Component pur.
  */
 
-export const metadata: Metadata = {
-  title:
-    "Mes médecines ancestrales — Asmaa Mansouri, naturopathe à Décines-Charpieu",
+export const metadata = buildMetadata({
+  title: "MTC, médecine prophétique et naturopathie, Décines",
   description:
-    "Médecine traditionnelle chinoise et médecine prophétique : les deux traditions ancestrales qui nourrissent ma pratique de naturopathe au cabinet de Décines-Charpieu.",
-  robots: { index: false, follow: false },
-};
+    "Médecine traditionnelle chinoise, médecine prophétique et naturopathie occidentale : trois traditions intégrées dans l'accompagnement d'Asmaa Mansouri.",
+  path: "/qui-suis-je/medecines-ancestrales",
+  ogType: "article",
+  authors: ["Asmaa Mansouri"],
+  ogTitle: "Mes médecines ancestrales",
+  ogDescription:
+    "MTC, médecine prophétique et naturopathie occidentale : trois traditions thérapeutiques intégrées dans mon accompagnement au cabinet.",
+});
 
-const bridges: readonly QuiSuisJeBridge[] = [
+const bridges: readonly BridgeItem[] = [
   {
     href: "/qui-suis-je/la-naturopathie",
     icon: Leaf,
@@ -70,8 +80,51 @@ const bridges: readonly QuiSuisJeBridge[] = [
 ] as const;
 
 export default function MedecinesAncestralesPage() {
+  const pageUrl = absUrl("/qui-suis-je/medecines-ancestrales");
+  const jsonLd = buildGraph([
+    buildWebPage({
+      url: pageUrl,
+      name: "MTC, médecine prophétique et naturopathie, Décines",
+      description:
+        "Médecine traditionnelle chinoise, médecine prophétique et naturopathie occidentale : trois traditions intégrées dans l'accompagnement d'Asmaa Mansouri.",
+      mainEntity: `${pageUrl}#article`,
+      breadcrumb: `${pageUrl}#breadcrumb`,
+    }),
+    buildArticle({
+      pageUrl,
+      headline: "Mes médecines ancestrales",
+      description:
+        "Médecine traditionnelle chinoise, médecine prophétique et naturopathie occidentale : trois traditions intégrées dans l'accompagnement d'Asmaa Mansouri.",
+      image: {
+        url: absUrl("/qui-suis-je/portrait-1.jpg"),
+        width: 1203,
+        height: 1600,
+      },
+      datePublished: "2026-04-14",
+      dateModified: "2026-04-24",
+      articleSection: "Médecines ancestrales",
+      keywords: [
+        "médecine traditionnelle chinoise",
+        "MTC",
+        "Tuina",
+        "médecine prophétique",
+        "hijama",
+        "nigelle",
+        "Qi",
+      ],
+    }),
+    buildBreadcrumb(
+      [
+        { name: "Qui suis-je ?", url: absUrl("/qui-suis-je") },
+        { name: "Médecines ancestrales", url: pageUrl },
+      ],
+      pageUrl,
+    ),
+  ]);
+
   return (
     <main id="contenu-principal" className="flex-1">
+      <JsonLd data={jsonLd} />
       <Breadcrumbs
         items={[
           { label: "Qui suis-je ?", href: "/qui-suis-je" },
@@ -133,10 +186,10 @@ export default function MedecinesAncestralesPage() {
             </h2>
             <p className="mt-6 font-body text-base lg:text-lg leading-relaxed text-warm-700">
               Vieille de plus de 3&nbsp;000 ans, la Médecine Traditionnelle
-              Chinoise (MTC) repose sur une vision énergétique du corps
+              Chinoise (<abbr title="Médecine traditionnelle chinoise">MTC</abbr>) repose sur une vision énergétique du corps
               humain. La santé n&apos;est pas l&apos;absence de
               maladie&nbsp;: c&apos;est la circulation fluide et équilibrée
-              du Qi, l&apos;énergie vitale, à travers les méridiens et les
+              du <span lang="zh-Latn">Qi</span>, l&apos;énergie vitale, à travers les méridiens et les
               organes.
             </p>
 
@@ -164,9 +217,9 @@ export default function MedecinesAncestralesPage() {
                 Un enseignement clé pour les femmes
               </h3>
               <p className="mt-4 font-body text-base lg:text-lg leading-relaxed text-warm-700">
-                La MTC m&apos;a apporté une conviction que j&apos;intègre
+                La <abbr title="Médecine traditionnelle chinoise">MTC</abbr> m&apos;a apporté une conviction que j&apos;intègre
                 systématiquement&nbsp;: le cru ne convient pas à tous les
-                terrains. La femme est de nature Yin, un principe froid,
+                terrains. La femme est de nature <span lang="zh-Latn">Yin</span>, un principe froid,
                 humide, intérieur. Un terrain déjà froid n&apos;a pas besoin
                 d&apos;être davantage refroidi par une alimentation
                 crue&nbsp;: salades en plein hiver, smoothies glacés,
@@ -182,7 +235,7 @@ export default function MedecinesAncestralesPage() {
           <Reveal as="article" className="mt-16 lg:mt-20">
             <h2 className="font-display text-3xl lg:text-4xl font-medium tracking-[-0.02em] leading-[1.15] text-warm-900">
               La Médecine Prophétique{" "}
-              <span className="font-body text-lg lg:text-xl text-warm-700 italic">
+              <span className="font-body text-lg lg:text-xl text-warm-700 italic" lang="ar-Latn">
                 (Tibb an-Nabawi)
               </span>
             </h2>
@@ -224,9 +277,9 @@ export default function MedecinesAncestralesPage() {
                 Les outils utilisés
               </h3>
               <p className="mt-4 font-body text-base lg:text-lg leading-relaxed text-warm-700">
-                La nigelle (Nigella sativa), qui agit à la fois sur
+                La nigelle (<i lang="la">Nigella sativa</i>), qui agit à la fois sur
                 l&apos;inflammation, l&apos;immunité, la digestion et les
-                allergies. Le miel, tonique du Qi et du Sang, antibactérien
+                allergies. Le miel, tonique du <span lang="zh-Latn">Qi</span> et du Sang, antibactérien
                 et réparateur. Et le jeûne, pratique de purification et
                 d&apos;auto-guérison&nbsp;: bien avant que la science
                 moderne ne valide ses bienfaits, cette tradition enseignait

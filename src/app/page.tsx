@@ -4,10 +4,41 @@ import { Specialites } from "@/components/sections/Specialites";
 import { Cabinet } from "@/components/sections/Cabinet";
 import { Prestations } from "@/components/sections/Prestations";
 import { Temoignages } from "@/components/sections/Temoignages";
+import { JsonLd } from "@/components/seo/JsonLd";
+import {
+  absUrl,
+  BUSINESS_ID,
+  buildGraph,
+  buildWebPage,
+} from "@/lib/schema";
+import { buildMetadata } from "@/lib/metadata";
+
+export const metadata = buildMetadata({
+  title: "Asmaa Mansouri, naturopathe santé féminine à Décines-Charpieu",
+  description:
+    "Naturopathe santé féminine à Décines-Charpieu : SOPK, hormones, digestion, burn-out. Cabinet à dix minutes de Lyon ou visio. Rendez-vous en ligne.",
+  path: "/",
+  ogTitle: "Asmaa Mansouri, naturopathe à Décines-Charpieu",
+  ogDescription:
+    "Accompagnement naturopathique pour femmes à Décines-Charpieu : hormones, digestion, burn-out. Cabinet à dix minutes de Lyon ou en visio.",
+});
 
 export default function Home() {
+  const pageUrl = absUrl("/");
+  const jsonLd = buildGraph([
+    buildWebPage({
+      url: pageUrl,
+      name: "Asmaa Mansouri, naturopathe santé féminine à Décines-Charpieu",
+      description:
+        "Naturopathe santé féminine à Décines-Charpieu : SOPK, hormones, digestion, burn-out. Cabinet à dix minutes de Lyon ou visio. Rendez-vous en ligne.",
+      about: BUSINESS_ID,
+      mainEntity: BUSINESS_ID,
+    }),
+  ]);
+
   return (
     <main id="contenu-principal" className="flex-1">
+      <JsonLd data={jsonLd} />
       {/* Hero — section d'accueil (titre, sous-titre, CTA Resalib, LogoMark) */}
       <Hero />
 

@@ -4,11 +4,8 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { Reveal } from "@/components/motion/Reveal";
-import {
-  accessModes,
-  zonesDesservies,
-  type AccessMode,
-} from "@/data/cabinet-acces";
+import { accessModes, zonesDesservies } from "@/data/cabinet-acces";
+import type { AccessMode } from "@/types";
 
 /**
  * Acces — section "Accessibilité du cabinet" de la page /cabinet.

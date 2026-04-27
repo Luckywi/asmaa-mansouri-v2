@@ -3,8 +3,13 @@
 import { useRef, useState, useCallback, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Play, Pause, X } from "lucide-react";
+import { useFocusTrap } from "@/lib/useFocusTrap";
 
 const VIDEO_SRC = "/temoignages/temoignage-video.mp4";
+
+// TODO a11y : fournir sous-titres (<track kind="captions" src="…/temoignage-video.fr.vtt"
+// srclang="fr" label="Français">) et/ou transcription textuelle (WCAG 1.2.2 A).
+// À produire avec Asmaa avant mise en ligne publique.
 
 function formatTime(s: number): string {
   const m = Math.floor(s / 60);
@@ -15,11 +20,18 @@ function formatTime(s: number): string {
 /* ─── Modale player (mobile / tablette uniquement) ─────────── */
 
 function VideoModal({ onClose }: { onClose: () => void }) {
+  const dialogRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
-  const [playing, setPlaying] = useState(false);
+  // `playing=true` dès le render initial : la modale est toujours ouverte
+  // par un user gesture (tap miniature), on lance la vidéo immédiatement
+  // dans l'effet d'en bas. Initialiser à `true` évite le flash Play→Pause
+  // au mount.
+  const [playing, setPlaying] = useState(true);
   const [current, setCurrent] = useState(0);
   const [duration, setDuration] = useState(0);
+
+  useFocusTrap(true, dialogRef);
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
@@ -36,7 +48,6 @@ function VideoModal({ onClose }: { onClose: () => void }) {
 
   useEffect(() => {
     videoRef.current?.play();
-    setPlaying(true);
   }, []);
 
   const togglePlay = useCallback(() => {
@@ -86,6 +97,41 @@ function VideoModal({ onClose }: { onClose: () => void }) {
     dragging.current = false;
   }, []);
 
+  const onKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      const v = videoRef.current;
+      if (!v || !duration) return;
+      const step = 5;
+      let nextTime: number | null = null;
+      switch (e.key) {
+        case "ArrowRight":
+        case "ArrowUp":
+          nextTime = Math.min(duration, v.currentTime + step);
+          break;
+        case "ArrowLeft":
+        case "ArrowDown":
+          nextTime = Math.max(0, v.currentTime - step);
+          break;
+        case "Home":
+          nextTime = 0;
+          break;
+        case "End":
+          nextTime = duration;
+          break;
+        case " ":
+        case "Enter":
+          e.preventDefault();
+          togglePlay();
+          return;
+      }
+      if (nextTime !== null) {
+        e.preventDefault();
+        v.currentTime = nextTime;
+      }
+    },
+    [duration, togglePlay],
+  );
+
   const pct = duration ? (current / duration) * 100 : 0;
 
   return (
@@ -101,6 +147,7 @@ function VideoModal({ onClose }: { onClose: () => void }) {
       />
 
       <motion.div
+        ref={dialogRef}
         initial={{ opacity: 0, scale: 0.96, y: 12 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.96, y: 12 }}
@@ -132,8 +179,9 @@ function VideoModal({ onClose }: { onClose: () => void }) {
           <video
             ref={videoRef}
             src={VIDEO_SRC}
-            preload="auto"
+            preload="metadata"
             playsInline
+            aria-label="Témoignage vidéo"
             onClick={togglePlay}
             onTimeUpdate={() => setCurrent(videoRef.current?.currentTime ?? 0)}
             onLoadedMetadata={() => setDuration(videoRef.current?.duration ?? 0)}
@@ -177,11 +225,19 @@ function VideoModal({ onClose }: { onClose: () => void }) {
 
           <div
             ref={progressRef}
+            role="slider"
+            tabIndex={0}
+            aria-label="Progression de la vidéo"
+            aria-valuemin={0}
+            aria-valuemax={Math.max(0, Math.floor(duration))}
+            aria-valuenow={Math.floor(current)}
+            aria-valuetext={`${formatTime(current)} sur ${formatTime(duration)}`}
             onPointerDown={onPointerDown}
             onPointerMove={onPointerMove}
             onPointerUp={onPointerUp}
             onPointerCancel={onPointerUp}
-            className="relative flex-1 h-1.5 rounded-full bg-warm-500/20 cursor-pointer touch-none"
+            onKeyDown={onKeyDown}
+            className="relative flex-1 h-1.5 rounded-full bg-warm-500/20 cursor-pointer touch-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-warm-700"
           >
             <div
               className="absolute inset-y-0 left-0 rounded-full bg-warm-700 transition-[width] duration-150"
@@ -189,7 +245,7 @@ function VideoModal({ onClose }: { onClose: () => void }) {
             />
           </div>
 
-          <span className="shrink-0 font-body text-xs tabular-nums text-warm-700/70">
+          <span className="shrink-0 font-body text-xs tabular-nums text-warm-700/80">
             {formatTime(current)}/{formatTime(duration)}
           </span>
         </div>
@@ -233,6 +289,7 @@ function DesktopPlayer() {
         src={VIDEO_SRC}
         preload="metadata"
         playsInline
+        aria-label="Témoignage vidéo"
         onEnded={() => setPlaying(false)}
         className="absolute inset-0 h-full w-full object-cover rounded-md"
       />
