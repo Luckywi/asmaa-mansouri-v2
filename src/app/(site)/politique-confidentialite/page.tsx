@@ -108,24 +108,58 @@ export default function PolitiqueConfidentialitePage() {
             </p>
           </LegalBlock>
 
-          <LegalBlock title="Finalités du traitement">
-            <p>Vos données sont utilisées exclusivement pour :</p>
+          <LegalBlock title="Finalités et bases légales du traitement">
+            <p>
+              Conformément à l&apos;article 6 du <abbr title="Règlement général sur la protection des données">RGPD</abbr>,
+              chaque traitement repose sur une base légale identifiée :
+            </p>
             <ul className="space-y-2 pl-0">
               <Bullet>
-                Répondre à vos demandes de contact et gérer vos rendez-vous
+                <strong className="font-medium text-warm-900">
+                  Répondre aux demandes de contact
+                </strong>{" "}
+                (formulaire, email, téléphone) — base&nbsp;: consentement
+                (art. 6.1.a).
               </Bullet>
               <Bullet>
-                Réaliser le bilan et le suivi naturopathique dans le cadre de la
-                prestation convenue
+                <strong className="font-medium text-warm-900">
+                  Gérer les rendez-vous et réaliser les prestations
+                </strong>{" "}
+                (bilan et suivi naturopathique) — base&nbsp;: exécution du
+                contrat conclu entre vous et la praticienne (art. 6.1.b).
               </Bullet>
               <Bullet>
-                Respecter les obligations comptables et fiscales liées à
-                l&apos;activité
+                <strong className="font-medium text-warm-900">
+                  Respecter les obligations comptables et fiscales
+                </strong>{" "}
+                (facturation, archivage légal) — base&nbsp;: obligation
+                légale (art. 6.1.c).
               </Bullet>
             </ul>
             <p>
               Vos données ne sont jamais cédées, vendues ni louées à des
               tiers, et ne font l&apos;objet d&apos;aucune publicité ciblée.
+            </p>
+          </LegalBlock>
+
+          <LegalBlock title="Données de santé">
+            <p>
+              Les informations relatives à votre santé recueillies lors
+              d&apos;une consultation constituent des données sensibles au
+              sens de l&apos;article 9 du <abbr title="Règlement général sur la protection des données">RGPD</abbr>.
+              Leur traitement repose sur votre{" "}
+              <strong className="font-medium text-warm-900">
+                consentement explicite
+              </strong>
+              {" "}(art. 9.2.a), recueilli oralement en début de
+              consultation. Ce consentement peut être retiré à tout moment,
+              sans affecter la licéité des traitements effectués
+              antérieurement.
+            </p>
+            <p>
+              Ces données sont strictement réservées au suivi
+              naturopathique, ne sont jamais transmises à des tiers, et
+              sont couvertes par le secret professionnel.
             </p>
           </LegalBlock>
 
@@ -174,6 +208,40 @@ export default function PolitiqueConfidentialitePage() {
               Les informations de santé confiées lors d&apos;une consultation
               sont couvertes par le secret professionnel. Elles ne sont en
               aucun cas transmises à des tiers sans votre consentement explicite.
+            </p>
+          </LegalBlock>
+
+          <LegalBlock title="Hébergement et transferts hors Union européenne">
+            <p>
+              Le site est hébergé par{" "}
+              <strong className="font-medium text-warm-900">Vercel Inc.</strong>,
+              société dont le siège est aux États-Unis. À ce titre,
+              certaines données techniques (adresse IP, logs serveur,
+              contenus du formulaire de contact) sont susceptibles
+              d&apos;être traitées sur des serveurs situés hors de
+              l&apos;Union européenne.
+            </p>
+            <p>
+              Ces transferts sont encadrés par les{" "}
+              <strong className="font-medium text-warm-900">
+                clauses contractuelles types
+              </strong>{" "}
+              (Standard Contractual Clauses) adoptées par la Commission
+              européenne, ainsi que par l&apos;accord de traitement des
+              données (DPA) conclu avec Vercel, garantissant un niveau de
+              protection équivalent à celui prévu par le <abbr title="Règlement général sur la protection des données">RGPD</abbr>.
+            </p>
+            <p>
+              Pour plus d&apos;informations, vous pouvez consulter la{" "}
+              <a
+                href="https://vercel.com/legal/privacy-policy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-warm-900 underline underline-offset-4 decoration-warm-700/40 hover:decoration-warm-900"
+              >
+                politique de confidentialité de Vercel
+              </a>
+              .
             </p>
           </LegalBlock>
 

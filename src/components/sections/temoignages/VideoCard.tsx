@@ -8,10 +8,7 @@ import { useFocusTrap } from "@/lib/useFocusTrap";
 
 const VIDEO_SRC = "/temoignages/temoignage-video.mp4";
 const POSTER_SRC = "/temoignages/temoignage-poster.jpg";
-
-// TODO a11y : fournir sous-titres (<track kind="captions" src="…/temoignage-video.fr.vtt"
-// srclang="fr" label="Français">) et/ou transcription textuelle (WCAG 1.2.2 A).
-// À produire avec Asmaa avant mise en ligne publique.
+const CAPTIONS_SRC = "/temoignages/temoignage-video.fr.vtt";
 
 function formatTime(s: number): string {
   const m = Math.floor(s / 60);
@@ -190,7 +187,15 @@ function VideoModal({ onClose }: { onClose: () => void }) {
             onLoadedMetadata={() => setDuration(videoRef.current?.duration ?? 0)}
             onEnded={() => setPlaying(false)}
             className="absolute inset-0 h-full w-full object-cover cursor-pointer"
-          />
+          >
+            <track
+              kind="captions"
+              src={CAPTIONS_SRC}
+              srcLang="fr"
+              label="Français"
+              default
+            />
+          </video>
 
           <button
             type="button"
@@ -296,7 +301,15 @@ function DesktopPlayer() {
         aria-label="Témoignage vidéo"
         onEnded={() => setPlaying(false)}
         className="absolute inset-0 h-full w-full object-cover rounded-md"
-      />
+      >
+        <track
+          kind="captions"
+          src={CAPTIONS_SRC}
+          srcLang="fr"
+          label="Français"
+          default
+        />
+      </video>
 
       <button
         type="button"

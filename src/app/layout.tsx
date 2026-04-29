@@ -26,12 +26,11 @@ const ROOT_DESCRIPTION =
   "Naturopathe à Décines-Charpieu (69150) spécialisée en santé féminine. Consultations, massages Tuina, cupping therapy. Cabinet à 10 minutes de Lyon.";
 
 /**
- * Metadata racine — Phase A fondations SEO.
+ * Metadata racine — fondations SEO.
  *
- * Pré-production : `robots.index = false` et `robots.follow = false`
- * maintiennent le site hors des moteurs tant que la qualité 10/10 n'est
- * pas atteinte. Bascule à true uniquement au go final (synchrone avec
- * `src/app/robots.ts` qui passera `disallow: "/"` -> `allow: "/"`).
+ * Indexation activée pour la production. Les pages légales
+ * (mentions-legales, cgv, politique-confidentialite) conservent leur
+ * `noindex` individuel via `buildMetadata({ noindex: true })`.
  *
  * `metadataBase` résout toutes les URLs relatives des pages filles
  * (canonical, OG images) contre le domaine de production.
@@ -66,12 +65,11 @@ export const metadata: Metadata = {
     address: true,
   },
   robots: {
-    index: false,
-    follow: false,
-    nocache: true,
+    index: true,
+    follow: true,
     googleBot: {
-      index: false,
-      follow: false,
+      index: true,
+      follow: true,
       "max-image-preview": "large",
       "max-snippet": -1,
       "max-video-preview": -1,
@@ -83,12 +81,12 @@ export const metadata: Metadata = {
       "fr-FR": "/",
     },
   },
-  // Placeholders : à renseigner quand Search Console et Bing Webmaster
-  // Tools auront validé la propriété du domaine (Phase B).
-  // verification: {
-  //   google: "google-site-verification-token",
-  //   other: { "msvalidate.01": "bing-verification-token" },
-  // },
+  // Pas de `verification:` ici : la propriété du domaine est validée via
+  // un enregistrement DNS TXT côté Google Search Console et Bing Webmaster
+  // Tools (méthode "domain property"). Avantage : couvre www + apex + tous
+  // les sous-domaines en une fois, ne nécessite aucun redéploiement, et ne
+  // pollue pas le <head>. Si un jour on bascule sur la méthode "URL prefix"
+  // (rare), réintroduire un bloc `verification` ici.
   openGraph: {
     type: "website",
     locale: "fr_FR",
@@ -117,15 +115,14 @@ export const metadata: Metadata = {
     // un compte inexistant. À ajouter si un jour un compte X est créé.
   },
   // Next 16 n'injecte automatiquement que `favicon.ico` (+ manifest via
-  // `manifest.ts`). Les autres fichiers convention (`icon0.svg`,
-  // `icon1.png`, `apple-icon.png`) sont bien servis en route mais pas
-  // liés en `<head>` quand `favicon.ico` coexiste. On déclare donc
-  // explicitement pour garantir l'injection.
+  // `manifest.ts`). Les autres fichiers convention (`icon1.png`,
+  // `apple-icon.png`) sont bien servis en route mais pas liés en
+  // `<head>` quand `favicon.ico` coexiste. On déclare donc explicitement
+  // pour garantir l'injection.
   icons: {
     // `favicon.ico` est auto-injecté par la convention Next (hash
     // immutable), on ne le redéclare pas ici pour éviter le doublon.
     icon: [
-      { url: "/icon0.svg", type: "image/svg+xml" },
       { url: "/icon1.png", sizes: "96x96", type: "image/png" },
     ],
     shortcut: "/favicon.ico",

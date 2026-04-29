@@ -41,7 +41,6 @@ Chaque décision, chaque composant, chaque ligne de code doit servir ces 4 pilie
 | `DESIGN.md` | Palette warm + accent, glass recipe, typo, boutons, patterns landing | ✅ **Figé 2026-04-14** (post-landing) |
 | `STRUCTURE.md` | Navigation, arborescence, contenu par page | ⚠️ En cours (pages internes Phase 2) |
 | `CLAUDE.md` | Fichier directeur — stack, principes, méthodologie | ✅ Ce fichier |
-| `PALETTE_AUDIT.md` | (ancien) Audit palette `vert/beige` pré-refactor | ❌ Obsolète — tokens supprimés, à ignorer |
 
 **Landing figée — base pour toutes les pages internes :**
 

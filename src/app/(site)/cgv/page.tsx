@@ -201,11 +201,46 @@ export default function CGVPage() {
             </p>
           </Article>
 
-          <Article num="10" title="Droit applicable et litiges">
+          <Article num="10" title="Règlement amiable des litiges et droit applicable">
+            <p>Les présentes CGV sont soumises au droit français.</p>
             <p>
-              Les présentes CGV sont soumises au droit français. En cas de
-              différend, nous privilégions toujours la recherche
-              d&apos;une solution amiable avant toute procédure judiciaire.
+              En cas de différend, je m&apos;engage à privilégier la
+              recherche d&apos;une solution amiable. Toute réclamation peut
+              m&apos;être adressée par email à{" "}
+              <a
+                href={`mailto:${site.email}`}
+                className="text-warm-900 underline underline-offset-4 decoration-warm-700/40 hover:decoration-warm-900"
+              >
+                {site.email}
+              </a>{" "}
+              ou par courrier au {site.address.full}. Je m&apos;engage à y
+              répondre dans un délai de 30 jours.
+            </p>
+            <p>
+              Si aucune solution amiable n&apos;est trouvée, le consommateur
+              peut recourir gratuitement à la plateforme européenne de
+              règlement en ligne des litiges, accessible à l&apos;adresse{" "}
+              <a
+                href="https://ec.europa.eu/consumers/odr"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-warm-900 underline underline-offset-4 decoration-warm-700/40 hover:decoration-warm-900"
+              >
+                ec.europa.eu/consumers/odr
+              </a>
+              .
+            </p>
+            <p>
+              Conformément à l&apos;article L. 616-1 du Code de la
+              consommation, le consommateur a la possibilité de saisir un
+              médiateur de la consommation pour tout litige relatif à la
+              présente prestation.
+            </p>
+            <p>
+              À défaut de résolution amiable, le consommateur peut saisir,
+              à son choix, la juridiction du lieu où il demeurait au moment
+              de la conclusion du contrat, celle du lieu d&apos;exécution
+              de la prestation, ou celle du siège d&apos;Asmaa Mansouri.
             </p>
           </Article>
 

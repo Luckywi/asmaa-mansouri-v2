@@ -9,10 +9,15 @@ import { specialites } from "@/data/specialites";
  *   1.0  landing
  *   0.9  hubs niveau 1 (prestations, specialites, ateliers, qui-suis-je, cabinet, contact, temoignages)
  *   0.8  pages détail (slugs, sous-pages qui-suis-je, ateliers/passes, ateliers/thematiques)
- *   0.5  pages légales (mentions, cgv, confidentialité)
  *
- * changeFrequency : monthly par défaut pour le contenu éditorial (peut
- * être réajusté), yearly pour les pages légales.
+ * changeFrequency : monthly par défaut pour le contenu éditorial.
+ *
+ * Les pages légales (mentions, cgv, politique-confidentialite) sont
+ * volontairement EXCLUES du sitemap car elles portent un `noindex: true`
+ * via leur metadata individuelle. Lister une page noindex dans le sitemap
+ * est un signal mixte ("crawle ça mais n'indexe pas") que Google traite
+ * comme une faute SEO mineure ; on l'évite. Ces pages restent accessibles
+ * via les liens internes du Footer.
  *
  * `lastModified: new Date()` est évalué à chaque génération du sitemap,
  * suffisant tant que le contenu évolue sous git. Une stratégie par
@@ -74,23 +79,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  const legalPages: MetadataRoute.Sitemap = [
-    "/mentions-legales",
-    "/cgv",
-    "/politique-confidentialite",
-  ].map((path) => ({
-    url: `${BASE_URL}${path}`,
-    lastModified: now,
-    changeFrequency: "yearly",
-    priority: 0.5,
-  }));
-
   return [
     ...landing,
     ...hubs,
     ...secondaryPages,
     ...prestationsPages,
     ...specialitesPages,
-    ...legalPages,
   ];
 }
